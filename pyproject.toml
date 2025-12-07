@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "BrainNetAnno"
+version = "0.1.0"
+description = "Molecular network analysis tools for transcriptome, mitochondrial, and neurotransmitter PLS and enrichment analyses (NumPy/SciPy/Scikit-learn)."
+readme = "README.md"
+authors = [{ name = "Yunheng Diao", email = "diaoyunheng@163.com" }]
+license = { text = "MIT" }
+requires-python = ">=3.9"
+keywords = ["neuroscience", "transcriptome", "network", "PLS", "gene expression"]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Intended Audience :: Science/Research",
+  "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+dependencies = [
+  "numpy>=1.23",
+  "pandas>=2.0",
+  "scipy>=1.10",
+  "scikit-learn>=1.3",
+  "statsmodels>=0.14",
+  "matplotlib>=3.7",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourname/BrainNetAnno"
+Issues = "https://github.com/yourname/BrainNetAnno/issues"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = ["network_molecular"]
+
+[tool.setuptools.package-data]
+network_molecular = ["py.typed"]
