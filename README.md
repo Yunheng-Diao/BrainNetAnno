@@ -1,94 +1,103 @@
-# network-molecular
+# BrainNetAnno
 
-Molecular network analysis tools for transcriptome, mitochondrial, and neurotransmitter datasets.
+A toolkit for molecular annotation of brain networks, integrating transcriptome, neurotransmitters, and mitochondria.
 
 ## Features
-- CPU-only NumPy/SciPy/Scikit-learn implementations
-- Shared utilities in `network_molecular.utils`
-- PLS pipelines: `*_pls_cge.run_pipeline`
-- Enrichment modules: `gene_celltype.run_pipeline`, `gene_layer.run_pipeline`
-- Command-line interface (CLI) for common workflows
+- CPU-only implementations (NumPy/SciPy/Scikit-learn/Statsmodels/Matplotlib)
+- Shared utilities in `BrainNetAnno.utils`
+- PLS pipelines: `*_pls_cge.run_*_pls_pipeline`
+- Enrichment analyses: `gene_celltype.run_pipeline`, `gene_layer.run_pipeline`
 
 ## Requirements
 - Python >= 3.9
-- Recommended packages (specified in pyproject.toml):
+- Main dependencies (see `pyproject.toml`):
   - numpy, pandas, scipy, scikit-learn, statsmodels, matplotlib
 
 ## Installation
-```
-pip install network-molecular
-```
-Or from source:
+From source:
 ```
 pip install .
+```
+Or build a wheel and install:
+```
+python -m pip install -U build
+python -m build
+pip install dist/BrainNetAnno-<version>-py3-none-any.whl
 ```
 
 ## Quickstart (Python API)
 - Transcriptome PLS-CGE pipeline:
 ```python
-from network_molecular import run_transcriptome_pls_cge
-best_n, df = run_transcriptome_pls_cge(
-    t_values_file="path/to/fc_deviation.csv",  # square matrix CSV, no header
-    gene_expression_file="path/to/gene_contribution_df.csv",  # contains 'Region_Pair'
+from BrainNetAnno.transcriptome_pls_cge import run_transcriptome_pls_pipeline
+
+run_transcriptome_pls_pipeline(
+    t_values_file="path/to/fc_deviation.csv",          # square matrix CSV, no header
+    gene_expression_file="path/to/gene_contrib.csv",   # contains 'Region_Pair'
     output_best_genes_csv="path/to/best_genes.csv",
     fig_outputfile="path/to/rmse_variance.tif",
 )
-print(best_n)
-print(df.head())
 ```
 - Cell-type enrichment:
 ```python
-from network_molecular import run_celltype_enrichment
-res = run_celltype_enrichment(
-    celltype_csv="path/to/celltypes_PSP.csv",   # columns: gene, class
-    target_genes_csv="path/to/best_genes_SCZ.csv",  # column: Gene Index
+from BrainNetAnno.gene_celltype import run_pipeline
+
+res = run_pipeline(
+    celltype_csv="path/to/celltypes_PSP.csv",      # columns: gene, class
+    target_genes_csv="path/to/best_genes_SCZ.csv", # column: Gene Index
     output_csv="path/to/celltype_enrichment_results.csv",
 )
 print(res.head())
 ```
-- Layer enrichment:
+- Cortical layer enrichment:
 ```python
-from network_molecular import run_layer_enrichment
-res = run_layer_enrichment(
+from BrainNetAnno.gene_layer import run_pipeline
+
+res = run_pipeline(
     layer_marker_path="path/to/41593_2020_787_MOESM3_ESM.xlsx",  # sheet: Table S4B
     target_genes_path="path/to/best_genes_all.csv",
     output_csv="path/to/ALL_gene_layer_analysis_results.csv",
 )
 print(res.head())
 ```
+- Neurotransmitter PLS pipeline:
+```python
+from BrainNetAnno.neurotransmitter_pls_cge import run_neurotransmitter_pls_pipeline
 
-## CLI Usage
-After installation, the following commands are available:
-- Cell-type enrichment
+best_n, df = run_neurotransmitter_pls_pipeline(
+    fc_matrix_path="path/to/fc_deviation.csv",      # square matrix CSV, no header
+    nt_contrib_csv="path/to/nt_contrib.csv",        # contains 'Region_Pair'
+    output_weights_csv="path/to/nt_weights.csv",
+)
+print(best_n)
+print(df.head())
 ```
-network-molecular-celltype path/to/celltypes.csv path/to/target_genes.csv --output path/to/out.csv --n-perm 5000 --seed 42
-```
-- Layer enrichment
-```
-network-molecular-layer path/to/layer_markers.xlsx path/to/target_genes.csv --output path/to/out.csv --n-perm 5000 --seed 42
-```
-- Transcriptome PLS-CGE
-```
-network-molecular-pls path/to/fc_deviation.csv path/to/gene_contrib.csv --output-best-genes path/to/out.csv --fig path/to/out.tif
+- Mitochondrial PLS pipeline:
+```python
+from BrainNetAnno.mitochondrial_pls_cge import run_mitochondrial_pls_pipeline
+
+best_n, df = run_mitochondrial_pls_pipeline(
+    fc_matrix_path="path/to/fc_deviation.csv",      # square matrix CSV, no header
+    nt_contrib_csv="path/to/mito_contrib.csv",      # contains 'Region_Pair'
+    output_weights_csv="path/to/mito_weights.csv",
+)
+print(best_n)
+print(df.head())
 ```
 
 ## Data Format
-- FC deviation CSV: square numeric matrix without header; only upper-triangle non-zero entries are used.
+- FC deviation/weights CSV: square numeric matrix without header; only upper-triangle non-zero entries are used.
 - Gene contribution CSV: must include a `Region_Pair` column formatted as `i-j`, where i < j.
 - Cell-type markers CSV: columns `gene` and `class` (gene symbols are uppercased internally).
-- Layer markers Excel: sheet contains columns named `t_stat_LayerX` (e.g., Layer1..Layer6), and a `gene` column.
+- Layer markers Excel: sheet contains columns named `t_stat_LayerX` (e.g., Layer1..Layer6) and a `gene` column.
 
 ## Development & Testing
-- Build package:
+- Build and install locally:
 ```
 python -m pip install -U build
 python -m build
+pip install dist/BrainNetAnno-<version>-py3-none-any.whl
 ```
-- Install wheel locally:
-```
-pip install dist/network_molecular-<version>-py3-none-any.whl
-```
-- Run tests (after install or from source):
+- Run tests (if present):
 ```
 pip install -U pytest
 pytest -q
