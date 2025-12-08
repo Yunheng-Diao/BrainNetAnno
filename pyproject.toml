@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "BrainNetAnno"
 version = "0.1.0"
-description = "Molecular network analysis tools for transcriptome, mitochondrial, and neurotransmitter PLS and enrichment analyses (NumPy/SciPy/Scikit-learn)."
+description = "A toolkit for molecular annotation of brain networks, integrating transcriptome, neurotransmitters, and mitochondria."
 readme = "README.md"
 authors = [{ name = "Yunheng Diao", email = "diaoyunheng@163.com" }]
 license = { text = "MIT" }
@@ -36,7 +36,7 @@ Issues = "https://github.com/Yunheng-Diao/BrainNetAnno/issues"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
-packages = ["network_molecular"]
+packages = ["BrainNetAnno"]
 
 [tool.setuptools.package-data]
 network_molecular = ["py.typed"]

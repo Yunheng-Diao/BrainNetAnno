@@ -126,6 +126,7 @@ def compute_overlap_enrichment(celltype_markers: Dict[str, Set[str]],
 
     result_df = pd.DataFrame(results)
     result_df['FDR'] = multipletests(result_df['Raw P-Value'], method='fdr_bh')[1]
+    return result_df
 
 def run_pipeline(
     celltype_csv: str,
