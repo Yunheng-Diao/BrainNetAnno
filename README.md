@@ -16,7 +16,7 @@ A toolkit for molecular annotation of brain networks, integrating transcriptome,
 ## Installation
 From source:
 ```
-pip install .
+pip install BrainNetAnno
 ```
 Or build a wheel and install:
 ```
@@ -97,14 +97,6 @@ python -m pip install -U build
 python -m build
 pip install dist/BrainNetAnno-<version>-py3-none-any.whl
 ```
-- Run tests (if present):
-```
-pip install -U pytest
-pytest -q
-```
-
-## Versioning
-- Semantic versioning (MAJOR.MINOR.PATCH)
 
 ## License
 MIT
