@@ -1,5 +1,5 @@
 """
-PLS analysis for mitochondrial gene contributions against FC deviations.
+PLS analysis for mitochondrial contributions against FC deviations.
 
 Provides reusable functions to select PLS components via CV, run PLS, compute
 permutation p-values for weights, and plotting utilities suitable for packaging.
@@ -18,6 +18,7 @@ try:
         run_pls,
         permutation_pvalues,
         plot_mse_curve,
+        permutation_explained_variance,
     )
 except ModuleNotFoundError:
     import sys, os
@@ -30,6 +31,7 @@ except ModuleNotFoundError:
             run_pls,
             permutation_pvalues,
             plot_mse_curve,
+            permutation_explained_variance,
         )
     except ModuleNotFoundError:
         project_root = os.path.abspath(os.path.join(src_dir, '..'))
@@ -40,22 +42,23 @@ except ModuleNotFoundError:
             run_pls,
             permutation_pvalues,
             plot_mse_curve,
+            permutation_explained_variance,
         )
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 logger = logging.getLogger(__name__)
 
 def run_mitochondrial_pls_pipeline(fc_matrix_path: str,
-                 nt_contrib_csv: str,
+                 nt_contrib_path: str,
                  top_k: int = 500,
                  mse_plot_path: Optional[str] = None,
                  explained_variance_plot_path: Optional[str] = None,
-                 output_weights_csv: Optional[str] = None,
+                 output_weights_path: Optional[str] = None,
                  max_components: int = 6,
                  cv_splits: int = 5,
                  random_state: int = 42,
                  n_permutations: int = 1000) -> Tuple[int, pd.DataFrame]:
-    """Run PLS analysis linking FC weights to mitochondrial gene contributions.
+    """Run PLS analysis linking FC weights to mitochondrial contributions.
 
     This pipeline loads an FC weights matrix and a per-connection mitochondrial
     contribution table, aligns by ``Region_Pair``, selects the optimal number of
@@ -68,7 +71,7 @@ def run_mitochondrial_pls_pipeline(fc_matrix_path: str,
     fc_matrix_path : str
         Path to the CSV containing a square FC weights matrix (no header).
     nt_contrib_csv : str
-        Path to the CSV containing mitochondrial gene contributions with a
+        Path to the CSV containing mitochondrial contributions with a
         ``'Region_Pair'`` column.
     top_k : int, optional
         Number of top absolute FC entries to keep. Default ``500``.
@@ -90,7 +93,7 @@ def run_mitochondrial_pls_pipeline(fc_matrix_path: str,
     Returns
     -------
     Tuple[int, pd.DataFrame]
-        Best number of components and a DataFrame with gene weights and p-values.
+        Best number of components and a DataFrame with neurotransmitter weights and p-values.
 
     Notes
     -----
@@ -117,9 +120,9 @@ def run_mitochondrial_pls_pipeline(fc_matrix_path: str,
     top_idx = np.argsort(np.abs(fc_values))[-top_k:]
     fc_df = pd.DataFrame({"Region_Pair": np.array(region_pairs)[top_idx], "FC_Value": fc_values[top_idx]})
 
-    logger.info(f"Merging FC with mitochondrial contributions from: {nt_contrib_csv}")
+    logger.info(f"Merging FC with mitochondrial contributions from: {nt_contrib_path}")
     try:
-        nt_df = load_table_generic(nt_contrib_csv)
+        nt_df = load_table_generic(nt_contrib_path)
     except Exception as e:
         logger.error(f"Failed to read contributions CSV: {e}")
         raise
@@ -128,7 +131,7 @@ def run_mitochondrial_pls_pipeline(fc_matrix_path: str,
 
     Y = merged_df["FC_Value"].values
     X = merged_df.drop(columns=["Region_Pair", "FC_Value"]).values
-    genes = merged_df.drop(columns=["Region_Pair", "FC_Value"]).columns
+    mitochondrial = merged_df.drop(columns=["Region_Pair", "FC_Value"]).columns
 
     logger.info(f"Running CV to select optimal PLS components (max={max_components}, splits={cv_splits}, seed={random_state})")
     best_n_comp, mse_scores = select_optimal_components(X, Y, max_components=max_components, cv_splits=cv_splits, random_state=random_state)
@@ -146,19 +149,28 @@ def run_mitochondrial_pls_pipeline(fc_matrix_path: str,
         logger.info(f"Saved MSE data to: {mse_csv}")
 
     pls, x_weights, x_scores, y_scores = run_pls(X, Y, best_n_comp)
-    logger.info("PLS model fitted. Computing explained variance for X scores.")
+    logger.info("PLS model fitted. Computing explained variance via permutation.")
+
+    pls, x_weights, x_scores, y_scores = run_pls(X, Y, best_n_comp)
 
     total_var_X = np.var(X, axis=0).sum()
     explained_var_X = np.var(x_scores, axis=0) / total_var_X
+    explained_var_Y = np.var(y_scores, axis=0) / np.var(Y)
+
     if explained_variance_plot_path:
         from os import path, makedirs
         d = path.dirname(explained_variance_plot_path)
         if d:
             makedirs(d, exist_ok=True)
         ev_csv = path.splitext(explained_variance_plot_path)[0] + "_data.csv"
-        pd.DataFrame({"Component": list(range(1, len(explained_var_X)+1)), "ExplainedVariance": explained_var_X}).to_csv(ev_csv, index=False)
+        pd.DataFrame({
+            "Component": list(range(1, len(explained_var_X)+1)),
+            "ExplainedVariance_X": explained_var_X,
+            "ExplainedVariance_Y": explained_var_Y
+        }).to_csv(ev_csv, index=False)
         plt.figure(figsize=(8, 5))
-        plt.plot(range(1, len(explained_var_X) + 1), explained_var_X * 100, marker='o', linestyle='-', color='b', label='Explained Variance (X)')
+        plt.plot(range(1, len(explained_var_X) + 1), explained_var_X * 100, 
+                 marker='o', linestyle='-', color='b', label='Explained Variance (X)')
         plt.xlabel("PLS Component", fontsize=14)
         plt.ylabel("Explained Variance (%)", fontsize=14)
         plt.grid(axis='y', linestyle='--', alpha=0.7)
@@ -173,20 +185,20 @@ def run_mitochondrial_pls_pipeline(fc_matrix_path: str,
 
     logger.info("Assembling result DataFrame with weights and p-values")
     result_df = pd.DataFrame({
-        "Gene": genes,
+        "Mitochondrial": mitochondrial,
         "Weight": x_weights[:, optimal_component_index],
         "P_value": p_values,
     }).sort_values(by="Weight", key=np.abs, ascending=False)
 
     import os
-    for p in [output_weights_csv]:
+    for p in [output_weights_path]:
         if p:
             d = os.path.dirname(p)
             if d:
                 os.makedirs(d, exist_ok=True)
-    if output_weights_csv:
-        result_df.to_csv(output_weights_csv, index=False)
-        logger.info(f"Saved weights and p-values to: {output_weights_csv}")
+    if output_weights_path:
+        result_df.to_csv(output_weights_path, index=False)
+        logger.info(f"Saved weights and p-values to: {output_weights_path}")
 
     logger.info("Mitochondrial PLS pipeline completed successfully.")
     return best_n_comp, result_df

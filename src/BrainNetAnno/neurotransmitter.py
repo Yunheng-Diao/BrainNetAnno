@@ -3,7 +3,7 @@ Neurotransmitter network analysis utilities using NumPy/SciPy/Scikit-learn on CP
 
 This module builds precision matrices, fits distance-decay models, computes
 residual networks, and performs leave-one-feature-out (LOFO) contribution
-analysis for neurotransmitter gene sets.
+analysis for neurotransmitter sets.
 """
 from typing import Tuple, Sequence, Iterable, Optional
 import numpy as np
@@ -17,7 +17,7 @@ import os
 try:
     from .utils import (
         load_coordinates,
-        load_gene_expression_excel,
+        load_neurotransmitter_expression,
         zscore_rows,
         compute_distance_matrix,
         exponential_decay,
@@ -29,7 +29,7 @@ except ImportError:
     sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
     from BrainNetAnno.utils import (
         load_coordinates,
-        load_gene_expression_excel,
+        load_neurotransmitter_expression,
         zscore_rows,
         compute_distance_matrix,
         exponential_decay,
@@ -50,12 +50,12 @@ def build_precision_matrix(z_neurotransmitter_expression: np.ndarray) -> Tuple[n
     Parameters
     ----------
     z_neurotransmitter_expression : np.ndarray
-        Z-scored neurotransmitter gene expression matrix of shape (n_regions, n_genes). Rows are regions.
+        Z-scored neurotransmitter  expression matrix of shape (n_regions, n_neurotransmitter). Rows are regions.
 
     Returns
     -------
     Tuple[np.ndarray, np.ndarray]
-        (covariance, precision) matrices of shape (n_genes, n_genes).
+        (covariance, precision) matrices of shape (n_neurotransmitter, n_neurotransmitter).
     """
     model = LedoitWolf()
     model.fit(z_neurotransmitter_expression.T)
@@ -86,38 +86,38 @@ def lofo_contribution(z_neurotransmitter_expression: np.ndarray,
                       expected_matrix: np.ndarray,
                       region_pairs: Iterable[Tuple[int, int]],
                       base_precision: np.ndarray,
-                      gene_names: Sequence[str]) -> pd.DataFrame:
-    """Perform Leave-One-Feature-Out (LOFO) analysis to estimate gene contributions.
+                      neurotransmitter_names: Sequence[str]) -> pd.DataFrame:
+    """Perform Leave-One-Feature-Out (LOFO) analysis to estimate neurotransmitter contributions.
 
-    For each gene g, remove it from the expression matrix, rebuild the precision
+    For each neurotransmitter g, remove it from the expression matrix, rebuild the precision
     matrix, and compute the change in residuals per connection.
 
     Parameters
     ----------
     z_neurotransmitter_expression : np.ndarray
-        Z-scored neurotransmitter gene expression matrix of shape (n_regions, n_genes).
+        Z-scored neurotransmitter expression matrix of shape (n_regions, n_neurotransmitter).
     expected_matrix : np.ndarray
         Expected connection matrix of shape (n_regions, n_regions).
     region_pairs : Iterable[Tuple[int, int]]
         Iterable of (i, j) indices representing upper-triangle connections.
     base_precision : np.ndarray
-        Precision matrix computed from the full set of genes (shape (n_genes, n_genes)).
-    gene_names : Sequence[str]
-        Names of genes corresponding to columns in z_neurotransmitter_expression.
+        Precision matrix computed from the full set of neurotransmitter (shape (n_neurotransmitter, n_neurotransmitter)).
+    neurotransmitter_names : Sequence[str]
+        Names of neurotransmitter corresponding to columns in z_neurotransmitter_expression.
 
     Returns
     -------
     pd.DataFrame
-        DataFrame containing per-connection contribution scores per gene with column 'Region_Pair'.
+        DataFrame containing per-connection contribution scores per neurotransmitter with column 'Region_Pair'.
     """
     region_pairs = list(region_pairs)
     num_connections = len(region_pairs)
-    num_genes = z_neurotransmitter_expression.shape[1]
+    num_neurotransmitter = z_neurotransmitter_expression.shape[1]
 
     residual_full = compute_residual_matrix(base_precision, expected_matrix)
-    out = pd.DataFrame(np.zeros((num_connections, num_genes)), columns=gene_names)
+    out = pd.DataFrame(np.zeros((num_connections, num_neurotransmitter)), columns=neurotransmitter_names)
 
-    for g in range(num_genes):
+    for g in range(num_neurotransmitter):
         reduced_expression = np.delete(z_neurotransmitter_expression, g, axis=1)
         try:
             _, precision_lofo = build_precision_matrix(reduced_expression)
@@ -158,25 +158,24 @@ def plot_distance_decay(distances: np.ndarray, conn_values: np.ndarray, params: 
     plt.ylabel("Connection strength (precision)")
     plt.title("Connection vs. Distance with Fitted Exponential Decay")
     plt.legend()
-    plt.show()
 
 # -----------------------------
 # High-level pipeline
 # -----------------------------
 
-def run_neurotransmitter_pipeline(coordinates_csv: str,
-                 gene_expression_xlsx: str,
-                 output_contribution_csv: str,
+def run_neurotransmitter_pipeline(coordinates_path: str,
+                 neurotransmitter_expression_path: str,
+                 output_contribution_path: str,
                  initial_params: Sequence[float] = (1.0, 50.0, 0.0),
                  save_plot: bool = True,
                  plot_path: Optional[str] = None) -> Tuple[Tuple[float, float, float], pd.DataFrame]:
-    """Run neurotransmitter CGE/precision analysis and optionally save LOFO gene contributions.
+    """Run neurotransmitter CGE/precision analysis and optionally save LOFO neurotransmitter contributions.
 
-    This high-level pipeline loads region coordinates and neurotransmitter gene
+    This high-level pipeline loads region coordinates and neurotransmitter neurotransmitter
     expression from Excel, computes distances and a precision-based connection
     measure, fits an exponential distance-decay model, builds an expected
     connection matrix, and performs leave-one-feature-out (LOFO) analysis to
-    quantify per-gene contributions per region pair. Results can be saved to
+    quantify per-neurotransmitter contributions per region pair. Results can be saved to
     CSV and an optional distance-decay plot can be saved.
 
     Parameters
@@ -184,11 +183,11 @@ def run_neurotransmitter_pipeline(coordinates_csv: str,
     coordinates_csv : str
         Path to the CSV containing region coordinates (columns: ``MNI_X``,
         ``MNI_Y``, ``MNI_Z``).
-    gene_expression_xlsx : str
-        Path to the Excel file containing neurotransmitter gene expression
-        (rows=regions, columns=genes). Label columns may be dropped upstream.
+    neurotransmitter_expression_xlsx : str
+        Path to the Excel file containing neurotransmitter expression
+        (rows=regions, columns=neurotransmitter). Label columns may be dropped upstream.
     output_contribution_csv : str
-        Path to save the per-connection LOFO gene contribution scores as CSV.
+        Path to save the per-connection LOFO neurotransmitter contribution scores as CSV.
         Parent directories are created automatically.
     initial_params : Sequence[float], optional
         Initial guess for decay parameters ``(A, n, B)``, by default
@@ -203,7 +202,7 @@ def run_neurotransmitter_pipeline(coordinates_csv: str,
     -------
     Tuple[Tuple[float, float, float], pd.DataFrame]
         The fitted decay parameters ``(A, n, B)`` and the LOFO contribution
-        DataFrame with a ``'Region_Pair'`` column followed by per-gene scores.
+        DataFrame with a ``'Region_Pair'`` column followed by per-neurotransmitter scores.
 
     Notes
     -----
@@ -213,13 +212,13 @@ def run_neurotransmitter_pipeline(coordinates_csv: str,
     - Parent directories for ``output_contribution_csv`` are created
       automatically when saving results.
     """
-    logger.info(f"Loading coordinates from: {coordinates_csv}")
-    coords = load_coordinates(coordinates_csv)
+    logger.info(f"Loading coordinates from: {coordinates_path}")
+    coords = load_coordinates(coordinates_path)
     logger.info(f"Coordinates loaded. Shape: {coords.shape}")
 
-    logger.info(f"Loading neurotransmitter expression from: {gene_expression_xlsx}")
-    matrix, gene_names = load_gene_expression_excel(gene_expression_xlsx)
-    logger.info(f"Expression loaded. Shape: {matrix.shape}; genes: {len(gene_names)}")
+    logger.info(f"Loading neurotransmitter expression from: {neurotransmitter_expression_path}")
+    matrix, neurotransmitter_names = load_neurotransmitter_expression(neurotransmitter_expression_path)
+    logger.info(f"Expression loaded. Shape: {matrix.shape}; neurotransmitters: {len(neurotransmitter_names)}")
 
     logger.info("Computing distance matrix and z-scoring rows")
     dist_mat = compute_distance_matrix(coords)
@@ -240,22 +239,22 @@ def run_neurotransmitter_pipeline(coordinates_csv: str,
     logger.info("Building expected connection matrix from decay model")
     expected = compute_expected_matrix(dist_mat, A, n, B)
 
-    logger.info("Running LOFO per-gene contribution analysis")
-    contrib_df = lofo_contribution(z_mat, expected, zip(upper[0], upper[1]), precision_full, gene_names)
+    logger.info("Running LOFO per-neurotransmitter contribution analysis")
+    contrib_df = lofo_contribution(z_mat, expected, zip(upper[0], upper[1]), precision_full, neurotransmitter_names)
 
-    logger.info(f"Saving contributions to: {output_contribution_csv}")
-    d = os.path.dirname(output_contribution_csv)
+    logger.info(f"Saving contributions to: {output_contribution_path}")
+    d = os.path.dirname(output_contribution_path)
     if d:
         os.makedirs(d, exist_ok=True)
-    contrib_df.to_csv(output_contribution_csv, index=False)
-    logger.info(f"Saved contributions to: {output_contribution_csv}")
+    contrib_df.to_csv(output_contribution_path, index=False)
+    logger.info(f"Saved contributions to: {output_contribution_path}")
 
     if save_plot:
         if plot_path is None:
-            plot_path = os.path.splitext(output_contribution_csv)[0] + "_decay_plot.png"
-        pd = os.path.dirname(plot_path)
-        if pd:
-            os.makedirs(pd, exist_ok=True)
+            plot_path = os.path.splitext(output_contribution_path)[0] + "_decay_plot.tif"
+        plot_dir = os.path.dirname(plot_path)
+        if plot_dir:
+            os.makedirs(plot_dir, exist_ok=True)
         plt.figure(figsize=(8, 6))
         order = np.argsort(distances)
         plt.scatter(distances, conn_values, s=3, color='gray', alpha=0.5)
@@ -266,6 +265,18 @@ def run_neurotransmitter_pipeline(coordinates_csv: str,
         plt.savefig(plot_path, dpi=300)
         plt.close()
         logger.info(f"Saved decay plot to: {plot_path}")
+        # Save plot data (raw and fitted)
+        data_csv = os.path.splitext(plot_path)[0] + "_data.csv"
+        fitted_values = exponential_decay(distances, A, n, B)
+        data_dir = os.path.dirname(data_csv)
+        if data_dir:
+            os.makedirs(data_dir, exist_ok=True)
+        pd.DataFrame({
+            'Distance': distances,
+            'Connection': conn_values,
+            'Fitted': fitted_values
+        }).to_csv(data_csv, index=False)
+        logger.info(f"Saved decay plot data to: {data_csv}")
 
     logger.info("Neurotransmitter pipeline completed successfully.")
     return params, contrib_df

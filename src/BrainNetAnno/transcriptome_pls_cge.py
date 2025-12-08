@@ -19,9 +19,8 @@ logger = logging.getLogger(__name__)
 
 try:
     from BrainNetAnno.utils import (
-        optimal_pls_components_rmse,
+        select_optimal_components,
         permutation_explained_variance,
-        plot_rmse_and_variance,
     )
 except ModuleNotFoundError:
     import sys, os
@@ -30,18 +29,16 @@ except ModuleNotFoundError:
         sys.path.append(src_dir)
     try:
         from utils import (
-            optimal_pls_components_rmse,
+            select_optimal_components,
             permutation_explained_variance,
-            plot_rmse_and_variance,
         )
     except ModuleNotFoundError:
         project_root = os.path.abspath(os.path.join(src_dir, '..'))
         if project_root not in sys.path:
             sys.path.append(project_root)
         from BrainNetAnno.utils import (
-            optimal_pls_components_rmse,
+            select_optimal_components,
             permutation_explained_variance,
-            plot_rmse_and_variance,
         )
 
 # -----------------------------
@@ -143,12 +140,14 @@ def save_best_genes_to_csv(gene_names: np.ndarray,
 # -----------------------------
 
 def run_transcriptome_pls_pipeline(
-    t_values_file: str,
-    gene_expression_file: str,
-    output_best_genes_csv: str,
-    fig_outputfile: Optional[str] = None,
+    t_values_file_path: str,
+    gene_expression_file_path: str,
+    output_best_genes_path: str,
+    mse_plot_path: Optional[str] = None,
+    explained_variance_plot_path: Optional[str] = None,
     max_components: int = 15,
-    n_splits: int = 5,
+    cv_splits: int = 5,
+    random_state: int = 42,
     n_permutations: int = 1000,
     n_components: Optional[int] = None,
 ) -> None:
@@ -196,10 +195,10 @@ def run_transcriptome_pls_pipeline(
       explained variance is chosen.
     - Output directories are created automatically for CSV and figures.
     """
-    logger.info(f"Loading t-values from: {t_values_file}")
-    logger.info(f"Loading gene contributions from: {gene_expression_file}")
-    df_pairs_values, t_values, gene_matrix, gene_names = read_data_from_files(t_values_file, gene_expression_file)
-    df_pairs_values.to_csv(output_best_genes_csv.replace('.csv', '_pairs_values.csv'), index=False)
+    logger.info(f"Loading t-values from: {t_values_file_path}")
+    logger.info(f"Loading gene contributions from: {gene_expression_file_path}")
+    df_pairs_values, t_values, gene_matrix, gene_names = read_data_from_files(t_values_file_path, gene_expression_file_path)
+    df_pairs_values.to_csv(output_best_genes_path.replace('.csv', '_pairs_values.csv'), index=False)
 
     # Standardize
     from sklearn.preprocessing import StandardScaler
@@ -208,37 +207,80 @@ def run_transcriptome_pls_pipeline(
     Y = scaler.fit_transform(t_values)
 
     # CV errors and best components
-    logger.info(f"Selecting optimal components (max={max_components}, splits={n_splits})")
-    cv_errors = optimal_pls_components_rmse(X, Y, max_components=max_components, n_splits=n_splits)
-    best_n_components = int(np.argmin(cv_errors) + 1) if n_components is None else int(n_components)
-    logger.info(f"Best number of components selected: {best_n_components}")
+    logger.info(f"Selecting optimal components (max={max_components}, splits={cv_splits})")
+    best_n_comp, mse_scores = select_optimal_components(X, Y, max_components=max_components, cv_splits=cv_splits, random_state=random_state)
 
-    # 置换检验
-    explained_variance_ratio, p_values, weights = permutation_explained_variance(X, Y, best_n_components, n_permutations=n_permutations)
+    logger.info(f"Best number of components selected: {best_n_comp}")
+
+    # permutation test
+    explained_variance_ratio, p_values, weights = permutation_explained_variance(X, Y, best_n_comp, n_permutations=n_permutations)
     best_component, best_genes, z_scores, p_values_genes = select_best_component_and_genes(explained_variance_ratio, p_values, weights)
 
     # Save significant genes
-    save_best_genes_to_csv(gene_names, best_genes, z_scores, p_values_genes, output_best_genes_csv)
+    save_best_genes_to_csv(gene_names, best_genes, z_scores, p_values_genes, output_best_genes_path)
 
-    # Plot curves
-    plot_rmse_and_variance(cv_errors, explained_variance_ratio, fig_outputfile)
+    # Plot and save curves and data
+    # Ensure directories exist only when paths are provided
+    if mse_plot_path:
+        mse_dir = os.path.dirname(mse_plot_path)
+        if mse_dir:
+            os.makedirs(mse_dir, exist_ok=True)
 
-    import os
-    out_dir = os.path.dirname(output_best_genes_csv)
+        # Save MSE data (CV errors per component)
+        mse_csv = os.path.splitext(mse_plot_path)[0] + "_data.csv"
+        pd.DataFrame({
+            "Components": list(range(1, len(mse_scores) + 1)),
+            "RMSE": mse_scores
+        }).to_csv(mse_csv, index=False)
+
+        # Plot MSE curve
+        plt.figure(figsize=(6, 5))
+        plt.plot(range(1, len(mse_scores) + 1), mse_scores, marker='o')
+        plt.title('PLS CV MSE')
+        plt.xlabel('Components')
+        plt.ylabel('MSE')
+        plt.grid(True, linestyle='--', alpha=0.6)
+        plt.tight_layout()
+        plt.savefig(mse_plot_path, dpi=300)
+        plt.close()
+        logger.info(f"Saved SE curve to: {mse_plot_path}")
+        logger.info(f"Saved SE data to: {mse_csv}")
+
+    if explained_variance_plot_path:
+        ev_dir = os.path.dirname(explained_variance_plot_path)
+        if ev_dir:
+            os.makedirs(ev_dir, exist_ok=True)
+        # Save explained variance data (for X)
+        ev_csv = os.path.splitext(explained_variance_plot_path)[0] + "_data.csv"
+        pd.DataFrame({
+            "Component": list(range(1, len(explained_variance_ratio) + 1)),
+            "ExplainedVariance": explained_variance_ratio
+        }).to_csv(ev_csv, index=False)
+        # Plot explained variance
+        plt.figure(figsize=(8, 5))
+        plt.plot(range(1, len(explained_variance_ratio) + 1), explained_variance_ratio * 100,
+                 marker='o', linestyle='-', color='b', label='Explained Variance (X)')
+        plt.xlabel("PLS Component", fontsize=14)
+        plt.ylabel("Explained Variance (%)", fontsize=14)
+        plt.grid(axis='y', linestyle='--', alpha=0.7)
+        plt.legend(fontsize=12)
+        plt.tight_layout()
+        plt.savefig(explained_variance_plot_path, dpi=300)
+        plt.close()
+        logger.info(f"Saved explained variance plot to: {explained_variance_plot_path}")
+        logger.info(f"Saved explained variance data to: {ev_csv}")
+
+    # Ensure output directories exist for CSVs
+    out_dir = os.path.dirname(output_best_genes_path)
     if out_dir:
         os.makedirs(out_dir, exist_ok=True)
-    if fig_outputfile:
-        fig_dir = os.path.dirname(fig_outputfile)
-        if fig_dir:
-            os.makedirs(fig_dir, exist_ok=True)
 
     df_best = pd.DataFrame({
         'Gene Index': gene_names[best_genes],
         'Original Z-Score': z_scores[best_genes],
         'P-Value': p_values_genes[best_genes]
     })
-    df_best.to_csv(output_best_genes_csv, index=False)
-    logger.info(f"Saved best genes CSV to: {output_best_genes_csv}")
-    if fig_outputfile:
-        logger.info(f"Saved plots to: {fig_outputfile}")
+    df_best.to_csv(output_best_genes_path, index=False)
+    logger.info(f"Saved best genes CSV to: {output_best_genes_path}")
+
     logger.info("Transcriptome PLS pipeline completed successfully.")

@@ -1,5 +1,5 @@
 """
-PLS analysis for neurotransmitter gene contributions against FC deviations.
+PLS analysis for neurotransmitter contributions against FC deviations.
 
 Provides reusable functions to select PLS components via CV, run PLS, compute
 permutation p-values for weights, and plotting utilities suitable for packaging.
@@ -47,11 +47,11 @@ except ModuleNotFoundError:
         )
 
 def run_neurotransmitter_pls_pipeline(fc_matrix_path: str,
-                                       nt_contrib_csv: str,
+                                       nt_contrib_path: str,
                                        top_k: int = 350,
                                        mse_plot_path: Optional[str] = None,
                                        explained_variance_plot_path: Optional[str] = None,
-                                       output_weights_csv: Optional[str] = None,
+                                       output_weights_path: Optional[str] = None,
                  max_components: int = 10,
                  cv_splits: int = 5,
                  random_state: int = 42,
@@ -68,8 +68,8 @@ def run_neurotransmitter_pls_pipeline(fc_matrix_path: str,
     ----------
     fc_matrix_path : str
         Path to the CSV containing a square FC weights matrix (no header).
-    nt_contrib_csv : str
-        Path to the CSV containing neurotransmitter gene contributions with a
+    nt_contrib : str
+        Path to the CSV containing neurotransmitter contributions with a
         ``'Region_Pair'`` column.
     top_k : int, optional
         Number of top absolute FC entries to keep. Default ``350``.
@@ -77,7 +77,7 @@ def run_neurotransmitter_pls_pipeline(fc_matrix_path: str,
         Path to save the CV MSE curve plot. Default ``None``.
     explained_variance_plot_path : Optional[str], optional
         Path to save the explained-variance plot for X scores. Default ``None``.
-    output_weights_csv : Optional[str], optional
+    output_weights : Optional[str], optional
         Path to save weights and p-values CSV. Default ``None``.
     max_components : int, optional
         Maximum number of components considered in CV. Default ``10``.
@@ -91,7 +91,7 @@ def run_neurotransmitter_pls_pipeline(fc_matrix_path: str,
     Returns
     -------
     Tuple[int, pd.DataFrame]
-        Best number of components and a DataFrame with gene weights and p-values.
+        Best number of components and a DataFrame with neurotransmitter weights and p-values.
 
     Notes
     -----
@@ -100,9 +100,9 @@ def run_neurotransmitter_pls_pipeline(fc_matrix_path: str,
     - The explained variance is computed from X scores relative to total X
       variance.
     """
-    if mse_plot_path or explained_variance_plot_path or output_weights_csv:
+    if mse_plot_path or explained_variance_plot_path or output_weights_path:
         import os
-        for p in [mse_plot_path, explained_variance_plot_path, output_weights_csv]:
+        for p in [mse_plot_path, explained_variance_plot_path, output_weights_path]:
             if p:
                 d = os.path.dirname(p)
                 if d:
@@ -120,14 +120,14 @@ def run_neurotransmitter_pls_pipeline(fc_matrix_path: str,
     top_idx = np.argsort(np.abs(fc_values))[-top_k:]
     fc_df = pd.DataFrame({"Region_Pair": np.array(region_pairs)[top_idx], "FC_Value": fc_values[top_idx]})
 
-    logger.info(f"Merging FC with neurotransmitter contributions from: {nt_contrib_csv}")
-    nt_df = load_table_generic(nt_contrib_csv)
+    logger.info(f"Merging FC with neurotransmitter contributions from: {nt_contrib_path}")
+    nt_df = load_table_generic(nt_contrib_path)
     merged_df = pd.merge(fc_df, nt_df, on="Region_Pair")
     logger.info(f"Merged dataset shape: {merged_df.shape}; features: {merged_df.shape[1]-2}")
 
     Y = merged_df["FC_Value"].values
     X = merged_df.drop(columns=["Region_Pair", "FC_Value"]).values
-    genes = merged_df.drop(columns=["Region_Pair", "FC_Value"]).columns
+    neurotransmitter = merged_df.drop(columns=["Region_Pair", "FC_Value"]).columns
 
     logger.info(f"Running CV to select optimal PLS components (max={max_components}, splits={cv_splits}, seed={random_state})")
     best_n_comp, mse_scores = select_optimal_components(X, Y, max_components=max_components, cv_splits=cv_splits, random_state=random_state)
@@ -143,11 +143,18 @@ def run_neurotransmitter_pls_pipeline(fc_matrix_path: str,
 
     total_var_X = np.var(X, axis=0).sum()
     explained_var_X = np.var(x_scores, axis=0) / total_var_X
+    explained_var_Y = np.var(y_scores, axis=0) / np.var(Y)
+
     if explained_variance_plot_path:
         ev_csv = os.path.splitext(explained_variance_plot_path)[0] + "_data.csv"
-        pd.DataFrame({"Component": list(range(1, len(explained_var_X)+1)), "ExplainedVariance": explained_var_X}).to_csv(ev_csv, index=False)
+        pd.DataFrame({"Component": list(range(1, len(explained_var_X)+1)), 
+                      "ExplainedVariance_X": explained_var_X,
+                      "ExplainedVariance_Y": explained_var_Y}
+                      ).to_csv(ev_csv, index=False)
         plt.figure(figsize=(8, 5))
-        plt.plot(range(1, len(explained_var_X) + 1), explained_var_X * 100, marker='o', linestyle='-', color='b', label='Explained Variance (X)')
+        plt.plot(range(1, len(explained_var_X) + 1), 
+                 explained_var_X * 100, marker='o', 
+                 linestyle='-', color='b', label='Explained Variance (X)')
         plt.xlabel("PLS Component", fontsize=14)
         plt.ylabel("Explained Variance (%)", fontsize=14)
         plt.grid(axis='y', linestyle='--', alpha=0.7)
@@ -161,13 +168,13 @@ def run_neurotransmitter_pls_pipeline(fc_matrix_path: str,
     p_values = permutation_pvalues(X, Y, best_n_comp, optimal_component_index, n_permutations=n_permutations)
 
     result_df = pd.DataFrame({
-        "Gene": genes,
+        "neurotransmitter": neurotransmitter,
         "Weight": x_weights[:, optimal_component_index],
         "P_value": p_values,
     }).sort_values(by="Weight", key=np.abs, ascending=False)
 
-    if output_weights_csv:
-        result_df.to_csv(output_weights_csv, index=False)
+    if output_weights_path:
+        result_df.to_csv(output_weights_path, index=False)
 
     logger.info("Neurotransmitter PLS pipeline completed successfully.")
     return best_n_comp, result_df

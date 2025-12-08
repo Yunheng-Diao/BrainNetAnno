@@ -9,7 +9,7 @@ A toolkit for molecular annotation of brain networks, integrating transcriptome,
 - Enrichment analyses: `gene_celltype.run_pipeline`, `gene_layer.run_pipeline`
 
 ## Requirements
-- Python >= 3.9
+- Python >= 3.8
 - Main dependencies (see `pyproject.toml`):
   - numpy, pandas, scipy, scikit-learn, statsmodels, matplotlib
 

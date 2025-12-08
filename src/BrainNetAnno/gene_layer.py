@@ -147,7 +147,7 @@ def compute_layer_enrichment(gene_tvals: pd.DataFrame,
 
 def run_pipeline(layer_marker_path: str,
                  target_genes_path: str,
-                 output_csv: Optional[str] = None,
+                 output_path: Optional[str] = None,
                  sheet_name: str = 'Table S4B',
                  gene_col: str = 'gene',
                  target_gene_col: str = 'Gene Index',
@@ -233,13 +233,13 @@ def run_pipeline(layer_marker_path: str,
     logger.info(f"Running enrichment (n_perm={n_perm}, random_state={random_state})")
     result_df = compute_layer_enrichment(gene_tvals, targets, n_perm=n_perm, random_state=random_state)
 
-    if output_csv:
+    if output_path:
         import os
-        d = os.path.dirname(output_csv)
+        d = os.path.dirname(output_path)
         if d:
             os.makedirs(d, exist_ok=True)
-        result_df.to_csv(output_csv, index=False)
-        logger.info(f"Saved layer enrichment results to: {output_csv}")
+        result_df.to_csv(output_path, index=False)
+        logger.info(f"Saved layer enrichment results to: {output_path}")
 
     logger.info("Layer enrichment pipeline completed successfully.")
     return result_df

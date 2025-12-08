@@ -129,9 +129,9 @@ def compute_overlap_enrichment(celltype_markers: Dict[str, Set[str]],
     return result_df
 
 def run_pipeline(
-    celltype_csv: str,
-    target_genes_csv: str,
-    output_csv: str,
+    celltype_path: str,
+    target_genes_path: str,
+    output_path: str,
     marker_gene_col: str = 'gene',
     celltype_col: str = 'class',
     target_gene_col: str = 'Gene Index',
@@ -192,18 +192,18 @@ def run_pipeline(
     - Parent directories for ``output_csv`` are created automatically when
       saving results.
     """
-    logger.info(f"Loading cell type markers from: {celltype_csv}")
+    logger.info(f"Loading cell type markers from: {celltype_path}")
     try:
-        _, markers, background = load_celltype_markers(celltype_csv, gene_col=marker_gene_col, celltype_col=celltype_col)
+        _, markers, background = load_celltype_markers(celltype_path, gene_col=marker_gene_col, celltype_col=celltype_col)
 
     except Exception as e:
         logger.error(f"Failed to read celltype CSV: {e}")
         raise
     logger.info(f"Markers loaded. Cell types: {len(markers)}; background genes: {len(background)}")
 
-    logger.info(f"Loading target genes from: {target_genes_csv} (col={target_gene_col})")
+    logger.info(f"Loading target genes from: {target_genes_path} (col={target_gene_col})")
     try:
-        targets = load_target_genes(target_genes_csv, gene_col=target_gene_col)
+        targets = load_target_genes(target_genes_path, gene_col=target_gene_col)
     except Exception as e:
         logger.error(f"Failed to read target genes CSV: {e}")
         raise
@@ -212,13 +212,13 @@ def run_pipeline(
     logger.info(f"Running cell type enrichment (n_perm={n_perm}, random_state={random_state})")
     result_df = compute_overlap_enrichment(markers, targets, background_genes=background, n_perm=n_perm, random_state=random_state)
 
-    logger.info(f"Saving results to: {output_csv}")
+    logger.info(f"Saving results to: {output_path}")
 
-    d = os.path.dirname(output_csv)
+    d = os.path.dirname(output_path)
     if d:
         os.makedirs(d, exist_ok=True)
-    result_df.to_csv(output_csv, index=False)
-    logger.info(f"Saved cell type enrichment results to: {output_csv}")
+    result_df.to_csv(output_path, index=False)
+    logger.info(f"Saved cell type enrichment results to: {output_path}")
 
     logger.info("Cell type enrichment pipeline completed successfully.")
     return result_df

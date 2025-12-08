@@ -111,15 +111,14 @@ def plot_fit(distances: np.ndarray, correlations: np.ndarray, params: Tuple[floa
     plt.ylabel("Correlated gene expression (CGE)")
     plt.title("CGE vs. Distance with Fitted Exponential Decay")
     plt.legend()
-    plt.show()
 
 # -----------------------------
 # High-level pipeline
 # -----------------------------
 
-def run_transcriptome_pipeline(coordinates_csv: str,
-                 gene_expression_csv: str,
-                 output_contribution_csv: str,
+def run_transcriptome_pipeline(coordinates_path: str,
+                 gene_expression_path: str,
+                 output_contribution_path: str,
                  initial_params: Sequence[float] = (0.64, 90.4, -0.19),
                  save_plot: bool = False,
                  plot_path: Optional[str] = None) -> Tuple[Tuple[float, float, float], pd.DataFrame]:
@@ -165,12 +164,12 @@ def run_transcriptome_pipeline(coordinates_csv: str,
     - Parent directories for ``output_contribution_csv`` are created
       automatically when saving results.
     """
-    logger.info(f"Loading coordinates from: {coordinates_csv}")
-    coords = load_coordinates_adaptive(coordinates_csv)
+    logger.info(f"Loading coordinates from: {coordinates_path}")
+    coords = load_coordinates_adaptive(coordinates_path)
     logger.info(f"Coordinates loaded. Shape: {coords.shape}")
 
-    logger.info(f"Loading gene expression CSV from: {gene_expression_csv}")
-    matrix, gene_names = load_gene_expression(gene_expression_csv)
+    logger.info(f"Loading gene expression CSV from: {gene_expression_path}")
+    matrix, gene_names = load_gene_expression(gene_expression_path)
     logger.info(f"Gene expression loaded. Shape: {matrix.shape}; genes: {len(gene_names)}")
 
     logger.info("Computing distance matrix and z-scoring rows")
@@ -195,16 +194,16 @@ def run_transcriptome_pipeline(coordinates_csv: str,
     logger.info("Computing per-connection gene contribution scores")
     contrib_df = compute_gene_contribution(z_mat, expected, upper, gene_names)
 
-    logger.info(f"Saving contributions to: {output_contribution_csv}")
-    d = os.path.dirname(output_contribution_csv)
+    logger.info(f"Saving contributions to: {output_contribution_path}")
+    d = os.path.dirname(output_contribution_path)
     if d:
         os.makedirs(d, exist_ok=True)
-    contrib_df.to_csv(output_contribution_csv, index=False)
-    logger.info(f"Saved contributions to: {output_contribution_csv}")
+    contrib_df.to_csv(output_contribution_path, index=False)
+    logger.info(f"Saved contributions to: {output_contribution_path}")
 
     if save_plot:
         if plot_path is None:
-            plot_path = os.path.splitext(output_contribution_csv)[0] + "_decay_plot.png"
+            plot_path = os.path.splitext(output_contribution_path)[0] + "_decay_plot.tif"
         pds = os.path.dirname(plot_path)
         if pds:
             os.makedirs(pds, exist_ok=True)
