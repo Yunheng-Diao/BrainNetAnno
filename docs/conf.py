@@ -1,6 +1,8 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
+# Ensure local source tree (src/) is importable for autodoc
+sys.path.insert(0, os.path.abspath('../src'))
 
 project = 'BrainNetAnno'
 copyright = '2025, BrainNetAnno'
@@ -19,7 +21,8 @@ extensions = [
 templates_path = ['_templates']
 exclude_patterns = []
 
-html_theme = 'alabaster'
+# Use Read the Docs theme if available
+html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 
 # Autodoc settings
