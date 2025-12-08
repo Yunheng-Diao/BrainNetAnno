@@ -3,7 +3,7 @@
 """
 BrainNetAnno
 
-Molecular network analysis tools for transcriptome, mitochondrial, and neurotransmitter datasets.
+A toolkit for molecular annotation of brain networks, integrating transcriptome, neurotransmitters, and mitochondria.
 """
 
 __version__ = "0.1.0"
