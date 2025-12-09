@@ -22,8 +22,8 @@ The present toolkit was developed to fill this critical gap. It provides systema
    :caption: Contents
 
    install
-   usage
    Example
+   modules
    api
    changelog
-   modules
+

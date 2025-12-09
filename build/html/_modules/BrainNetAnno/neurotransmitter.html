@@ -28,8 +28,9 @@
 
           
           
-          <a href="../../index.html" class="icon icon-home">
-            BrainNetAnno
+          <a href="../../index.html">
+            
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -39,8 +40,15 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation and setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Example.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Module Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+
         </div>
       </div>
     </nav>
@@ -113,7 +121,7 @@
 <span class="c1"># -----------------------------</span>
 
 <div class="viewcode-block" id="build_precision_matrix">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.neurotransmitter.build_precision_matrix">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/BrainNetAnno.neurotransmitter.html#BrainNetAnno.neurotransmitter.build_precision_matrix">[docs]</a>
 <span class="k">def</span> <span class="nf">build_precision_matrix</span><span class="p">(</span><span class="n">z_neurotransmitter_expression</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Estimate covariance (Ledoit-Wolf) and compute the corresponding precision matrix.</span>
 
@@ -136,7 +144,7 @@
 
 
 <div class="viewcode-block" id="compute_residual_matrix">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.neurotransmitter.compute_residual_matrix">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/BrainNetAnno.neurotransmitter.html#BrainNetAnno.neurotransmitter.compute_residual_matrix">[docs]</a>
 <span class="k">def</span> <span class="nf">compute_residual_matrix</span><span class="p">(</span><span class="n">observed_matrix</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">expected_matrix</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute residual network as observed minus expected.</span>
 
@@ -157,7 +165,7 @@
 
 
 <div class="viewcode-block" id="lofo_contribution">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.neurotransmitter.lofo_contribution">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/BrainNetAnno.neurotransmitter.html#BrainNetAnno.neurotransmitter.lofo_contribution">[docs]</a>
 <span class="k">def</span> <span class="nf">lofo_contribution</span><span class="p">(</span><span class="n">z_neurotransmitter_expression</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
                       <span class="n">expected_matrix</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
                       <span class="n">region_pairs</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span>
@@ -214,7 +222,7 @@
 <span class="c1"># -----------------------------</span>
 
 <div class="viewcode-block" id="plot_distance_decay">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.neurotransmitter.plot_distance_decay">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/BrainNetAnno.neurotransmitter.html#BrainNetAnno.neurotransmitter.plot_distance_decay">[docs]</a>
 <span class="k">def</span> <span class="nf">plot_distance_decay</span><span class="p">(</span><span class="n">distances</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">conn_values</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot empirical connection strength vs. distance and fitted exponential decay curve.</span>
 
@@ -244,7 +252,7 @@
 <span class="c1"># -----------------------------</span>
 
 <div class="viewcode-block" id="run_neurotransmitter_pipeline">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.neurotransmitter.run_neurotransmitter_pipeline">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/BrainNetAnno.neurotransmitter.html#BrainNetAnno.neurotransmitter.run_neurotransmitter_pipeline">[docs]</a>
 <span class="k">def</span> <span class="nf">run_neurotransmitter_pipeline</span><span class="p">(</span><span class="n">coordinates_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                  <span class="n">neurotransmitter_expression_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                  <span class="n">output_contribution_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>

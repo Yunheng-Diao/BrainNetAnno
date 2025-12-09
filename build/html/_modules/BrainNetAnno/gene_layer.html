@@ -28,8 +28,9 @@
 
           
           
-          <a href="../../index.html" class="icon icon-home">
-            BrainNetAnno
+          <a href="../../index.html">
+            
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -39,8 +40,15 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation and setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Example.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Module Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+
         </div>
       </div>
     </nav>
@@ -81,7 +89,7 @@
 
 
 <div class="viewcode-block" id="load_layer_markers">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.gene_layer.load_layer_markers">[docs]</a>
+<a class="viewcode-back" href="../../api.html#BrainNetAnno.gene_layer.load_layer_markers">[docs]</a>
 <span class="k">def</span> <span class="nf">load_layer_markers</span><span class="p">(</span><span class="n">excel_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                        <span class="n">sheet_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;Table S4B&#39;</span><span class="p">,</span>
                        <span class="n">gene_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;gene&#39;</span><span class="p">,</span>
@@ -126,7 +134,7 @@
 
 
 <div class="viewcode-block" id="load_target_genes">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.gene_layer.load_target_genes">[docs]</a>
+<a class="viewcode-back" href="../../api.html#BrainNetAnno.gene_layer.load_target_genes">[docs]</a>
 <span class="k">def</span> <span class="nf">load_target_genes</span><span class="p">(</span><span class="n">csv_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                       <span class="n">gene_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;Gene Index&#39;</span><span class="p">,</span>
                       <span class="n">uppercase</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
@@ -153,7 +161,7 @@
 
 
 <div class="viewcode-block" id="compute_layer_enrichment">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.gene_layer.compute_layer_enrichment">[docs]</a>
+<a class="viewcode-back" href="../../api.html#BrainNetAnno.gene_layer.compute_layer_enrichment">[docs]</a>
 <span class="k">def</span> <span class="nf">compute_layer_enrichment</span><span class="p">(</span><span class="n">gene_tvals</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
                              <span class="n">target_genes</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
                              <span class="n">n_perm</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5000</span><span class="p">,</span>
@@ -223,7 +231,7 @@
 
 
 <div class="viewcode-block" id="run_pipeline">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.gene_layer.run_pipeline">[docs]</a>
+<a class="viewcode-back" href="../../api.html#BrainNetAnno.gene_layer.run_pipeline">[docs]</a>
 <span class="k">def</span> <span class="nf">run_pipeline</span><span class="p">(</span><span class="n">layer_marker_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                  <span class="n">target_genes_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                  <span class="n">output_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>

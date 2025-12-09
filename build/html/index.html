@@ -16,6 +16,7 @@
       <script src="_static/documentation_options.js?v=5929fcd5"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -45,11 +46,10 @@
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation and setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Example.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Module Index</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">Module Index</a></li>
 </ul>
 
         </div>
@@ -96,19 +96,18 @@
 <li class="toctree-l2"><a class="reference internal" href="install.html#local-docs-build-optional">Local docs build (optional)</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="usage.html#quickstart-python-api">Quickstart (Python API)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Example.html">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pipeline_example.html">Pipeline Example</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Example.html">Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="transcriptome.html">Transcriptome contribution example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="transcriptome_pls.html">Transcriptome PLS-CGE example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="neurotransmitter.html">Neurotransmitter contribution example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="neurotransmitter_pls.html">Neurotransmitter PLS example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mitochondrial.html">Mitochondrial contribution example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mitochondrial_pls.html">Mitochondrial PLS example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="enrichment_celltype.html">Cell-type enrichment example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="enrichment_layer.html">Cortical layer enrichment example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Module Index</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="_autosummary/BrainNetAnno.html">BrainNetAnno</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_autosummary/BrainNetAnno.transcriptome_pls_cge.html">BrainNetAnno.transcriptome_pls_cge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_autosummary/BrainNetAnno.neurotransmitter_pls_cge.html">BrainNetAnno.neurotransmitter_pls_cge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_autosummary/BrainNetAnno.mitochondrial_pls_cge.html">BrainNetAnno.mitochondrial_pls_cge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_autosummary/BrainNetAnno.gene_celltype.html">BrainNetAnno.gene_celltype</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_autosummary/BrainNetAnno.gene_layer.html">BrainNetAnno.gene_layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_autosummary/BrainNetAnno.utils.html">BrainNetAnno.utils</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a><ul>
@@ -145,16 +144,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#initial-release">0.1.0 (Initial release)</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">Module Index</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="_autosummary/BrainNetAnno.html">BrainNetAnno</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_autosummary/BrainNetAnno.transcriptome_pls_cge.html">BrainNetAnno.transcriptome_pls_cge</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_autosummary/BrainNetAnno.neurotransmitter_pls_cge.html">BrainNetAnno.neurotransmitter_pls_cge</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_autosummary/BrainNetAnno.mitochondrial_pls_cge.html">BrainNetAnno.mitochondrial_pls_cge</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_autosummary/BrainNetAnno.gene_celltype.html">BrainNetAnno.gene_celltype</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_autosummary/BrainNetAnno.gene_layer.html">BrainNetAnno.gene_layer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_autosummary/BrainNetAnno.utils.html">BrainNetAnno.utils</a></li>
 </ul>
 </li>
 </ul>

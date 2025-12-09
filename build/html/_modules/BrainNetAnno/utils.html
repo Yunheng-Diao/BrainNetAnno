@@ -28,8 +28,9 @@
 
           
           
-          <a href="../../index.html" class="icon icon-home">
-            BrainNetAnno
+          <a href="../../index.html">
+            
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -39,8 +40,15 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation and setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Example.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Module Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+
         </div>
       </div>
     </nav>
@@ -108,7 +116,7 @@
 
 
 <div class="viewcode-block" id="load_table_generic">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.load_table_generic">[docs]</a>
+<a class="viewcode-back" href="../../api.html#BrainNetAnno.utils.load_table_generic">[docs]</a>
 <span class="k">def</span> <span class="nf">load_table_generic</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">read_kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Load a tabular file (CSV or Excel) adaptively based on file extension.</span>
 
@@ -143,7 +151,7 @@
 
 
 <div class="viewcode-block" id="load_coordinates_adaptive">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.load_coordinates_adaptive">[docs]</a>
+<a class="viewcode-back" href="../../api.html#BrainNetAnno.utils.load_coordinates_adaptive">[docs]</a>
 <span class="k">def</span> <span class="nf">load_coordinates_adaptive</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Load coordinates from CSV or Excel adaptively.</span>
 
@@ -174,7 +182,7 @@
 
 
 <div class="viewcode-block" id="load_gene_expression">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.load_gene_expression">[docs]</a>
+<a class="viewcode-back" href="../../api.html#BrainNetAnno.utils.load_gene_expression">[docs]</a>
 <span class="k">def</span> <span class="nf">load_gene_expression</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">drop_columns</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">,))</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Load gene expression from CSV or Excel adaptively.</span>
 
@@ -205,7 +213,7 @@
 <span class="c1"># Backward-compatible wrappers delegate to adaptive loaders</span>
 
 <div class="viewcode-block" id="load_coordinates">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.load_coordinates">[docs]</a>
+<a class="viewcode-back" href="../../api.html#BrainNetAnno.utils.load_coordinates">[docs]</a>
 <span class="k">def</span> <span class="nf">load_coordinates</span><span class="p">(</span><span class="n">csv_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Backward-compatible wrapper for ``load_coordinates_adaptive``.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">load_coordinates_adaptive</span><span class="p">(</span><span class="n">csv_path</span><span class="p">)</span></div>
@@ -213,7 +221,7 @@
 
 
 <div class="viewcode-block" id="load_gene_expression_csv">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.load_gene_expression_csv">[docs]</a>
+<a class="viewcode-back" href="../../api.html#BrainNetAnno.utils.load_gene_expression_csv">[docs]</a>
 <span class="k">def</span> <span class="nf">load_gene_expression_csv</span><span class="p">(</span><span class="n">csv_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">drop_columns</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">,))</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Backward-compatible wrapper for ``load_gene_expression``.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">load_gene_expression</span><span class="p">(</span><span class="n">csv_path</span><span class="p">,</span> <span class="n">drop_columns</span><span class="p">)</span></div>
@@ -221,7 +229,7 @@
 
 
 <div class="viewcode-block" id="load_neurotransmitter_expression">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.load_neurotransmitter_expression">[docs]</a>
+<a class="viewcode-back" href="../../api.html#BrainNetAnno.utils.load_neurotransmitter_expression">[docs]</a>
 <span class="k">def</span> <span class="nf">load_neurotransmitter_expression</span><span class="p">(</span><span class="n">xlsx_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">drop_columns</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">,))</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Load neurotransmitter expression from Excel/CSV adaptively.</span>
 
@@ -247,7 +255,7 @@
 
 
 <div class="viewcode-block" id="load_mitochondrial_expression">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.load_mitochondrial_expression">[docs]</a>
+<a class="viewcode-back" href="../../api.html#BrainNetAnno.utils.load_mitochondrial_expression">[docs]</a>
 <span class="k">def</span> <span class="nf">load_mitochondrial_expression</span><span class="p">(</span><span class="n">xlsx_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">drop_columns</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">,))</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Load mitochondrial expression from Excel/CSV adaptively.</span>
 
@@ -272,7 +280,7 @@
 
 
 <div class="viewcode-block" id="zscore_rows">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.zscore_rows">[docs]</a>
+<a class="viewcode-back" href="../../api.html#BrainNetAnno.utils.zscore_rows">[docs]</a>
 <span class="k">def</span> <span class="nf">zscore_rows</span><span class="p">(</span><span class="n">matrix</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply z-score along rows to standardize each region&#39;s gene expression vector.</span>
 
@@ -298,7 +306,7 @@
 <span class="c1"># -----------------------------</span>
 
 <div class="viewcode-block" id="compute_distance_matrix">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.compute_distance_matrix">[docs]</a>
+<a class="viewcode-back" href="../../api.html#BrainNetAnno.utils.compute_distance_matrix">[docs]</a>
 <span class="k">def</span> <span class="nf">compute_distance_matrix</span><span class="p">(</span><span class="n">coordinates</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute Euclidean distance matrix between brain regions.</span>
 
@@ -317,7 +325,7 @@
 
 
 <div class="viewcode-block" id="compute_cge">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.compute_cge">[docs]</a>
+<a class="viewcode-back" href="../../api.html#BrainNetAnno.utils.compute_cge">[docs]</a>
 <span class="k">def</span> <span class="nf">compute_cge</span><span class="p">(</span><span class="n">z_gene_expression</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute correlated gene expression (CGE) between regions.</span>
 
@@ -336,7 +344,7 @@
 
 
 <div class="viewcode-block" id="exponential_decay">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.exponential_decay">[docs]</a>
+<a class="viewcode-back" href="../../api.html#BrainNetAnno.utils.exponential_decay">[docs]</a>
 <span class="k">def</span> <span class="nf">exponential_decay</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Exponential decay function A * exp(-d / n) + B.</span>
 
@@ -356,7 +364,7 @@
 
 
 <div class="viewcode-block" id="fit_exponential_decay">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.fit_exponential_decay">[docs]</a>
+<a class="viewcode-back" href="../../api.html#BrainNetAnno.utils.fit_exponential_decay">[docs]</a>
 <span class="k">def</span> <span class="nf">fit_exponential_decay</span><span class="p">(</span><span class="n">distances</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">correlations</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
                           <span class="n">initial_params</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Fit the exponential decay relationship between distance and observations.</span>
@@ -387,7 +395,7 @@
 
 
 <div class="viewcode-block" id="compute_expected_matrix">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.compute_expected_matrix">[docs]</a>
+<a class="viewcode-back" href="../../api.html#BrainNetAnno.utils.compute_expected_matrix">[docs]</a>
 <span class="k">def</span> <span class="nf">compute_expected_matrix</span><span class="p">(</span><span class="n">distance_matrix</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute expected matrix using fitted exponential decay parameters.</span>
 
@@ -415,7 +423,7 @@
 
 
 <div class="viewcode-block" id="select_optimal_components">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.select_optimal_components">[docs]</a>
+<a class="viewcode-back" href="../../api.html#BrainNetAnno.utils.select_optimal_components">[docs]</a>
 <span class="k">def</span> <span class="nf">select_optimal_components</span><span class="p">(</span><span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
                               <span class="n">max_components</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
                               <span class="n">cv_splits</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
@@ -495,7 +503,7 @@
 
 
 <div class="viewcode-block" id="run_pls">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.run_pls">[docs]</a>
+<a class="viewcode-back" href="../../api.html#BrainNetAnno.utils.run_pls">[docs]</a>
 <span class="k">def</span> <span class="nf">run_pls</span><span class="p">(</span><span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">n_components</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">PLSRegression</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Fit a PLS regression model and return weights and scores.</span>
 
@@ -520,7 +528,7 @@
 
 
 <div class="viewcode-block" id="permutation_pvalues">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.permutation_pvalues">[docs]</a>
+<a class="viewcode-back" href="../../api.html#BrainNetAnno.utils.permutation_pvalues">[docs]</a>
 <span class="k">def</span> <span class="nf">permutation_pvalues</span><span class="p">(</span><span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">n_components</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
                         <span class="n">target_component_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
                         <span class="n">n_permutations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
@@ -568,7 +576,7 @@
 
 
 <div class="viewcode-block" id="plot_mse_curve">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.plot_mse_curve">[docs]</a>
+<a class="viewcode-back" href="../../api.html#BrainNetAnno.utils.plot_mse_curve">[docs]</a>
 <span class="k">def</span> <span class="nf">plot_mse_curve</span><span class="p">(</span><span class="n">mse_scores</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">save_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot mean CV MSE vs. number of PLS components.</span>
 
@@ -595,7 +603,7 @@
 
 
 <div class="viewcode-block" id="permutation_explained_variance">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.permutation_explained_variance">[docs]</a>
+<a class="viewcode-back" href="../../api.html#BrainNetAnno.utils.permutation_explained_variance">[docs]</a>
 <span class="k">def</span> <span class="nf">permutation_explained_variance</span><span class="p">(</span><span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">n_components</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_permutations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute explained variance ratio per component and permutation p-values for components.</span>
 
@@ -640,7 +648,7 @@
 
 
 <div class="viewcode-block" id="plot_rmse_and_variance">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.plot_rmse_and_variance">[docs]</a>
+<a class="viewcode-back" href="../../api.html#BrainNetAnno.utils.plot_rmse_and_variance">[docs]</a>
 <span class="k">def</span> <span class="nf">plot_rmse_and_variance</span><span class="p">(</span><span class="n">cv_errors</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
                            <span class="n">explained_variance_ratio</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
                            <span class="n">fig_outputfile</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>

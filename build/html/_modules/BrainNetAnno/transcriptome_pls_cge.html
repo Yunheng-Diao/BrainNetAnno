@@ -28,8 +28,9 @@
 
           
           
-          <a href="../../index.html" class="icon icon-home">
-            BrainNetAnno
+          <a href="../../index.html">
+            
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -39,8 +40,15 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation and setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Example.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Module Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+
         </div>
       </div>
     </nav>
@@ -114,7 +122,7 @@
 <span class="c1"># -----------------------------</span>
 
 <div class="viewcode-block" id="read_data_from_files">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.transcriptome_pls_cge.read_data_from_files">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/BrainNetAnno.transcriptome_pls_cge.html#BrainNetAnno.transcriptome_pls_cge.read_data_from_files">[docs]</a>
 <span class="k">def</span> <span class="nf">read_data_from_files</span><span class="p">(</span><span class="n">t_values_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">gene_expression_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Read FC deviation (t_values) and gene contribution matrices, align by Region_Pair.</span>
 
@@ -154,7 +162,7 @@
 <span class="c1"># -----------------------------</span>
 
 <div class="viewcode-block" id="select_best_component_and_genes">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.transcriptome_pls_cge.select_best_component_and_genes">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/BrainNetAnno.transcriptome_pls_cge.html#BrainNetAnno.transcriptome_pls_cge.select_best_component_and_genes">[docs]</a>
 <span class="k">def</span> <span class="nf">select_best_component_and_genes</span><span class="p">(</span><span class="n">explained_variance_ratio</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
                                     <span class="n">p_values</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
                                     <span class="n">weights</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
@@ -195,7 +203,7 @@
 <span class="c1"># -----------------------------</span>
 
 <div class="viewcode-block" id="save_best_genes_to_csv">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.transcriptome_pls_cge.save_best_genes_to_csv">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/BrainNetAnno.transcriptome_pls_cge.html#BrainNetAnno.transcriptome_pls_cge.save_best_genes_to_csv">[docs]</a>
 <span class="k">def</span> <span class="nf">save_best_genes_to_csv</span><span class="p">(</span><span class="n">gene_names</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
                            <span class="n">best_genes</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
                            <span class="n">z_scores</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
@@ -217,7 +225,7 @@
 <span class="c1"># -----------------------------</span>
 
 <div class="viewcode-block" id="run_transcriptome_pls_pipeline">
-<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.transcriptome_pls_cge.run_transcriptome_pls_pipeline">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/BrainNetAnno.transcriptome_pls_cge.html#BrainNetAnno.transcriptome_pls_cge.run_transcriptome_pls_pipeline">[docs]</a>
 <span class="k">def</span> <span class="nf">run_transcriptome_pls_pipeline</span><span class="p">(</span>
     <span class="n">t_values_file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">gene_expression_file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
