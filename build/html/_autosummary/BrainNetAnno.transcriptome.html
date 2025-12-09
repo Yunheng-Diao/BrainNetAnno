@@ -1,0 +1,242 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrainNetAnno.transcriptome &mdash; BrainNetAnno  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="BrainNetAnno.transcriptome_pls_cge" href="BrainNetAnno.transcriptome_pls_cge.html" />
+    <link rel="prev" title="BrainNetAnno.neurotransmitter_pls_cge" href="BrainNetAnno.neurotransmitter_pls_cge.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../modules.html">Module Index</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="BrainNetAnno.html">BrainNetAnno</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="BrainNetAnno.gene_celltype.html">BrainNetAnno.gene_celltype</a></li>
+<li class="toctree-l3"><a class="reference internal" href="BrainNetAnno.gene_layer.html">BrainNetAnno.gene_layer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="BrainNetAnno.mitochondrial.html">BrainNetAnno.mitochondrial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="BrainNetAnno.mitochondrial_pls_cge.html">BrainNetAnno.mitochondrial_pls_cge</a></li>
+<li class="toctree-l3"><a class="reference internal" href="BrainNetAnno.neurotransmitter.html">BrainNetAnno.neurotransmitter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="BrainNetAnno.neurotransmitter_pls_cge.html">BrainNetAnno.neurotransmitter_pls_cge</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">BrainNetAnno.transcriptome</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#BrainNetAnno.transcriptome.compute_gene_contribution"><code class="docutils literal notranslate"><span class="pre">compute_gene_contribution()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BrainNetAnno.transcriptome.plot_fit"><code class="docutils literal notranslate"><span class="pre">plot_fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BrainNetAnno.transcriptome.run_transcriptome_pipeline"><code class="docutils literal notranslate"><span class="pre">run_transcriptome_pipeline()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="BrainNetAnno.transcriptome_pls_cge.html">BrainNetAnno.transcriptome_pls_cge</a></li>
+<li class="toctree-l3"><a class="reference internal" href="BrainNetAnno.utils.html">BrainNetAnno.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.transcriptome_pls_cge.html">BrainNetAnno.transcriptome_pls_cge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.neurotransmitter_pls_cge.html">BrainNetAnno.neurotransmitter_pls_cge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.mitochondrial_pls_cge.html">BrainNetAnno.mitochondrial_pls_cge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.gene_celltype.html">BrainNetAnno.gene_celltype</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.gene_layer.html">BrainNetAnno.gene_layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.utils.html">BrainNetAnno.utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BrainNetAnno</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../modules.html">Module Index</a></li>
+          <li class="breadcrumb-item"><a href="BrainNetAnno.html">BrainNetAnno</a></li>
+      <li class="breadcrumb-item active">BrainNetAnno.transcriptome</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/_autosummary/BrainNetAnno.transcriptome.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-BrainNetAnno.transcriptome">
+<span id="brainnetanno-transcriptome"></span><h1>BrainNetAnno.transcriptome<a class="headerlink" href="#module-BrainNetAnno.transcriptome" title="Link to this heading"></a></h1>
+<p>Transcriptome analysis utilities for computing CGE vs. distance relationships
+and per-connection gene contribution scores using NumPy/SciPy on CPU.</p>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#BrainNetAnno.transcriptome.compute_gene_contribution" title="BrainNetAnno.transcriptome.compute_gene_contribution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_gene_contribution</span></code></a>(z_gene_expression, ...)</p></td>
+<td><p>Compute per-connection gene contribution scores.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#BrainNetAnno.transcriptome.plot_fit" title="BrainNetAnno.transcriptome.plot_fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_fit</span></code></a>(distances, correlations, params)</p></td>
+<td><p>Plot empirical CGE vs.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#BrainNetAnno.transcriptome.run_transcriptome_pipeline" title="BrainNetAnno.transcriptome.run_transcriptome_pipeline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_transcriptome_pipeline</span></code></a>(coordinates_path, ...)</p></td>
+<td><p>Run transcriptome-based CGE analysis and optionally save per-connection gene contributions.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.transcriptome.compute_gene_contribution">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.transcriptome.</span></span><span class="sig-name descname"><span class="pre">compute_gene_contribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z_gene_expression</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_tri_indices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.DataFrame</span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/transcriptome.html#compute_gene_contribution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.transcriptome.compute_gene_contribution" title="Link to this definition"></a></dt>
+<dd><p>Compute per-connection gene contribution scores.</p>
+<dl class="simple">
+<dt>For each connection (i, j), contribution score for gene g is:</dt><dd><p>z[i, g] * z[j, g] - expected[i, j]</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z_gene_expression</strong> (<em>np.ndarray</em>) – Z-scored gene expression matrix of shape (n_regions, n_genes).</p></li>
+<li><p><strong>expected_matrix</strong> (<em>np.ndarray</em>) – Expected CGE matrix of shape (n_regions, n_regions).</p></li>
+<li><p><strong>upper_tri_indices</strong> (<em>Tuple</em><em>[</em><em>np.ndarray</em><em>, </em><em>np.ndarray</em><em>]</em>) – Indices (rows, cols) of the upper triangle (k=1) of the matrices.</p></li>
+<li><p><strong>gene_names</strong> (<em>Sequence</em><em>[</em><em>str</em><em>]</em>) – Names of genes corresponding to columns in z_gene_expression.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (n_connections, n_genes + 1) with a ‘Region_Pair’ column
+and per-gene contribution scores.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.transcriptome.plot_fit">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.transcriptome.</span></span><span class="sig-name descname"><span class="pre">plot_fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distances</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correlations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/transcriptome.html#plot_fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.transcriptome.plot_fit" title="Link to this definition"></a></dt>
+<dd><p>Plot empirical CGE vs. distance and fitted exponential decay curve.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>distances</strong> (<em>np.ndarray</em>) – 1D array of pairwise distances (upper triangle entries).</p></li>
+<li><p><strong>correlations</strong> (<em>np.ndarray</em>) – 1D array of CGE values matching distances.</p></li>
+<li><p><strong>params</strong> (<em>Tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>]</em>) – Fitted parameters (A, n, B).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.transcriptome.run_transcriptome_pipeline">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.transcriptome.</span></span><span class="sig-name descname"><span class="pre">run_transcriptome_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coordinates_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_expression_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_contribution_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(0.64,</span> <span class="pre">90.4,</span> <span class="pre">-0.19)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_plot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pandas.DataFrame</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/transcriptome.html#run_transcriptome_pipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.transcriptome.run_transcriptome_pipeline" title="Link to this definition"></a></dt>
+<dd><p>Run transcriptome-based CGE analysis and optionally save per-connection gene contributions.</p>
+<p>This high-level pipeline loads region MNI coordinates and a transcriptome
+expression matrix, computes pairwise distances and a precision-based
+connection measure, fits an exponential distance-decay model to the
+connection values, builds an expected connection matrix, and derives per-
+connection gene contribution scores. Results can be saved to CSV and an
+optional plot of the fitted decay can be saved.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>coordinates_csv</strong> (<em>str</em>) – Path to the CSV containing region coordinates with columns such as
+<code class="docutils literal notranslate"><span class="pre">'MNI_X'</span></code>, <code class="docutils literal notranslate"><span class="pre">'MNI_Y'</span></code>, <code class="docutils literal notranslate"><span class="pre">'MNI_Z'</span></code>.</p></li>
+<li><p><strong>gene_expression_csv</strong> (<em>str</em>) – Path to the CSV containing gene expression (rows=regions, columns=genes).</p></li>
+<li><p><strong>output_contribution_csv</strong> (<em>str</em>) – Path to save the per-connection gene contribution scores as CSV.
+Parent directories are created automatically.</p></li>
+<li><p><strong>initial_params</strong> (<em>Sequence</em><em>[</em><em>float</em><em>]</em><em>, </em><em>optional</em>) – Initial guess for the exponential decay parameters <code class="docutils literal notranslate"><span class="pre">(A,</span> <span class="pre">n,</span> <span class="pre">B)</span></code>.
+Default is <code class="docutils literal notranslate"><span class="pre">(0.64,</span> <span class="pre">90.4,</span> <span class="pre">-0.19)</span></code>.</p></li>
+<li><p><strong>save_plot</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to save the fitted distance-decay plot. Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>plot_path</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Path to save the plot when <code class="docutils literal notranslate"><span class="pre">save_plot=True</span></code>. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, a file next
+to <code class="docutils literal notranslate"><span class="pre">output_contribution_csv</span></code> is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The fitted decay parameters <code class="docutils literal notranslate"><span class="pre">(A,</span> <span class="pre">n,</span> <span class="pre">B)</span></code> and the contribution DataFrame
+with a <code class="docutils literal notranslate"><span class="pre">'Region_Pair'</span></code> column followed by per-gene scores.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[Tuple[float, float, float], pd.DataFrame]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Rows of the expression matrix are z-scored prior to model fitting.</p></li>
+<li><p>Precision matrix is estimated via Ledoit–Wolf shrinkage on gene features.</p></li>
+<li><p>The expected connection matrix is built from the fitted decay model.</p></li>
+<li><p>Parent directories for <code class="docutils literal notranslate"><span class="pre">output_contribution_csv</span></code> are created
+automatically when saving results.</p></li>
+</ul>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="BrainNetAnno.neurotransmitter_pls_cge.html" class="btn btn-neutral float-left" title="BrainNetAnno.neurotransmitter_pls_cge" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="BrainNetAnno.transcriptome_pls_cge.html" class="btn btn-neutral float-right" title="BrainNetAnno.transcriptome_pls_cge" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, BrainNetAnno.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

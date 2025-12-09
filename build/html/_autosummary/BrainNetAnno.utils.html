@@ -1,0 +1,617 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrainNetAnno.utils &mdash; BrainNetAnno  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="BrainNetAnno.transcriptome_pls_cge" href="BrainNetAnno.transcriptome_pls_cge.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../modules.html">Module Index</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.html">BrainNetAnno</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.transcriptome_pls_cge.html">BrainNetAnno.transcriptome_pls_cge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.neurotransmitter_pls_cge.html">BrainNetAnno.neurotransmitter_pls_cge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.mitochondrial_pls_cge.html">BrainNetAnno.mitochondrial_pls_cge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.gene_celltype.html">BrainNetAnno.gene_celltype</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.gene_layer.html">BrainNetAnno.gene_layer</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">BrainNetAnno.utils</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.utils.load_table_generic"><code class="docutils literal notranslate"><span class="pre">load_table_generic()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.utils.load_coordinates_adaptive"><code class="docutils literal notranslate"><span class="pre">load_coordinates_adaptive()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.utils.load_gene_expression"><code class="docutils literal notranslate"><span class="pre">load_gene_expression()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.utils.load_coordinates"><code class="docutils literal notranslate"><span class="pre">load_coordinates()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.utils.load_gene_expression_csv"><code class="docutils literal notranslate"><span class="pre">load_gene_expression_csv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.utils.load_neurotransmitter_expression"><code class="docutils literal notranslate"><span class="pre">load_neurotransmitter_expression()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.utils.load_mitochondrial_expression"><code class="docutils literal notranslate"><span class="pre">load_mitochondrial_expression()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.utils.zscore_rows"><code class="docutils literal notranslate"><span class="pre">zscore_rows()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.utils.compute_distance_matrix"><code class="docutils literal notranslate"><span class="pre">compute_distance_matrix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.utils.compute_cge"><code class="docutils literal notranslate"><span class="pre">compute_cge()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.utils.exponential_decay"><code class="docutils literal notranslate"><span class="pre">exponential_decay()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.utils.fit_exponential_decay"><code class="docutils literal notranslate"><span class="pre">fit_exponential_decay()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.utils.compute_expected_matrix"><code class="docutils literal notranslate"><span class="pre">compute_expected_matrix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.utils.select_optimal_components"><code class="docutils literal notranslate"><span class="pre">select_optimal_components()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.utils.run_pls"><code class="docutils literal notranslate"><span class="pre">run_pls()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.utils.permutation_pvalues"><code class="docutils literal notranslate"><span class="pre">permutation_pvalues()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.utils.plot_mse_curve"><code class="docutils literal notranslate"><span class="pre">plot_mse_curve()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.utils.permutation_explained_variance"><code class="docutils literal notranslate"><span class="pre">permutation_explained_variance()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.utils.plot_rmse_and_variance"><code class="docutils literal notranslate"><span class="pre">plot_rmse_and_variance()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BrainNetAnno</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../modules.html">Module Index</a></li>
+          <li class="breadcrumb-item"><a href="BrainNetAnno.html">BrainNetAnno</a></li>
+      <li class="breadcrumb-item active">BrainNetAnno.utils</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/_autosummary/BrainNetAnno.utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-BrainNetAnno.utils">
+<span id="brainnetanno-utils"></span><h1>BrainNetAnno.utils<a class="headerlink" href="#module-BrainNetAnno.utils" title="Link to this heading"></a></h1>
+<p>Common utilities for molecular network analyses (NumPy/SciPy/Scikit-learn, CPU).</p>
+<p>This module centralizes shared functions to avoid redundancy across submodules.
+It provides:
+- Robust table loaders for CSV/Excel
+- Coordinate, expression loaders and z-score preprocessing
+- Distance/CGE computations and exponential decay fitting
+- Shared PLS helpers (CV component selection, permutation tests, plotting)</p>
+<p>All functions aim to have stable I/O contracts and clear error messages.</p>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api.html#BrainNetAnno.utils.compute_cge" title="BrainNetAnno.utils.compute_cge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_cge</span></code></a>(z_gene_expression)</p></td>
+<td><p>Compute correlated gene expression (CGE) between regions.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api.html#BrainNetAnno.utils.compute_distance_matrix" title="BrainNetAnno.utils.compute_distance_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_distance_matrix</span></code></a>(coordinates)</p></td>
+<td><p>Compute Euclidean distance matrix between brain regions.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api.html#BrainNetAnno.utils.compute_expected_matrix" title="BrainNetAnno.utils.compute_expected_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_expected_matrix</span></code></a>(distance_matrix, A, n, B)</p></td>
+<td><p>Compute expected matrix using fitted exponential decay parameters.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api.html#BrainNetAnno.utils.exponential_decay" title="BrainNetAnno.utils.exponential_decay"><code class="xref py py-obj docutils literal notranslate"><span class="pre">exponential_decay</span></code></a>(d, A, n, B)</p></td>
+<td><p>Exponential decay function A * exp(-d / n) + B.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api.html#BrainNetAnno.utils.fit_exponential_decay" title="BrainNetAnno.utils.fit_exponential_decay"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit_exponential_decay</span></code></a>(distances, ...)</p></td>
+<td><p>Fit the exponential decay relationship between distance and observations.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api.html#BrainNetAnno.utils.load_coordinates" title="BrainNetAnno.utils.load_coordinates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_coordinates</span></code></a>(csv_path)</p></td>
+<td><p>Backward-compatible wrapper for <code class="docutils literal notranslate"><span class="pre">load_coordinates_adaptive</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api.html#BrainNetAnno.utils.load_coordinates_adaptive" title="BrainNetAnno.utils.load_coordinates_adaptive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_coordinates_adaptive</span></code></a>(path)</p></td>
+<td><p>Load coordinates from CSV or Excel adaptively.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api.html#BrainNetAnno.utils.load_gene_expression" title="BrainNetAnno.utils.load_gene_expression"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_gene_expression</span></code></a>(path[, drop_columns])</p></td>
+<td><p>Load gene expression from CSV or Excel adaptively.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api.html#BrainNetAnno.utils.load_gene_expression_csv" title="BrainNetAnno.utils.load_gene_expression_csv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_gene_expression_csv</span></code></a>(csv_path[, ...])</p></td>
+<td><p>Backward-compatible wrapper for <code class="docutils literal notranslate"><span class="pre">load_gene_expression</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api.html#BrainNetAnno.utils.load_mitochondrial_expression" title="BrainNetAnno.utils.load_mitochondrial_expression"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_mitochondrial_expression</span></code></a>(xlsx_path[, ...])</p></td>
+<td><p>Load mitochondrial expression from Excel/CSV adaptively.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api.html#BrainNetAnno.utils.load_neurotransmitter_expression" title="BrainNetAnno.utils.load_neurotransmitter_expression"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_neurotransmitter_expression</span></code></a>(xlsx_path)</p></td>
+<td><p>Load neurotransmitter expression from Excel/CSV adaptively.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api.html#BrainNetAnno.utils.load_table_generic" title="BrainNetAnno.utils.load_table_generic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_table_generic</span></code></a>(path, **read_kwargs)</p></td>
+<td><p>Load a tabular file (CSV or Excel) adaptively based on file extension.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api.html#BrainNetAnno.utils.permutation_explained_variance" title="BrainNetAnno.utils.permutation_explained_variance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">permutation_explained_variance</span></code></a>(X, Y, ...[, ...])</p></td>
+<td><p>Compute explained variance ratio per component and permutation p-values for components.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api.html#BrainNetAnno.utils.permutation_pvalues" title="BrainNetAnno.utils.permutation_pvalues"><code class="xref py py-obj docutils literal notranslate"><span class="pre">permutation_pvalues</span></code></a>(X, Y, n_components, ...)</p></td>
+<td><p>Compute permutation p-values for PLS weights of a specific component.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api.html#BrainNetAnno.utils.plot_mse_curve" title="BrainNetAnno.utils.plot_mse_curve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_mse_curve</span></code></a>(mse_scores[, save_path])</p></td>
+<td><p>Plot mean CV MSE vs.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api.html#BrainNetAnno.utils.plot_rmse_and_variance" title="BrainNetAnno.utils.plot_rmse_and_variance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_rmse_and_variance</span></code></a>(cv_errors, ...)</p></td>
+<td><p>Save two figures: CV RMSE curve and explained variance per component.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api.html#BrainNetAnno.utils.run_pls" title="BrainNetAnno.utils.run_pls"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_pls</span></code></a>(X, Y, n_components)</p></td>
+<td><p>Fit a PLS regression model and return weights and scores.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api.html#BrainNetAnno.utils.select_optimal_components" title="BrainNetAnno.utils.select_optimal_components"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select_optimal_components</span></code></a>(X, Y[, ...])</p></td>
+<td><p>Select the optimal number of PLS components using K-Fold cross-validation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api.html#BrainNetAnno.utils.zscore_rows" title="BrainNetAnno.utils.zscore_rows"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zscore_rows</span></code></a>(matrix)</p></td>
+<td><p>Apply z-score along rows to standardize each region's gene expression vector.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.utils.load_table_generic">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.utils.</span></span><span class="sig-name descname"><span class="pre">load_table_generic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">read_kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.DataFrame</span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/utils.html#load_table_generic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.utils.load_table_generic" title="Link to this definition"></a></dt>
+<dd><p>Load a tabular file (CSV or Excel) adaptively based on file extension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – File path ending with .csv, .xlsx, or .xls.</p></li>
+<li><p><strong>**read_kwargs</strong> (<em>dict</em>) – Extra keyword arguments passed to pandas reader (e.g., sheet_name for Excel).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Loaded DataFrame.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>FileNotFoundError</strong> – If the file does not exist.</p></li>
+<li><p><strong>ValueError</strong> – If the file extension is unsupported.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.utils.load_coordinates_adaptive">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.utils.</span></span><span class="sig-name descname"><span class="pre">load_coordinates_adaptive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/utils.html#load_coordinates_adaptive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.utils.load_coordinates_adaptive" title="Link to this definition"></a></dt>
+<dd><p>Load coordinates from CSV or Excel adaptively.</p>
+<p>Expects columns ‘MNI_X’,’MNI_Y’,’MNI_Z’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Path to CSV/Excel containing coordinate columns.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Array of shape (n_regions, 3) with xyz coordinates.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If required coordinate columns are missing.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.utils.load_gene_expression">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.utils.</span></span><span class="sig-name descname"><span class="pre">load_gene_expression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drop_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">('label',)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pandas.Index</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/utils.html#load_gene_expression"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.utils.load_gene_expression" title="Link to this definition"></a></dt>
+<dd><p>Load gene expression from CSV or Excel adaptively.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – File path (.csv, .xlsx, .xls) containing rows=regions, columns=genes.</p></li>
+<li><p><strong>drop_columns</strong> (<em>Sequence</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Column names to drop (e.g., labels), by default (“label”,).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Matrix (n_regions, n_genes) and gene names index.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[np.ndarray, pd.Index]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Non-feature columns listed in <code class="docutils literal notranslate"><span class="pre">drop_columns</span></code> are removed if present.</p></li>
+<li><p>Returned matrix preserves the original row order.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.utils.load_coordinates">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.utils.</span></span><span class="sig-name descname"><span class="pre">load_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">csv_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/utils.html#load_coordinates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.utils.load_coordinates" title="Link to this definition"></a></dt>
+<dd><p>Backward-compatible wrapper for <code class="docutils literal notranslate"><span class="pre">load_coordinates_adaptive</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.utils.load_gene_expression_csv">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.utils.</span></span><span class="sig-name descname"><span class="pre">load_gene_expression_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">csv_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drop_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">('label',)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pandas.Index</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/utils.html#load_gene_expression_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.utils.load_gene_expression_csv" title="Link to this definition"></a></dt>
+<dd><p>Backward-compatible wrapper for <code class="docutils literal notranslate"><span class="pre">load_gene_expression</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.utils.load_neurotransmitter_expression">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.utils.</span></span><span class="sig-name descname"><span class="pre">load_neurotransmitter_expression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xlsx_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drop_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">('label',)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pandas.Index</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/utils.html#load_neurotransmitter_expression"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.utils.load_neurotransmitter_expression" title="Link to this definition"></a></dt>
+<dd><p>Load neurotransmitter expression from Excel/CSV adaptively.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xlsx_path</strong> (<em>str</em>) – Path to the file containing rows=regions, columns=neurotransmitters.</p></li>
+<li><p><strong>drop_columns</strong> (<em>Sequence</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Column names to drop (e.g., labels), by default (“label”,).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Matrix (n_regions, n_neurotransmitters) and names index.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[np.ndarray, pd.Index]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.utils.load_mitochondrial_expression">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.utils.</span></span><span class="sig-name descname"><span class="pre">load_mitochondrial_expression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xlsx_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drop_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">('label',)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pandas.Index</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/utils.html#load_mitochondrial_expression"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.utils.load_mitochondrial_expression" title="Link to this definition"></a></dt>
+<dd><p>Load mitochondrial expression from Excel/CSV adaptively.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xlsx_path</strong> (<em>str</em>) – Path to the file containing rows=regions, columns=mitochondrial genes/features.</p></li>
+<li><p><strong>drop_columns</strong> (<em>Sequence</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Column names to drop (e.g., labels), by default (“label”,).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Matrix (n_regions, n_features) and names index.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[np.ndarray, pd.Index]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.utils.zscore_rows">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.utils.</span></span><span class="sig-name descname"><span class="pre">zscore_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/utils.html#zscore_rows"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.utils.zscore_rows" title="Link to this definition"></a></dt>
+<dd><p>Apply z-score along rows to standardize each region’s gene expression vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>matrix</strong> (<em>np.ndarray</em>) – Gene expression matrix of shape (n_regions, n_genes).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Z-scored matrix with same shape, standardized per row.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Uses <code class="docutils literal notranslate"><span class="pre">scipy.stats.zscore</span></code> with default settings (population standardization).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.utils.compute_distance_matrix">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.utils.</span></span><span class="sig-name descname"><span class="pre">compute_distance_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coordinates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/utils.html#compute_distance_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.utils.compute_distance_matrix" title="Link to this definition"></a></dt>
+<dd><p>Compute Euclidean distance matrix between brain regions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>coordinates</strong> (<em>np.ndarray</em>) – Array of shape (n_regions, 3) with xyz coordinates.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Distance matrix of shape (n_regions, n_regions).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.utils.compute_cge">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.utils.</span></span><span class="sig-name descname"><span class="pre">compute_cge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z_gene_expression</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/utils.html#compute_cge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.utils.compute_cge" title="Link to this definition"></a></dt>
+<dd><p>Compute correlated gene expression (CGE) between regions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>z_gene_expression</strong> (<em>np.ndarray</em>) – Z-scored gene expression matrix of shape (n_regions, n_genes). Rows are regions.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Correlation matrix (CGE) of shape (n_regions, n_regions).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.utils.exponential_decay">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.utils.</span></span><span class="sig-name descname"><span class="pre">exponential_decay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/utils.html#exponential_decay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.utils.exponential_decay" title="Link to this definition"></a></dt>
+<dd><p>Exponential decay function A * exp(-d / n) + B.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>d</strong> (<em>np.ndarray</em>) – Distance values.</p></li>
+<li><p><strong>A</strong> (<em>float</em>) – Amplitude.</p></li>
+<li><p><strong>n</strong> (<em>float</em>) – Scale/decay parameter.</p></li>
+<li><p><strong>B</strong> (<em>float</em>) – Offset/baseline.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.utils.fit_exponential_decay">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.utils.</span></span><span class="sig-name descname"><span class="pre">fit_exponential_decay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distances</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correlations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/utils.html#fit_exponential_decay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.utils.fit_exponential_decay" title="Link to this definition"></a></dt>
+<dd><p>Fit the exponential decay relationship between distance and observations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>distances</strong> (<em>np.ndarray</em>) – 1D array of pairwise distances (upper triangle entries).</p></li>
+<li><p><strong>correlations</strong> (<em>np.ndarray</em>) – 1D array of observed values matching distances.</p></li>
+<li><p><strong>initial_params</strong> (<em>Sequence</em><em>[</em><em>float</em><em>]</em>) – Initial guess for parameters (A, n, B).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Fitted parameters (A, n, B).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[float, float, float]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If curve fitting fails to converge.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.utils.compute_expected_matrix">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.utils.</span></span><span class="sig-name descname"><span class="pre">compute_expected_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distance_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/utils.html#compute_expected_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.utils.compute_expected_matrix" title="Link to this definition"></a></dt>
+<dd><p>Compute expected matrix using fitted exponential decay parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>distance_matrix</strong> (<em>np.ndarray</em>) – Pairwise distance matrix.</p></li>
+<li><p><strong>A</strong> (<em>float</em>) – Fitted parameters for exponential decay.</p></li>
+<li><p><strong>n</strong> (<em>float</em>) – Fitted parameters for exponential decay.</p></li>
+<li><p><strong>B</strong> (<em>float</em>) – Fitted parameters for exponential decay.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Expected values per pair.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.utils.select_optimal_components">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.utils.</span></span><span class="sig-name descname"><span class="pre">select_optimal_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv_splits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/utils.html#select_optimal_components"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.utils.select_optimal_components" title="Link to this definition"></a></dt>
+<dd><p>Select the optimal number of PLS components using K-Fold cross-validation.</p>
+<p>This function evaluates Partial Least Squares (PLS) regression models with
+different numbers of components and selects the configuration that achieves
+the lowest mean cross-validated Mean Squared Error (MSE).</p>
+<p>Key implementation details:
+- Upper bound on n_components: Scikit-learn’s PLSRegression enforces that</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">n_components</span> <span class="pre">&lt;=</span> <span class="pre">min(n_samples,</span> <span class="pre">n_features,</span> <span class="pre">n_targets)</span></code>. We compute this
+upper bound from the input data and cap the search space accordingly to
+avoid runtime errors.</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Cross-validation: Uses K-Fold CV with shuffling to obtain stable estimates
+of generalization performance. The scoring metric is negative MSE, which
+is converted back to MSE for interpretability.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – Predictor matrix of shape (n_samples, n_features).</p></li>
+<li><p><strong>Y</strong> (<em>np.ndarray</em>) – Response vector or matrix of shape (n_samples,) or (n_samples, n_targets).
+If a 1D vector is provided, it is treated as a single-target regression
+with <code class="docutils literal notranslate"><span class="pre">n_targets</span> <span class="pre">=</span> <span class="pre">1</span></code>.</p></li>
+<li><p><strong>max_components</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum number of components to consider (before applying the upper bound
+constraint). Default is 10.</p></li>
+<li><p><strong>cv_splits</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of cross-validation folds (K in K-Fold). Default is 5.</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>optional</em>) – Random seed used for shuffling in K-Fold to ensure reproducibility.
+Default is 42.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>best_n_comp: The number of components (1-based) yielding the lowest
+mean CV MSE across folds.</p></li>
+<li><p>mse_scores: A list of mean CV MSE values for each evaluated component
+count, ordered from 1 to <code class="docutils literal notranslate"><span class="pre">min(max_components,</span> <span class="pre">upper_bound)</span></code>.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[int, list]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>If multiple component counts result in identical MSE, <code class="docutils literal notranslate"><span class="pre">np.argmin</span></code>
+returns the first occurrence (i.e., the smallest number of components).</p></li>
+<li><p>The returned <code class="docutils literal notranslate"><span class="pre">mse_scores</span></code> can be plotted against component counts to
+visualize the bias-variance trade-off and identify potential overfitting.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.utils.run_pls">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.utils.</span></span><span class="sig-name descname"><span class="pre">run_pls</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">sklearn.cross_decomposition.PLSRegression</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/utils.html#run_pls"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.utils.run_pls" title="Link to this definition"></a></dt>
+<dd><p>Fit a PLS regression model and return weights and scores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – Predictor matrix (n_samples, n_features).</p></li>
+<li><p><strong>Y</strong> (<em>np.ndarray</em>) – Response vector/matrix (n_samples,) or (n_samples, n_targets).</p></li>
+<li><p><strong>n_components</strong> (<em>int</em>) – Number of latent components in PLS.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Fitted PLS model, x_weights, x_scores, y_scores.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[PLSRegression, np.ndarray, np.ndarray, np.ndarray]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.utils.permutation_pvalues">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.utils.</span></span><span class="sig-name descname"><span class="pre">permutation_pvalues</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_component_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_permutations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/utils.html#permutation_pvalues"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.utils.permutation_pvalues" title="Link to this definition"></a></dt>
+<dd><p>Compute permutation p-values for PLS weights of a specific component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – Predictor matrix.</p></li>
+<li><p><strong>Y</strong> (<em>np.ndarray</em>) – Response vector/matrix.</p></li>
+<li><p><strong>n_components</strong> (<em>int</em>) – Number of PLS components to fit.</p></li>
+<li><p><strong>target_component_index</strong> (<em>int</em>) – Index of the component whose weights are tested.</p></li>
+<li><p><strong>n_permutations</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of permutations, default 1000.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>P-values per feature for the target component’s weights.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The null distribution is built by shuffling X and Y jointly with a fixed
+random seed per permutation for reproducibility.</p></li>
+<li><p>Two-sided testing is approximated by comparing absolute weights to the
+empirical null absolute weights.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.utils.plot_mse_curve">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.utils.</span></span><span class="sig-name descname"><span class="pre">plot_mse_curve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mse_scores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/utils.html#plot_mse_curve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.utils.plot_mse_curve" title="Link to this definition"></a></dt>
+<dd><p>Plot mean CV MSE vs. number of PLS components.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mse_scores</strong> (<em>Sequence</em><em>[</em><em>float</em><em>]</em>) – Mean CV MSE per component count.</p></li>
+<li><p><strong>save_path</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Path to save the figure (created if directory missing). If None, only
+renders the plot in memory for the caller to handle.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.utils.permutation_explained_variance">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.utils.</span></span><span class="sig-name descname"><span class="pre">permutation_explained_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_permutations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BrainNetAnno/utils.html#permutation_explained_variance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.utils.permutation_explained_variance" title="Link to this definition"></a></dt>
+<dd><p>Compute explained variance ratio per component and permutation p-values for components.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – Predictor matrix.</p></li>
+<li><p><strong>Y</strong> (<em>np.ndarray</em>) – Response matrix/vector.</p></li>
+<li><p><strong>n_components</strong> (<em>int</em>) – Number of PLS components.</p></li>
+<li><p><strong>n_permutations</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of permutations, default 1000.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>explained_variance_ratio (components,), p_values (components,), weights (features x components)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[np.ndarray, np.ndarray, np.ndarray]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Explained variance is computed from X scores relative to total variance of X.</p></li>
+<li><p>Permutation p-values quantify whether the observed explained variance per
+component exceeds the null distribution obtained by shuffling.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.utils.plot_rmse_and_variance">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.utils.</span></span><span class="sig-name descname"><span class="pre">plot_rmse_and_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cv_errors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explained_variance_ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig_outputfile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/utils.html#plot_rmse_and_variance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.utils.plot_rmse_and_variance" title="Link to this definition"></a></dt>
+<dd><p>Save two figures: CV RMSE curve and explained variance per component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cv_errors</strong> (<em>np.ndarray</em>) – Mean CV RMSE per number of components.</p></li>
+<li><p><strong>explained_variance_ratio</strong> (<em>np.ndarray</em>) – Explained variance ratio of X per component.</p></li>
+<li><p><strong>fig_outputfile</strong> (<em>str</em>) – Base output path (two figures are saved with suffixes).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="BrainNetAnno.transcriptome_pls_cge.html" class="btn btn-neutral float-left" title="BrainNetAnno.transcriptome_pls_cge" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, BrainNetAnno.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,334 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrainNetAnno.gene_celltype &mdash; BrainNetAnno  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            BrainNetAnno
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">BrainNetAnno</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">BrainNetAnno.gene_celltype</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for BrainNetAnno.gene_celltype</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
+<span class="kn">from</span> <span class="nn">statsmodels.stats.multitest</span> <span class="kn">import</span> <span class="n">multipletests</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">load_table_generic</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> </span><span class="si">%(levelname)s</span><span class="s2"> </span><span class="si">%(name)s</span><span class="s2">: </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="load_celltype_markers">
+<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.gene_celltype.load_celltype_markers">[docs]</a>
+<span class="k">def</span> <span class="nf">load_celltype_markers</span><span class="p">(</span><span class="n">csv_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                          <span class="n">gene_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;gene&#39;</span><span class="p">,</span>
+                          <span class="n">celltype_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;class&#39;</span><span class="p">,</span>
+                          <span class="n">uppercase</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load cell-type marker table and build marker sets per cell type.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    csv_path : str</span>
+<span class="sd">        Path to a CSV file containing marker genes with columns for gene names and cell-type labels.</span>
+<span class="sd">    gene_col : str, optional</span>
+<span class="sd">        Column name for gene symbols, by default &#39;gene&#39;.</span>
+<span class="sd">    celltype_col : str, optional</span>
+<span class="sd">        Column name for cell-type labels, by default &#39;class&#39;.</span>
+<span class="sd">    uppercase : bool, optional</span>
+<span class="sd">        Whether to uppercase all gene symbols, by default True.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Tuple[pd.DataFrame, Dict[str, Set[str]], Set[str]]</span>
+<span class="sd">        - Original DataFrame (with gene column possibly uppercased)</span>
+<span class="sd">        - Mapping from cell-type to its marker gene set</span>
+<span class="sd">        - Background gene set (all unique marker genes)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">load_table_generic</span><span class="p">(</span><span class="n">csv_path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">uppercase</span><span class="p">:</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">gene_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">gene_col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+    <span class="n">cell_types</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">celltype_col</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+    <span class="n">markers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span><span class="n">ct</span><span class="p">:</span> <span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">celltype_col</span><span class="p">]</span> <span class="o">==</span> <span class="n">ct</span><span class="p">][</span><span class="n">gene_col</span><span class="p">])</span> <span class="k">for</span> <span class="n">ct</span> <span class="ow">in</span> <span class="n">cell_types</span><span class="p">}</span>
+    <span class="n">background</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">gene_col</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">df</span><span class="p">,</span> <span class="n">markers</span><span class="p">,</span> <span class="n">background</span></div>
+
+
+
+<div class="viewcode-block" id="load_target_genes">
+<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.gene_celltype.load_target_genes">[docs]</a>
+<span class="k">def</span> <span class="nf">load_target_genes</span><span class="p">(</span><span class="n">csv_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                      <span class="n">gene_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;Gene Index&#39;</span><span class="p">,</span>
+                      <span class="n">uppercase</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load target gene list from CSV.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    csv_path : str</span>
+<span class="sd">        Path to the CSV containing the target gene list.</span>
+<span class="sd">    gene_col : str, optional</span>
+<span class="sd">        Column name that holds gene symbols, by default &#39;Gene Index&#39;.</span>
+<span class="sd">    uppercase : bool, optional</span>
+<span class="sd">        Whether to uppercase gene symbols, by default True.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Set[str]</span>
+<span class="sd">        Set of target gene symbols.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">load_table_generic</span><span class="p">(</span><span class="n">csv_path</span><span class="p">)</span>
+    <span class="n">genes</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">gene_col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">genes</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">if</span> <span class="n">uppercase</span> <span class="k">else</span> <span class="n">genes</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="compute_overlap_enrichment">
+<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.gene_celltype.compute_overlap_enrichment">[docs]</a>
+<span class="k">def</span> <span class="nf">compute_overlap_enrichment</span><span class="p">(</span><span class="n">celltype_markers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
+                               <span class="n">target_genes</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+                               <span class="n">background_genes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                               <span class="n">n_perm</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5000</span><span class="p">,</span>
+                               <span class="n">random_state</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute enrichment of target genes in cell-type marker sets via permutation test.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    celltype_markers : Dict[str, Set[str]]</span>
+<span class="sd">        Mapping from cell-type name to its marker gene set.</span>
+<span class="sd">    target_genes : Set[str]</span>
+<span class="sd">        Set of target genes to test for enrichment.</span>
+<span class="sd">    background_genes : Optional[Set[str]], optional</span>
+<span class="sd">        Background gene universe to sample from. If None, use the union of all marker genes.</span>
+<span class="sd">    n_perm : int, optional</span>
+<span class="sd">        Number of permutations for null distribution, by default 5000.</span>
+<span class="sd">    random_state : Optional[int], optional</span>
+<span class="sd">        Random seed for reproducibility, by default 42.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pd.DataFrame</span>
+<span class="sd">        DataFrame with columns: Cell Type, Overlap, Z-Score, Raw P-Value, Mean Overlap (Random), FDR</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">background_genes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">background_genes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="o">*</span><span class="n">celltype_markers</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="n">target_genes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">target_genes</span><span class="p">)</span>
+
+    <span class="n">true_overlaps</span> <span class="o">=</span> <span class="p">{</span><span class="n">ct</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">target_genes</span> <span class="o">&amp;</span> <span class="n">markers</span><span class="p">)</span> <span class="k">for</span> <span class="n">ct</span><span class="p">,</span> <span class="n">markers</span> <span class="ow">in</span> <span class="n">celltype_markers</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">random_state</span><span class="p">)</span>
+    <span class="n">bg_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">background_genes</span><span class="p">)</span>
+    <span class="n">n_target</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">target_genes</span><span class="p">)</span>
+
+    <span class="n">perm_counts</span> <span class="o">=</span> <span class="p">{</span><span class="n">ct</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">ct</span> <span class="ow">in</span> <span class="n">celltype_markers</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_perm</span><span class="p">):</span>
+        <span class="n">sampled</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">bg_list</span><span class="p">,</span> <span class="n">n_target</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">ct</span><span class="p">,</span> <span class="n">markers</span> <span class="ow">in</span> <span class="n">celltype_markers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">perm_counts</span><span class="p">[</span><span class="n">ct</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sampled</span> <span class="o">&amp;</span> <span class="n">markers</span><span class="p">))</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">ct</span><span class="p">,</span> <span class="n">true_val</span> <span class="ow">in</span> <span class="n">true_overlaps</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">perm_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">perm_counts</span><span class="p">[</span><span class="n">ct</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">mean_perm</span> <span class="o">=</span> <span class="n">perm_vals</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="n">std_perm</span> <span class="o">=</span> <span class="n">perm_vals</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">ddof</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">true_val</span> <span class="o">-</span> <span class="n">mean_perm</span><span class="p">)</span> <span class="o">/</span> <span class="n">std_perm</span> <span class="k">if</span> <span class="n">std_perm</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">norm</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">z</span><span class="p">)))</span> <span class="k">if</span> <span class="n">std_perm</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">1.0</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;Cell Type&#39;</span><span class="p">:</span> <span class="n">ct</span><span class="p">,</span>
+            <span class="s1">&#39;Overlap&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">true_val</span><span class="p">),</span>
+            <span class="s1">&#39;Z-Score&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">z</span><span class="p">),</span>
+            <span class="s1">&#39;Raw P-Value&#39;</span><span class="p">:</span> <span class="n">p</span><span class="p">,</span>
+            <span class="s1">&#39;Mean Overlap (Random)&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">mean_perm</span><span class="p">)</span>
+        <span class="p">})</span>
+
+    <span class="n">result_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+    <span class="n">result_df</span><span class="p">[</span><span class="s1">&#39;FDR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">multipletests</span><span class="p">(</span><span class="n">result_df</span><span class="p">[</span><span class="s1">&#39;Raw P-Value&#39;</span><span class="p">],</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;fdr_bh&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">result_df</span></div>
+
+
+<div class="viewcode-block" id="run_pipeline">
+<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.gene_celltype.run_pipeline">[docs]</a>
+<span class="k">def</span> <span class="nf">run_pipeline</span><span class="p">(</span>
+    <span class="n">celltype_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">target_genes_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">output_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">marker_gene_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;gene&#39;</span><span class="p">,</span>
+    <span class="n">celltype_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;class&#39;</span><span class="p">,</span>
+    <span class="n">target_gene_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;Gene Index&#39;</span><span class="p">,</span>
+    <span class="n">n_perm</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5000</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run cell-type enrichment analysis and optionally save results.</span>
+
+<span class="sd">    This high-level pipeline loads a table of cell-type marker genes from a CSV</span>
+<span class="sd">    file and a list of target genes from another CSV, performs a permutation-</span>
+<span class="sd">    based enrichment test to assess whether the target genes are overrepresented</span>
+<span class="sd">    within specific cell types, and returns a sorted results DataFrame. If an</span>
+<span class="sd">    output path is provided, results are written to CSV.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    celltype_csv : str</span>
+<span class="sd">        Path to the CSV containing cell-type marker genes and their associated</span>
+<span class="sd">        labels/scores. Must include the columns specified by ``gene_col`` and</span>
+<span class="sd">        ``celltype_col``. Optionally a score column (``score_col``) may be</span>
+<span class="sd">        present and used upstream.</span>
+<span class="sd">    target_genes_csv : str</span>
+<span class="sd">        Path to the CSV containing the list of target genes to evaluate. Must</span>
+<span class="sd">        include the gene column specified by ``target_gene_col``.</span>
+<span class="sd">    output_csv : str</span>
+<span class="sd">        Path to save the resulting enrichment table as CSV. Parent directories</span>
+<span class="sd">        are created automatically.</span>
+<span class="sd">    marker_gene_col : str, optional</span>
+<span class="sd">        Column name for marker gene symbols in the marker CSV, by default &#39;gene&#39;.</span>
+<span class="sd">    celltype_col : str, optional</span>
+<span class="sd">        Column name in ``celltype_csv`` holding cell-type labels. Default is</span>
+<span class="sd">        ``&#39;CellType&#39;``.</span>
+<span class="sd">    target_gene_col : str, optional</span>
+<span class="sd">        Column name for gene symbols in ``target_genes_csv``. Default is</span>
+<span class="sd">        ``&#39;Gene Index&#39;``.</span>
+<span class="sd">    n_perm : int, optional</span>
+<span class="sd">        Number of permutations used to form the null distribution when</span>
+<span class="sd">        computing enrichment statistics. Larger values improve stability but</span>
+<span class="sd">        increase runtime. Default is ``5000``.</span>
+<span class="sd">    random_state : Optional[int], optional</span>
+<span class="sd">        Random seed for reproducibility of permutations. Default is ``42``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pd.DataFrame</span>
+<span class="sd">        A DataFrame sorted by the Benjamini–Hochberg FDR, with columns:</span>
+<span class="sd">        - ``Cell Type``: Cell-type name.</span>
+<span class="sd">        - ``Overlap``: Observed overlap count of target genes with markers.</span>
+<span class="sd">        - ``Z-Score``: Z-score comparing observed overlap vs. null.</span>
+<span class="sd">        - ``Raw P-Value``: Two-sided p-value from the normal approximation.</span>
+<span class="sd">        - ``Mean Overlap (Random)``: Mean overlap from permutation samples.</span>
+<span class="sd">        - ``FDR``: Benjamini–Hochberg adjusted p-value.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    - The background gene universe is taken as the union of all marker genes</span>
+<span class="sd">      unless ``background_genes`` is provided upstream.</span>
+<span class="sd">    - Parent directories for ``output_csv`` are created automatically when</span>
+<span class="sd">      saving results.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading cell type markers from: </span><span class="si">{</span><span class="n">celltype_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">markers</span><span class="p">,</span> <span class="n">background</span> <span class="o">=</span> <span class="n">load_celltype_markers</span><span class="p">(</span><span class="n">celltype_path</span><span class="p">,</span> <span class="n">gene_col</span><span class="o">=</span><span class="n">marker_gene_col</span><span class="p">,</span> <span class="n">celltype_col</span><span class="o">=</span><span class="n">celltype_col</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to read celltype CSV: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Markers loaded. Cell types: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">markers</span><span class="p">)</span><span class="si">}</span><span class="s2">; background genes: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">background</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading target genes from: </span><span class="si">{</span><span class="n">target_genes_path</span><span class="si">}</span><span class="s2"> (col=</span><span class="si">{</span><span class="n">target_gene_col</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">targets</span> <span class="o">=</span> <span class="n">load_target_genes</span><span class="p">(</span><span class="n">target_genes_path</span><span class="p">,</span> <span class="n">gene_col</span><span class="o">=</span><span class="n">target_gene_col</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to read target genes CSV: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Target genes loaded: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running cell type enrichment (n_perm=</span><span class="si">{</span><span class="n">n_perm</span><span class="si">}</span><span class="s2">, random_state=</span><span class="si">{</span><span class="n">random_state</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+    <span class="n">result_df</span> <span class="o">=</span> <span class="n">compute_overlap_enrichment</span><span class="p">(</span><span class="n">markers</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">background_genes</span><span class="o">=</span><span class="n">background</span><span class="p">,</span> <span class="n">n_perm</span><span class="o">=</span><span class="n">n_perm</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saving results to: </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">d</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">d</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">result_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saved cell type enrichment results to: </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Cell type enrichment pipeline completed successfully.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result_df</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, BrainNetAnno.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

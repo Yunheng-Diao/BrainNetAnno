@@ -1,0 +1,272 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrainNetAnno.gene_celltype &mdash; BrainNetAnno  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="BrainNetAnno.gene_layer" href="BrainNetAnno.gene_layer.html" />
+    <link rel="prev" title="BrainNetAnno" href="BrainNetAnno.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../modules.html">Module Index</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.html">BrainNetAnno</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.transcriptome_pls_cge.html">BrainNetAnno.transcriptome_pls_cge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.neurotransmitter_pls_cge.html">BrainNetAnno.neurotransmitter_pls_cge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.mitochondrial_pls_cge.html">BrainNetAnno.mitochondrial_pls_cge</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">BrainNetAnno.gene_celltype</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.gene_celltype.load_celltype_markers"><code class="docutils literal notranslate"><span class="pre">load_celltype_markers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.gene_celltype.load_target_genes"><code class="docutils literal notranslate"><span class="pre">load_target_genes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.gene_celltype.compute_overlap_enrichment"><code class="docutils literal notranslate"><span class="pre">compute_overlap_enrichment()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.gene_celltype.run_pipeline"><code class="docutils literal notranslate"><span class="pre">run_pipeline()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.gene_layer.html">BrainNetAnno.gene_layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.utils.html">BrainNetAnno.utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BrainNetAnno</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../modules.html">Module Index</a></li>
+          <li class="breadcrumb-item"><a href="BrainNetAnno.html">BrainNetAnno</a></li>
+      <li class="breadcrumb-item active">BrainNetAnno.gene_celltype</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/_autosummary/BrainNetAnno.gene_celltype.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-BrainNetAnno.gene_celltype">
+<span id="brainnetanno-gene-celltype"></span><h1>BrainNetAnno.gene_celltype<a class="headerlink" href="#module-BrainNetAnno.gene_celltype" title="Link to this heading"></a></h1>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api.html#BrainNetAnno.gene_celltype.compute_overlap_enrichment" title="BrainNetAnno.gene_celltype.compute_overlap_enrichment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_overlap_enrichment</span></code></a>(celltype_markers, ...)</p></td>
+<td><p>Compute enrichment of target genes in cell-type marker sets via permutation test.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api.html#BrainNetAnno.gene_celltype.load_celltype_markers" title="BrainNetAnno.gene_celltype.load_celltype_markers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_celltype_markers</span></code></a>(csv_path[, gene_col, ...])</p></td>
+<td><p>Load cell-type marker table and build marker sets per cell type.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api.html#BrainNetAnno.gene_celltype.load_target_genes" title="BrainNetAnno.gene_celltype.load_target_genes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_target_genes</span></code></a>(csv_path[, gene_col, ...])</p></td>
+<td><p>Load target gene list from CSV.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api.html#BrainNetAnno.gene_celltype.run_pipeline" title="BrainNetAnno.gene_celltype.run_pipeline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_pipeline</span></code></a>(celltype_path, ...[, ...])</p></td>
+<td><p>Run cell-type enrichment analysis and optionally save results.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.gene_celltype.load_celltype_markers">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.gene_celltype.</span></span><span class="sig-name descname"><span class="pre">load_celltype_markers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">csv_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'gene'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">celltype_col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'class'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uppercase</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.DataFrame</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/gene_celltype.html#load_celltype_markers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.gene_celltype.load_celltype_markers" title="Link to this definition"></a></dt>
+<dd><p>Load cell-type marker table and build marker sets per cell type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>csv_path</strong> (<em>str</em>) – Path to a CSV file containing marker genes with columns for gene names and cell-type labels.</p></li>
+<li><p><strong>gene_col</strong> (<em>str</em><em>, </em><em>optional</em>) – Column name for gene symbols, by default ‘gene’.</p></li>
+<li><p><strong>celltype_col</strong> (<em>str</em><em>, </em><em>optional</em>) – Column name for cell-type labels, by default ‘class’.</p></li>
+<li><p><strong>uppercase</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to uppercase all gene symbols, by default True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>Original DataFrame (with gene column possibly uppercased)</p></li>
+<li><p>Mapping from cell-type to its marker gene set</p></li>
+<li><p>Background gene set (all unique marker genes)</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[pd.DataFrame, Dict[str, Set[str]], Set[str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.gene_celltype.load_target_genes">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.gene_celltype.</span></span><span class="sig-name descname"><span class="pre">load_target_genes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">csv_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Gene</span> <span class="pre">Index'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uppercase</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/gene_celltype.html#load_target_genes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.gene_celltype.load_target_genes" title="Link to this definition"></a></dt>
+<dd><p>Load target gene list from CSV.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>csv_path</strong> (<em>str</em>) – Path to the CSV containing the target gene list.</p></li>
+<li><p><strong>gene_col</strong> (<em>str</em><em>, </em><em>optional</em>) – Column name that holds gene symbols, by default ‘Gene Index’.</p></li>
+<li><p><strong>uppercase</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to uppercase gene symbols, by default True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Set of target gene symbols.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Set[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.gene_celltype.compute_overlap_enrichment">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.gene_celltype.</span></span><span class="sig-name descname"><span class="pre">compute_overlap_enrichment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">celltype_markers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_perm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.DataFrame</span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/gene_celltype.html#compute_overlap_enrichment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.gene_celltype.compute_overlap_enrichment" title="Link to this definition"></a></dt>
+<dd><p>Compute enrichment of target genes in cell-type marker sets via permutation test.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>celltype_markers</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Set</em><em>[</em><em>str</em><em>]</em><em>]</em>) – Mapping from cell-type name to its marker gene set.</p></li>
+<li><p><strong>target_genes</strong> (<em>Set</em><em>[</em><em>str</em><em>]</em>) – Set of target genes to test for enrichment.</p></li>
+<li><p><strong>background_genes</strong> (<em>Optional</em><em>[</em><em>Set</em><em>[</em><em>str</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – Background gene universe to sample from. If None, use the union of all marker genes.</p></li>
+<li><p><strong>n_perm</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of permutations for null distribution, by default 5000.</p></li>
+<li><p><strong>random_state</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – Random seed for reproducibility, by default 42.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame with columns: Cell Type, Overlap, Z-Score, Raw P-Value, Mean Overlap (Random), FDR</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.gene_celltype.run_pipeline">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.gene_celltype.</span></span><span class="sig-name descname"><span class="pre">run_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">celltype_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_genes_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_gene_col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'gene'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">celltype_col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'class'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_gene_col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Gene</span> <span class="pre">Index'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_perm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.DataFrame</span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/gene_celltype.html#run_pipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.gene_celltype.run_pipeline" title="Link to this definition"></a></dt>
+<dd><p>Run cell-type enrichment analysis and optionally save results.</p>
+<p>This high-level pipeline loads a table of cell-type marker genes from a CSV
+file and a list of target genes from another CSV, performs a permutation-
+based enrichment test to assess whether the target genes are overrepresented
+within specific cell types, and returns a sorted results DataFrame. If an
+output path is provided, results are written to CSV.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>celltype_csv</strong> (<em>str</em>) – Path to the CSV containing cell-type marker genes and their associated
+labels/scores. Must include the columns specified by <code class="docutils literal notranslate"><span class="pre">gene_col</span></code> and
+<code class="docutils literal notranslate"><span class="pre">celltype_col</span></code>. Optionally a score column (<code class="docutils literal notranslate"><span class="pre">score_col</span></code>) may be
+present and used upstream.</p></li>
+<li><p><strong>target_genes_csv</strong> (<em>str</em>) – Path to the CSV containing the list of target genes to evaluate. Must
+include the gene column specified by <code class="docutils literal notranslate"><span class="pre">target_gene_col</span></code>.</p></li>
+<li><p><strong>output_csv</strong> (<em>str</em>) – Path to save the resulting enrichment table as CSV. Parent directories
+are created automatically.</p></li>
+<li><p><strong>marker_gene_col</strong> (<em>str</em><em>, </em><em>optional</em>) – Column name for marker gene symbols in the marker CSV, by default ‘gene’.</p></li>
+<li><p><strong>celltype_col</strong> (<em>str</em><em>, </em><em>optional</em>) – Column name in <code class="docutils literal notranslate"><span class="pre">celltype_csv</span></code> holding cell-type labels. Default is
+<code class="docutils literal notranslate"><span class="pre">'CellType'</span></code>.</p></li>
+<li><p><strong>target_gene_col</strong> (<em>str</em><em>, </em><em>optional</em>) – Column name for gene symbols in <code class="docutils literal notranslate"><span class="pre">target_genes_csv</span></code>. Default is
+<code class="docutils literal notranslate"><span class="pre">'Gene</span> <span class="pre">Index'</span></code>.</p></li>
+<li><p><strong>n_perm</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of permutations used to form the null distribution when
+computing enrichment statistics. Larger values improve stability but
+increase runtime. Default is <code class="docutils literal notranslate"><span class="pre">5000</span></code>.</p></li>
+<li><p><strong>random_state</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – Random seed for reproducibility of permutations. Default is <code class="docutils literal notranslate"><span class="pre">42</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame sorted by the Benjamini–Hochberg FDR, with columns:
+- <code class="docutils literal notranslate"><span class="pre">Cell</span> <span class="pre">Type</span></code>: Cell-type name.
+- <code class="docutils literal notranslate"><span class="pre">Overlap</span></code>: Observed overlap count of target genes with markers.
+- <code class="docutils literal notranslate"><span class="pre">Z-Score</span></code>: Z-score comparing observed overlap vs. null.
+- <code class="docutils literal notranslate"><span class="pre">Raw</span> <span class="pre">P-Value</span></code>: Two-sided p-value from the normal approximation.
+- <code class="docutils literal notranslate"><span class="pre">Mean</span> <span class="pre">Overlap</span> <span class="pre">(Random)</span></code>: Mean overlap from permutation samples.
+- <code class="docutils literal notranslate"><span class="pre">FDR</span></code>: Benjamini–Hochberg adjusted p-value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The background gene universe is taken as the union of all marker genes
+unless <code class="docutils literal notranslate"><span class="pre">background_genes</span></code> is provided upstream.</p></li>
+<li><p>Parent directories for <code class="docutils literal notranslate"><span class="pre">output_csv</span></code> are created automatically when
+saving results.</p></li>
+</ul>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="BrainNetAnno.html" class="btn btn-neutral float-left" title="BrainNetAnno" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="BrainNetAnno.gene_layer.html" class="btn btn-neutral float-right" title="BrainNetAnno.gene_layer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, BrainNetAnno.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

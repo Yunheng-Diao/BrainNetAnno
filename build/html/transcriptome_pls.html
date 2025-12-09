@@ -1,0 +1,177 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Transcriptome PLS-CGE example &mdash; BrainNetAnno  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Neurotransmitter contribution example" href="neurotransmitter.html" />
+    <link rel="prev" title="Transcriptome contribution example" href="transcriptome.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation and setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Example.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="transcriptome.html">Transcriptome contribution example</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Transcriptome PLS-CGE example</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#key-parameters-used-in-the-example">Key parameters used in the example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#core-snippet">Core snippet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#notes">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="neurotransmitter.html">Neurotransmitter contribution example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="neurotransmitter_pls.html">Neurotransmitter PLS example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mitochondrial.html">Mitochondrial contribution example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mitochondrial_pls.html">Mitochondrial PLS example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enrichment_celltype.html">Cell-type enrichment example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enrichment_layer.html">Cortical layer enrichment example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Module Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BrainNetAnno</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="Example.html">Examples</a></li>
+      <li class="breadcrumb-item active">Transcriptome PLS-CGE example</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/transcriptome_pls.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="transcriptome-pls-cge-example">
+<h1>Transcriptome PLS-CGE example<a class="headerlink" href="#transcriptome-pls-cge-example" title="Link to this heading"></a></h1>
+<p>This example shows a complete PLS-CGE analysis that links FC deviations with per-connection
+gene contributions. It demonstrates cross-validated component selection, permutation
+significance testing, and saving of results and plots.</p>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
+<p>Run the example script shipped in the repository:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">tests</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">example_transcriptome_pls</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+</section>
+<section id="key-parameters-used-in-the-example">
+<h2>Key parameters used in the example<a class="headerlink" href="#key-parameters-used-in-the-example" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><cite>t_values_file_path</cite>: FC deviations CSV (square, no header)</p></li>
+<li><p><cite>gene_expression_file_path</cite>: per-connection gene contribution CSV (must contain <cite>Region_Pair</cite>)</p></li>
+<li><p><cite>output_best_genes_path</cite>: where significant genes are saved</p></li>
+<li><p><cite>mse_plot_path</cite>, <cite>explained_variance_plot_path</cite>: optional plots</p></li>
+</ul>
+</section>
+<section id="core-snippet">
+<h2>Core snippet<a class="headerlink" href="#core-snippet" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">BrainNetAnno.transcriptome_pls_cge</span> <span class="kn">import</span> <span class="n">run_transcriptome_pls_pipeline</span>
+
+<span class="n">run_transcriptome_pls_pipeline</span><span class="p">(</span>
+    <span class="n">t_values_file_path</span><span class="o">=</span><span class="n">fc_csv</span><span class="p">,</span>
+    <span class="n">gene_expression_file_path</span><span class="o">=</span><span class="n">contrib_csv</span><span class="p">,</span>
+    <span class="n">output_best_genes_path</span><span class="o">=</span><span class="n">best_genes_csv</span><span class="p">,</span>
+    <span class="n">mse_plot_path</span><span class="o">=</span><span class="n">mse_plot</span><span class="p">,</span>
+    <span class="n">explained_variance_plot_path</span><span class="o">=</span><span class="n">var_plot</span><span class="p">,</span>
+    <span class="n">max_components</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">cv_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+    <span class="n">n_permutations</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Replace the example input paths with your dataset paths. The example assumes
+supporting example data in <cite>examples_data/</cite> and writes outputs to <cite>examples_output/</cite>.</p></li>
+<li><p>For quick testing reduce <cite>n_permutations</cite> and <cite>max_components</cite>.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="transcriptome.html" class="btn btn-neutral float-left" title="Transcriptome contribution example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="neurotransmitter.html" class="btn btn-neutral float-right" title="Neurotransmitter contribution example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, BrainNetAnno.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

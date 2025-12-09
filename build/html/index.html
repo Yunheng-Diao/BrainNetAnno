@@ -1,0 +1,194 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrainNetAnno: A toolkit for molecular annotation of brain networks. &mdash; BrainNetAnno  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation and setup" href="install.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#">
+            
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation and setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Example.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Module Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">BrainNetAnno</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">BrainNetAnno: A toolkit for molecular annotation of brain networks.</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="brainnetanno-a-toolkit-for-molecular-annotation-of-brain-networks">
+<h1>BrainNetAnno: A toolkit for molecular annotation of brain networks.<a class="headerlink" href="#brainnetanno-a-toolkit-for-molecular-annotation-of-brain-networks" title="Link to this heading"></a></h1>
+<a class="reference internal image-reference" href="_images/logo.png"><img alt="BrainNetAnno" class="align-center" src="_images/logo.png" style="width: 220px;" />
+</a>
+<p>With the rapid advancement of multi-omics technologies and large-scale brain atlas initiatives, molecular-level information about the human brain has become increasingly abundant, including gene expression, neurotransmitter receptor densities, cell-type distributions, mitochondrial functional signatures, synaptic mechanisms, and metabolic features. These resources offer important opportunities to elucidate the biological foundations of brain development and neuropsychiatric disorders. However, brain function is not carried out by isolated regions in isolation; rather, it relies on a highly interconnected network architecture. Inter-regional connections work together to support cognition, emotion, and behavior, and disease-related abnormalities often manifest as systematic alterations in network connectivity. Therefore, understanding the molecular basis of network-level abnormalities is critical for uncovering the pathophysiology of neuropsychiatric disorders.</p>
+<p>Although substantial molecular annotation resources now exist at the level of brain regions, enabling characterization of regional molecular properties, methods that focus on the molecular annotation of the connections themselves remain highly limited. In other words, while we know the molecular attributes of individual regions, we still lack answers to fundamental questions such as why certain connections are more vulnerable, what molecular mechanisms drive connection-level abnormalities, or what underlies the susceptibility of specific connections in disease. This gap constrains the integration of multi-omics data with network neuroscience and limits our ability to understand complex brain disorders from a systems-level perspective.</p>
+<p>The present toolkit was developed to fill this critical gap. It provides systematic molecular annotation of inter-regional connections, enabling researchers to directly link network connectivity alterations to underlying gene-expression profiles, neurotransmitter systems, mitochondrial features, cell-type compositions, synaptic mechanisms, and metabolic characteristics. By integrating multi-omics information at the level of connections, the toolkit offers a new pathway for understanding the pathophysiology of neuropsychiatric disorders and provides a biologically informed, mechanistically interpretable framework for identifying targets for network-based interventions such as brain stimulation.</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation and setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#basic-installation">Basic installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#install-from-source-github">Install from source (GitHub)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#optional-i-o-extras">Optional I/O extras</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#platform-notes-linux">Platform notes (Linux)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#troubleshooting">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#developer-editable-install">Developer / editable install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#local-docs-build-optional">Local docs build (optional)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#quickstart-python-api">Quickstart (Python API)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Example.html">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="transcriptome.html">Transcriptome contribution example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transcriptome_pls.html">Transcriptome PLS-CGE example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="neurotransmitter.html">Neurotransmitter contribution example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="neurotransmitter_pls.html">Neurotransmitter PLS example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mitochondrial.html">Mitochondrial contribution example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mitochondrial_pls.html">Mitochondrial PLS example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enrichment_celltype.html">Cell-type enrichment example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enrichment_layer.html">Cortical layer enrichment example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.neurotransmitter_pls_cge.run_neurotransmitter_pls_pipeline"><code class="docutils literal notranslate"><span class="pre">run_neurotransmitter_pls_pipeline()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.mitochondrial_pls_cge.run_mitochondrial_pls_pipeline"><code class="docutils literal notranslate"><span class="pre">run_mitochondrial_pls_pipeline()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.gene_celltype.load_celltype_markers"><code class="docutils literal notranslate"><span class="pre">load_celltype_markers()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.gene_celltype.load_target_genes"><code class="docutils literal notranslate"><span class="pre">load_target_genes()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.gene_celltype.compute_overlap_enrichment"><code class="docutils literal notranslate"><span class="pre">compute_overlap_enrichment()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.gene_celltype.run_pipeline"><code class="docutils literal notranslate"><span class="pre">run_pipeline()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.gene_layer.load_layer_markers"><code class="docutils literal notranslate"><span class="pre">load_layer_markers()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.gene_layer.load_target_genes"><code class="docutils literal notranslate"><span class="pre">load_target_genes()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.gene_layer.compute_layer_enrichment"><code class="docutils literal notranslate"><span class="pre">compute_layer_enrichment()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.gene_layer.run_pipeline"><code class="docutils literal notranslate"><span class="pre">run_pipeline()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.utils.load_table_generic"><code class="docutils literal notranslate"><span class="pre">load_table_generic()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.utils.load_coordinates_adaptive"><code class="docutils literal notranslate"><span class="pre">load_coordinates_adaptive()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.utils.load_gene_expression"><code class="docutils literal notranslate"><span class="pre">load_gene_expression()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.utils.load_coordinates"><code class="docutils literal notranslate"><span class="pre">load_coordinates()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.utils.load_gene_expression_csv"><code class="docutils literal notranslate"><span class="pre">load_gene_expression_csv()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.utils.load_neurotransmitter_expression"><code class="docutils literal notranslate"><span class="pre">load_neurotransmitter_expression()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.utils.load_mitochondrial_expression"><code class="docutils literal notranslate"><span class="pre">load_mitochondrial_expression()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.utils.zscore_rows"><code class="docutils literal notranslate"><span class="pre">zscore_rows()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.utils.compute_distance_matrix"><code class="docutils literal notranslate"><span class="pre">compute_distance_matrix()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.utils.compute_cge"><code class="docutils literal notranslate"><span class="pre">compute_cge()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.utils.exponential_decay"><code class="docutils literal notranslate"><span class="pre">exponential_decay()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.utils.fit_exponential_decay"><code class="docutils literal notranslate"><span class="pre">fit_exponential_decay()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.utils.compute_expected_matrix"><code class="docutils literal notranslate"><span class="pre">compute_expected_matrix()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.utils.select_optimal_components"><code class="docutils literal notranslate"><span class="pre">select_optimal_components()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.utils.run_pls"><code class="docutils literal notranslate"><span class="pre">run_pls()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.utils.permutation_pvalues"><code class="docutils literal notranslate"><span class="pre">permutation_pvalues()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.utils.plot_mse_curve"><code class="docutils literal notranslate"><span class="pre">plot_mse_curve()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.utils.permutation_explained_variance"><code class="docutils literal notranslate"><span class="pre">permutation_explained_variance()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.utils.plot_rmse_and_variance"><code class="docutils literal notranslate"><span class="pre">plot_rmse_and_variance()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#initial-release">0.1.0 (Initial release)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Module Index</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="_autosummary/BrainNetAnno.html">BrainNetAnno</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_autosummary/BrainNetAnno.transcriptome_pls_cge.html">BrainNetAnno.transcriptome_pls_cge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_autosummary/BrainNetAnno.neurotransmitter_pls_cge.html">BrainNetAnno.neurotransmitter_pls_cge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_autosummary/BrainNetAnno.mitochondrial_pls_cge.html">BrainNetAnno.mitochondrial_pls_cge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_autosummary/BrainNetAnno.gene_celltype.html">BrainNetAnno.gene_celltype</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_autosummary/BrainNetAnno.gene_layer.html">BrainNetAnno.gene_layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_autosummary/BrainNetAnno.utils.html">BrainNetAnno.utils</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="install.html" class="btn btn-neutral float-right" title="Installation and setup" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, BrainNetAnno.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

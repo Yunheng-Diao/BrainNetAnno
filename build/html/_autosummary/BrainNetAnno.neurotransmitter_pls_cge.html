@@ -1,0 +1,180 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrainNetAnno.neurotransmitter_pls_cge &mdash; BrainNetAnno  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="BrainNetAnno.transcriptome" href="BrainNetAnno.transcriptome.html" />
+    <link rel="prev" title="BrainNetAnno.neurotransmitter" href="BrainNetAnno.neurotransmitter.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../modules.html">Module Index</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.html">BrainNetAnno</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.transcriptome_pls_cge.html">BrainNetAnno.transcriptome_pls_cge</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">BrainNetAnno.neurotransmitter_pls_cge</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.neurotransmitter_pls_cge.run_neurotransmitter_pls_pipeline"><code class="docutils literal notranslate"><span class="pre">run_neurotransmitter_pls_pipeline()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.mitochondrial_pls_cge.html">BrainNetAnno.mitochondrial_pls_cge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.gene_celltype.html">BrainNetAnno.gene_celltype</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.gene_layer.html">BrainNetAnno.gene_layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.utils.html">BrainNetAnno.utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BrainNetAnno</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../modules.html">Module Index</a></li>
+          <li class="breadcrumb-item"><a href="BrainNetAnno.html">BrainNetAnno</a></li>
+      <li class="breadcrumb-item active">BrainNetAnno.neurotransmitter_pls_cge</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/_autosummary/BrainNetAnno.neurotransmitter_pls_cge.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-BrainNetAnno.neurotransmitter_pls_cge">
+<span id="brainnetanno-neurotransmitter-pls-cge"></span><h1>BrainNetAnno.neurotransmitter_pls_cge<a class="headerlink" href="#module-BrainNetAnno.neurotransmitter_pls_cge" title="Link to this heading"></a></h1>
+<p>PLS analysis for neurotransmitter contributions against FC deviations.</p>
+<p>Provides reusable functions to select PLS components via CV, run PLS, compute
+permutation p-values for weights, and plotting utilities suitable for packaging.</p>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api.html#BrainNetAnno.neurotransmitter_pls_cge.run_neurotransmitter_pls_pipeline" title="BrainNetAnno.neurotransmitter_pls_cge.run_neurotransmitter_pls_pipeline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_neurotransmitter_pls_pipeline</span></code></a>(...[, ...])</p></td>
+<td><p>Run PLS analysis linking FC weights to neurotransmitter contributions.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.neurotransmitter_pls_cge.run_neurotransmitter_pls_pipeline">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.neurotransmitter_pls_cge.</span></span><span class="sig-name descname"><span class="pre">run_neurotransmitter_pls_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fc_matrix_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nt_contrib_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">350</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mse_plot_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explained_variance_plot_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_weights_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv_splits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_permutations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pandas.DataFrame</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/neurotransmitter_pls_cge.html#run_neurotransmitter_pls_pipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.neurotransmitter_pls_cge.run_neurotransmitter_pls_pipeline" title="Link to this definition"></a></dt>
+<dd><p>Run PLS analysis linking FC weights to neurotransmitter contributions.</p>
+<p>This pipeline loads an FC weights matrix and a per-connection neurotransmitter
+contribution table, aligns by <code class="docutils literal notranslate"><span class="pre">Region_Pair</span></code>, selects the optimal number of
+PLS components via cross-validated MSE, fits the PLS model, computes
+permutation p-values for feature weights, saves results, and optionally
+saves plots of MSE and explained variance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fc_matrix_path</strong> (<em>str</em>) – Path to the CSV containing a square FC weights matrix (no header).</p></li>
+<li><p><strong>nt_contrib</strong> (<em>str</em>) – Path to the CSV containing neurotransmitter contributions with a
+<code class="docutils literal notranslate"><span class="pre">'Region_Pair'</span></code> column.</p></li>
+<li><p><strong>top_k</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of top absolute FC entries to keep. Default <code class="docutils literal notranslate"><span class="pre">350</span></code>.</p></li>
+<li><p><strong>mse_plot_path</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Path to save the CV MSE curve plot. Default <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>explained_variance_plot_path</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Path to save the explained-variance plot for X scores. Default <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>output_weights</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Path to save weights and p-values CSV. Default <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>max_components</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum number of components considered in CV. Default <code class="docutils literal notranslate"><span class="pre">10</span></code>.</p></li>
+<li><p><strong>cv_splits</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of CV splits. Default <code class="docutils literal notranslate"><span class="pre">5</span></code>.</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>optional</em>) – Random seed for CV. Default <code class="docutils literal notranslate"><span class="pre">42</span></code>.</p></li>
+<li><p><strong>n_permutations</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of permutations for p-values. Default <code class="docutils literal notranslate"><span class="pre">1000</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Best number of components and a DataFrame with neurotransmitter weights and p-values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[int, pd.DataFrame]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Output directories for plots and CSVs are created automatically when
+paths are provided.</p></li>
+<li><p>The explained variance is computed from X scores relative to total X
+variance.</p></li>
+</ul>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="BrainNetAnno.neurotransmitter.html" class="btn btn-neutral float-left" title="BrainNetAnno.neurotransmitter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="BrainNetAnno.transcriptome.html" class="btn btn-neutral float-right" title="BrainNetAnno.transcriptome" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, BrainNetAnno.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

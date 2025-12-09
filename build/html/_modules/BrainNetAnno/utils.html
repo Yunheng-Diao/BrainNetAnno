@@ -1,0 +1,717 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrainNetAnno.utils &mdash; BrainNetAnno  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            BrainNetAnno
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">BrainNetAnno</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">BrainNetAnno.utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for BrainNetAnno.utils</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Common utilities for molecular network analyses (NumPy/SciPy/Scikit-learn, CPU).</span>
+
+<span class="sd">This module centralizes shared functions to avoid redundancy across submodules.</span>
+<span class="sd">It provides:</span>
+<span class="sd">- Robust table loaders for CSV/Excel</span>
+<span class="sd">- Coordinate, expression loaders and z-score preprocessing</span>
+<span class="sd">- Distance/CGE computations and exponential decay fitting</span>
+<span class="sd">- Shared PLS helpers (CV component selection, permutation tests, plotting)</span>
+
+<span class="sd">All functions aim to have stable I/O contracts and clear error messages.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">scipy.spatial.distance</span> <span class="kn">import</span> <span class="n">pdist</span><span class="p">,</span> <span class="n">squareform</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">curve_fit</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">zscore</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c1"># -----------------------------</span>
+<span class="c1"># Data loading and preprocessing</span>
+<span class="c1"># -----------------------------</span>
+
+<span class="k">def</span> <span class="nf">_is_excel</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if file extension indicates an Excel file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path : str</span>
+<span class="sd">        File path.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bool</span>
+<span class="sd">        Whether the path ends with .xlsx or .xls (case-insensitive).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">path</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;.xlsx&#39;</span><span class="p">,</span> <span class="s1">&#39;.xls&#39;</span><span class="p">}</span>
+
+
+<div class="viewcode-block" id="load_table_generic">
+<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.load_table_generic">[docs]</a>
+<span class="k">def</span> <span class="nf">load_table_generic</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">read_kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load a tabular file (CSV or Excel) adaptively based on file extension.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path : str</span>
+<span class="sd">        File path ending with .csv, .xlsx, or .xls.</span>
+<span class="sd">    **read_kwargs : dict</span>
+<span class="sd">        Extra keyword arguments passed to pandas reader (e.g., sheet_name for Excel).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pd.DataFrame</span>
+<span class="sd">        Loaded DataFrame.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    FileNotFoundError</span>
+<span class="sd">        If the file does not exist.</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If the file extension is unsupported.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File not found: </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">_is_excel</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">read_kwargs</span><span class="p">)</span>
+    <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">path</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">ext</span> <span class="o">==</span> <span class="s1">&#39;.csv&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">read_kwargs</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported file extension: </span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s2">. Expected .csv/.xlsx/.xls&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="load_coordinates_adaptive">
+<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.load_coordinates_adaptive">[docs]</a>
+<span class="k">def</span> <span class="nf">load_coordinates_adaptive</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load coordinates from CSV or Excel adaptively.</span>
+
+<span class="sd">    Expects columns &#39;MNI_X&#39;,&#39;MNI_Y&#39;,&#39;MNI_Z&#39;.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path : str</span>
+<span class="sd">        Path to CSV/Excel containing coordinate columns.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    np.ndarray</span>
+<span class="sd">        Array of shape (n_regions, 3) with xyz coordinates.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If required coordinate columns are missing.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">load_table_generic</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">required</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;MNI_X&quot;</span><span class="p">,</span> <span class="s2">&quot;MNI_Y&quot;</span><span class="p">,</span> <span class="s2">&quot;MNI_Z&quot;</span><span class="p">]</span>
+    <span class="n">missing</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">required</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">missing</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Missing coordinate columns: </span><span class="si">{</span><span class="n">missing</span><span class="si">}</span><span class="s2"> in </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span><span class="p">[[</span><span class="s2">&quot;MNI_X&quot;</span><span class="p">,</span> <span class="s2">&quot;MNI_Y&quot;</span><span class="p">,</span> <span class="s2">&quot;MNI_Z&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span></div>
+
+
+
+<div class="viewcode-block" id="load_gene_expression">
+<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.load_gene_expression">[docs]</a>
+<span class="k">def</span> <span class="nf">load_gene_expression</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">drop_columns</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">,))</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load gene expression from CSV or Excel adaptively.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path : str</span>
+<span class="sd">        File path (.csv, .xlsx, .xls) containing rows=regions, columns=genes.</span>
+<span class="sd">    drop_columns : Sequence[str], optional</span>
+<span class="sd">        Column names to drop (e.g., labels), by default (&quot;label&quot;,).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Tuple[np.ndarray, pd.Index]</span>
+<span class="sd">        Matrix (n_regions, n_genes) and gene names index.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    - Non-feature columns listed in ``drop_columns`` are removed if present.</span>
+<span class="sd">    - Returned matrix preserves the original row order.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">load_table_generic</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">drop_columns</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span></div>
+
+
+<span class="c1"># Backward-compatible wrappers delegate to adaptive loaders</span>
+
+<div class="viewcode-block" id="load_coordinates">
+<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.load_coordinates">[docs]</a>
+<span class="k">def</span> <span class="nf">load_coordinates</span><span class="p">(</span><span class="n">csv_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Backward-compatible wrapper for ``load_coordinates_adaptive``.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">load_coordinates_adaptive</span><span class="p">(</span><span class="n">csv_path</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="load_gene_expression_csv">
+<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.load_gene_expression_csv">[docs]</a>
+<span class="k">def</span> <span class="nf">load_gene_expression_csv</span><span class="p">(</span><span class="n">csv_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">drop_columns</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">,))</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Backward-compatible wrapper for ``load_gene_expression``.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">load_gene_expression</span><span class="p">(</span><span class="n">csv_path</span><span class="p">,</span> <span class="n">drop_columns</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="load_neurotransmitter_expression">
+<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.load_neurotransmitter_expression">[docs]</a>
+<span class="k">def</span> <span class="nf">load_neurotransmitter_expression</span><span class="p">(</span><span class="n">xlsx_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">drop_columns</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">,))</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load neurotransmitter expression from Excel/CSV adaptively.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    xlsx_path : str</span>
+<span class="sd">        Path to the file containing rows=regions, columns=neurotransmitters.</span>
+<span class="sd">    drop_columns : Sequence[str], optional</span>
+<span class="sd">        Column names to drop (e.g., labels), by default (&quot;label&quot;,).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Tuple[np.ndarray, pd.Index]</span>
+<span class="sd">        Matrix (n_regions, n_neurotransmitters) and names index.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">load_table_generic</span><span class="p">(</span><span class="n">xlsx_path</span><span class="p">)</span>
+    <span class="c1"># Drop any specified non-feature columns if present</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">drop_columns</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span></div>
+
+
+
+<div class="viewcode-block" id="load_mitochondrial_expression">
+<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.load_mitochondrial_expression">[docs]</a>
+<span class="k">def</span> <span class="nf">load_mitochondrial_expression</span><span class="p">(</span><span class="n">xlsx_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">drop_columns</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">,))</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load mitochondrial expression from Excel/CSV adaptively.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    xlsx_path : str</span>
+<span class="sd">        Path to the file containing rows=regions, columns=mitochondrial genes/features.</span>
+<span class="sd">    drop_columns : Sequence[str], optional</span>
+<span class="sd">        Column names to drop (e.g., labels), by default (&quot;label&quot;,).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Tuple[np.ndarray, pd.Index]</span>
+<span class="sd">        Matrix (n_regions, n_features) and names index.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">load_table_generic</span><span class="p">(</span><span class="n">xlsx_path</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">drop_columns</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span></div>
+
+
+
+<div class="viewcode-block" id="zscore_rows">
+<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.zscore_rows">[docs]</a>
+<span class="k">def</span> <span class="nf">zscore_rows</span><span class="p">(</span><span class="n">matrix</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply z-score along rows to standardize each region&#39;s gene expression vector.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    matrix : np.ndarray</span>
+<span class="sd">        Gene expression matrix of shape (n_regions, n_genes).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    np.ndarray</span>
+<span class="sd">        Z-scored matrix with same shape, standardized per row.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Uses ``scipy.stats.zscore`` with default settings (population standardization).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">apply_along_axis</span><span class="p">(</span><span class="n">zscore</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">matrix</span><span class="p">)</span></div>
+
+
+<span class="c1"># -----------------------------</span>
+<span class="c1"># Core computations</span>
+<span class="c1"># -----------------------------</span>
+
+<div class="viewcode-block" id="compute_distance_matrix">
+<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.compute_distance_matrix">[docs]</a>
+<span class="k">def</span> <span class="nf">compute_distance_matrix</span><span class="p">(</span><span class="n">coordinates</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute Euclidean distance matrix between brain regions.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    coordinates : np.ndarray</span>
+<span class="sd">        Array of shape (n_regions, 3) with xyz coordinates.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    np.ndarray</span>
+<span class="sd">        Distance matrix of shape (n_regions, n_regions).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">squareform</span><span class="p">(</span><span class="n">pdist</span><span class="p">(</span><span class="n">coordinates</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;euclidean&quot;</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="compute_cge">
+<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.compute_cge">[docs]</a>
+<span class="k">def</span> <span class="nf">compute_cge</span><span class="p">(</span><span class="n">z_gene_expression</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute correlated gene expression (CGE) between regions.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    z_gene_expression : np.ndarray</span>
+<span class="sd">        Z-scored gene expression matrix of shape (n_regions, n_genes). Rows are regions.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    np.ndarray</span>
+<span class="sd">        Correlation matrix (CGE) of shape (n_regions, n_regions).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">z_gene_expression</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="exponential_decay">
+<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.exponential_decay">[docs]</a>
+<span class="k">def</span> <span class="nf">exponential_decay</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exponential decay function A * exp(-d / n) + B.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    d : np.ndarray</span>
+<span class="sd">        Distance values.</span>
+<span class="sd">    A : float</span>
+<span class="sd">        Amplitude.</span>
+<span class="sd">    n : float</span>
+<span class="sd">        Scale/decay parameter.</span>
+<span class="sd">    B : float</span>
+<span class="sd">        Offset/baseline.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">A</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">d</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">B</span></div>
+
+
+
+<div class="viewcode-block" id="fit_exponential_decay">
+<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.fit_exponential_decay">[docs]</a>
+<span class="k">def</span> <span class="nf">fit_exponential_decay</span><span class="p">(</span><span class="n">distances</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">correlations</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+                          <span class="n">initial_params</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fit the exponential decay relationship between distance and observations.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    distances : np.ndarray</span>
+<span class="sd">        1D array of pairwise distances (upper triangle entries).</span>
+<span class="sd">    correlations : np.ndarray</span>
+<span class="sd">        1D array of observed values matching distances.</span>
+<span class="sd">    initial_params : Sequence[float]</span>
+<span class="sd">        Initial guess for parameters (A, n, B).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Tuple[float, float, float]</span>
+<span class="sd">        Fitted parameters (A, n, B).</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    RuntimeError</span>
+<span class="sd">        If curve fitting fails to converge.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">popt</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">exponential_decay</span><span class="p">,</span> <span class="n">distances</span><span class="p">,</span> <span class="n">correlations</span><span class="p">,</span> <span class="n">p0</span><span class="o">=</span><span class="n">initial_params</span><span class="p">)</span>
+    <span class="n">A</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">B</span> <span class="o">=</span> <span class="n">popt</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">B</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="compute_expected_matrix">
+<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.compute_expected_matrix">[docs]</a>
+<span class="k">def</span> <span class="nf">compute_expected_matrix</span><span class="p">(</span><span class="n">distance_matrix</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute expected matrix using fitted exponential decay parameters.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    distance_matrix : np.ndarray</span>
+<span class="sd">        Pairwise distance matrix.</span>
+<span class="sd">    A, n, B : float</span>
+<span class="sd">        Fitted parameters for exponential decay.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    np.ndarray</span>
+<span class="sd">        Expected values per pair.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">A</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">distance_matrix</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">B</span></div>
+
+
+<span class="c1"># -----------------------------</span>
+<span class="c1"># PLS utilities (shared across modules)</span>
+<span class="c1"># -----------------------------</span>
+<span class="kn">from</span> <span class="nn">sklearn.cross_decomposition</span> <span class="kn">import</span> <span class="n">PLSRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">KFold</span><span class="p">,</span> <span class="n">cross_val_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils</span> <span class="kn">import</span> <span class="n">shuffle</span>
+
+
+<div class="viewcode-block" id="select_optimal_components">
+<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.select_optimal_components">[docs]</a>
+<span class="k">def</span> <span class="nf">select_optimal_components</span><span class="p">(</span><span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+                              <span class="n">max_components</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+                              <span class="n">cv_splits</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+                              <span class="n">random_state</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">list</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Select the optimal number of PLS components using K-Fold cross-validation.</span>
+
+<span class="sd">    This function evaluates Partial Least Squares (PLS) regression models with</span>
+<span class="sd">    different numbers of components and selects the configuration that achieves</span>
+<span class="sd">    the lowest mean cross-validated Mean Squared Error (MSE).</span>
+
+<span class="sd">    Key implementation details:</span>
+<span class="sd">    - Upper bound on n_components: Scikit-learn&#39;s PLSRegression enforces that</span>
+<span class="sd">      ``n_components &lt;= min(n_samples, n_features, n_targets)``. We compute this</span>
+<span class="sd">      upper bound from the input data and cap the search space accordingly to</span>
+<span class="sd">      avoid runtime errors.</span>
+<span class="sd">    - Cross-validation: Uses K-Fold CV with shuffling to obtain stable estimates</span>
+<span class="sd">      of generalization performance. The scoring metric is negative MSE, which</span>
+<span class="sd">      is converted back to MSE for interpretability.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    X : np.ndarray</span>
+<span class="sd">        Predictor matrix of shape (n_samples, n_features).</span>
+<span class="sd">    Y : np.ndarray</span>
+<span class="sd">        Response vector or matrix of shape (n_samples,) or (n_samples, n_targets).</span>
+<span class="sd">        If a 1D vector is provided, it is treated as a single-target regression</span>
+<span class="sd">        with ``n_targets = 1``.</span>
+<span class="sd">    max_components : int, optional</span>
+<span class="sd">        Maximum number of components to consider (before applying the upper bound</span>
+<span class="sd">        constraint). Default is 10.</span>
+<span class="sd">    cv_splits : int, optional</span>
+<span class="sd">        Number of cross-validation folds (K in K-Fold). Default is 5.</span>
+<span class="sd">    random_state : int, optional</span>
+<span class="sd">        Random seed used for shuffling in K-Fold to ensure reproducibility.</span>
+<span class="sd">        Default is 42.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Tuple[int, list]</span>
+<span class="sd">        - best_n_comp: The number of components (1-based) yielding the lowest</span>
+<span class="sd">          mean CV MSE across folds.</span>
+<span class="sd">        - mse_scores: A list of mean CV MSE values for each evaluated component</span>
+<span class="sd">          count, ordered from 1 to ``min(max_components, upper_bound)``.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    - If multiple component counts result in identical MSE, ``np.argmin``</span>
+<span class="sd">      returns the first occurrence (i.e., the smallest number of components).</span>
+<span class="sd">    - The returned ``mse_scores`` can be plotted against component counts to</span>
+<span class="sd">      visualize the bias-variance trade-off and identify potential overfitting.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Prepare CV splitter with reproducible shuffling</span>
+    <span class="n">cv</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="n">cv_splits</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
+
+    <span class="c1"># Determine sklearn&#39;s upper bound for n_components</span>
+    <span class="n">n_samples</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">n_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">n_targets</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">Y</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">Y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">upper_bound</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span><span class="p">,</span> <span class="n">n_targets</span><span class="p">))</span>
+
+    <span class="c1"># Cap the component search space to avoid invalid configurations</span>
+    <span class="n">max_n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">max_components</span><span class="p">,</span> <span class="n">upper_bound</span><span class="p">))</span>
+
+    <span class="n">mse_scores</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Collect mean CV MSE for each component count</span>
+
+    <span class="c1"># Evaluate PLS models from 1 to max_n components</span>
+    <span class="k">for</span> <span class="n">n_comp</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">pls</span> <span class="o">=</span> <span class="n">PLSRegression</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_comp</span><span class="p">)</span>
+        <span class="c1"># cross_val_score returns negative MSE; convert to positive MSE by negation</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">pls</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;neg_mean_squared_error&#39;</span><span class="p">)</span>
+        <span class="n">mse_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">scores</span><span class="p">))</span>
+
+    <span class="c1"># Select the component count with the smallest mean CV MSE</span>
+    <span class="n">best_n_comp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">mse_scores</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># +1 to map index -&gt; component count</span>
+    <span class="k">return</span> <span class="n">best_n_comp</span><span class="p">,</span> <span class="n">mse_scores</span></div>
+
+
+
+<div class="viewcode-block" id="run_pls">
+<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.run_pls">[docs]</a>
+<span class="k">def</span> <span class="nf">run_pls</span><span class="p">(</span><span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">n_components</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">PLSRegression</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fit a PLS regression model and return weights and scores.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    X : np.ndarray</span>
+<span class="sd">        Predictor matrix (n_samples, n_features).</span>
+<span class="sd">    Y : np.ndarray</span>
+<span class="sd">        Response vector/matrix (n_samples,) or (n_samples, n_targets).</span>
+<span class="sd">    n_components : int</span>
+<span class="sd">        Number of latent components in PLS.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Tuple[PLSRegression, np.ndarray, np.ndarray, np.ndarray]</span>
+<span class="sd">        Fitted PLS model, x_weights, x_scores, y_scores.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pls</span> <span class="o">=</span> <span class="n">PLSRegression</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_components</span><span class="p">)</span>
+    <span class="n">pls</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pls</span><span class="p">,</span> <span class="n">pls</span><span class="o">.</span><span class="n">x_weights_</span><span class="p">,</span> <span class="n">pls</span><span class="o">.</span><span class="n">x_scores_</span><span class="p">,</span> <span class="n">pls</span><span class="o">.</span><span class="n">y_scores_</span></div>
+
+
+
+<div class="viewcode-block" id="permutation_pvalues">
+<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.permutation_pvalues">[docs]</a>
+<span class="k">def</span> <span class="nf">permutation_pvalues</span><span class="p">(</span><span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">n_components</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                        <span class="n">target_component_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                        <span class="n">n_permutations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute permutation p-values for PLS weights of a specific component.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    X : np.ndarray</span>
+<span class="sd">        Predictor matrix.</span>
+<span class="sd">    Y : np.ndarray</span>
+<span class="sd">        Response vector/matrix.</span>
+<span class="sd">    n_components : int</span>
+<span class="sd">        Number of PLS components to fit.</span>
+<span class="sd">    target_component_index : int</span>
+<span class="sd">        Index of the component whose weights are tested.</span>
+<span class="sd">    n_permutations : int, optional</span>
+<span class="sd">        Number of permutations, default 1000.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    np.ndarray</span>
+<span class="sd">        P-values per feature for the target component&#39;s weights.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    - The null distribution is built by shuffling X and Y jointly with a fixed</span>
+<span class="sd">      random seed per permutation for reproducibility.</span>
+<span class="sd">    - Two-sided testing is approximated by comparing absolute weights to the</span>
+<span class="sd">      empirical null absolute weights.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pls</span><span class="p">,</span> <span class="n">x_weights</span><span class="p">,</span> <span class="n">x_scores</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">run_pls</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">n_components</span><span class="p">)</span>
+    <span class="n">true_weights</span> <span class="o">=</span> <span class="n">x_weights</span><span class="p">[:,</span> <span class="n">target_component_index</span><span class="p">]</span>
+
+    <span class="n">perm_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_permutations</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_permutations</span><span class="p">):</span>
+        <span class="n">X_perm</span><span class="p">,</span> <span class="n">Y_perm</span> <span class="o">=</span> <span class="n">shuffle</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">pls_perm</span> <span class="o">=</span> <span class="n">PLSRegression</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_components</span><span class="p">)</span>
+        <span class="n">pls_perm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_perm</span><span class="p">,</span> <span class="n">Y_perm</span><span class="p">)</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">pls_perm</span><span class="o">.</span><span class="n">x_weights_</span><span class="p">[:,</span> <span class="n">target_component_index</span><span class="p">]</span>
+        <span class="n">perm_weights</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">w</span>
+
+    <span class="n">p_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">perm_weights</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">true_weights</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">p_values</span></div>
+
+
+
+<div class="viewcode-block" id="plot_mse_curve">
+<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.plot_mse_curve">[docs]</a>
+<span class="k">def</span> <span class="nf">plot_mse_curve</span><span class="p">(</span><span class="n">mse_scores</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">save_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot mean CV MSE vs. number of PLS components.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    mse_scores : Sequence[float]</span>
+<span class="sd">        Mean CV MSE per component count.</span>
+<span class="sd">    save_path : Optional[str], optional</span>
+<span class="sd">        Path to save the figure (created if directory missing). If None, only</span>
+<span class="sd">        renders the plot in memory for the caller to handle.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">mse_scores</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">mse_scores</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;PLS Components&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;MSE (CV)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">save_path</span><span class="p">:</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">d</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="permutation_explained_variance">
+<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.permutation_explained_variance">[docs]</a>
+<span class="k">def</span> <span class="nf">permutation_explained_variance</span><span class="p">(</span><span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">n_components</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_permutations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute explained variance ratio per component and permutation p-values for components.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    X : np.ndarray</span>
+<span class="sd">        Predictor matrix.</span>
+<span class="sd">    Y : np.ndarray</span>
+<span class="sd">        Response matrix/vector.</span>
+<span class="sd">    n_components : int</span>
+<span class="sd">        Number of PLS components.</span>
+<span class="sd">    n_permutations : int, optional</span>
+<span class="sd">        Number of permutations, default 1000.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Tuple[np.ndarray, np.ndarray, np.ndarray]</span>
+<span class="sd">        explained_variance_ratio (components,), p_values (components,), weights (features x components)</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    - Explained variance is computed from X scores relative to total variance of X.</span>
+<span class="sd">    - Permutation p-values quantify whether the observed explained variance per</span>
+<span class="sd">      component exceeds the null distribution obtained by shuffling.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pls</span><span class="p">,</span> <span class="n">x_weights</span><span class="p">,</span> <span class="n">x_scores</span><span class="p">,</span> <span class="n">y_scores</span> <span class="o">=</span> <span class="n">run_pls</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">n_components</span><span class="p">)</span>
+    <span class="n">total_var_X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">explained_var_X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">x_scores</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">total_var_X</span>
+
+    <span class="c1"># Permutation to get null distribution of explained variance per component</span>
+    <span class="n">null_explained</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_permutations</span><span class="p">,</span> <span class="n">n_components</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_permutations</span><span class="p">):</span>
+        <span class="n">X_perm</span><span class="p">,</span> <span class="n">Y_perm</span> <span class="o">=</span> <span class="n">shuffle</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">pls_perm</span> <span class="o">=</span> <span class="n">PLSRegression</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_components</span><span class="p">)</span>
+        <span class="n">pls_perm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_perm</span><span class="p">,</span> <span class="n">Y_perm</span><span class="p">)</span>
+        <span class="n">scores_perm</span> <span class="o">=</span> <span class="n">pls_perm</span><span class="o">.</span><span class="n">x_scores_</span>
+        <span class="n">null_explained</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">scores_perm</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">total_var_X</span>
+
+    <span class="n">p_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">null_explained</span> <span class="o">&gt;=</span> <span class="n">explained_var_X</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">explained_var_X</span><span class="p">,</span> <span class="n">p_values</span><span class="p">,</span> <span class="n">x_weights</span></div>
+
+
+
+<div class="viewcode-block" id="plot_rmse_and_variance">
+<a class="viewcode-back" href="../../BrainNetAnno.html#BrainNetAnno.utils.plot_rmse_and_variance">[docs]</a>
+<span class="k">def</span> <span class="nf">plot_rmse_and_variance</span><span class="p">(</span><span class="n">cv_errors</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+                           <span class="n">explained_variance_ratio</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+                           <span class="n">fig_outputfile</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Save two figures: CV RMSE curve and explained variance per component.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cv_errors : np.ndarray</span>
+<span class="sd">        Mean CV RMSE per number of components.</span>
+<span class="sd">    explained_variance_ratio : np.ndarray</span>
+<span class="sd">        Explained variance ratio of X per component.</span>
+<span class="sd">    fig_outputfile : str</span>
+<span class="sd">        Base output path (two figures are saved with suffixes).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+    <span class="kn">import</span> <span class="nn">os</span>
+    <span class="n">root</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fig_outputfile</span><span class="p">)</span>
+    <span class="n">rmse_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">root</span><span class="si">}</span><span class="s2">_RMSE</span><span class="si">{</span><span class="n">ext</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s1">&#39;.png&#39;</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">var_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">root</span><span class="si">}</span><span class="s2">_ExplainedVariance</span><span class="si">{</span><span class="n">ext</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s1">&#39;.png&#39;</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">[</span><span class="n">rmse_path</span><span class="p">,</span> <span class="n">var_path</span><span class="p">]:</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">d</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">cv_errors</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">cv_errors</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;PLS CV RMSE&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Components&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;RMSE&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">rmse_path</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">explained_variance_ratio</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">explained_variance_ratio</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Explained Variance (X)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Components&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Explained Variance (%)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">var_path</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, BrainNetAnno.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

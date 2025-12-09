@@ -1,0 +1,85 @@
+BrainNetAnno package
+====================
+
+Submodules
+----------
+
+BrainNetAnno.gene\_celltype module
+----------------------------------
+
+.. automodule:: BrainNetAnno.gene_celltype
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+BrainNetAnno.gene\_layer module
+-------------------------------
+
+.. automodule:: BrainNetAnno.gene_layer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+BrainNetAnno.mitochondrial module
+---------------------------------
+
+.. automodule:: BrainNetAnno.mitochondrial
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+BrainNetAnno.mitochondrial\_pls\_cge module
+-------------------------------------------
+
+.. automodule:: BrainNetAnno.mitochondrial_pls_cge
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+BrainNetAnno.neurotransmitter module
+------------------------------------
+
+.. automodule:: BrainNetAnno.neurotransmitter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+BrainNetAnno.neurotransmitter\_pls\_cge module
+----------------------------------------------
+
+.. automodule:: BrainNetAnno.neurotransmitter_pls_cge
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+BrainNetAnno.transcriptome module
+---------------------------------
+
+.. automodule:: BrainNetAnno.transcriptome
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+BrainNetAnno.transcriptome\_pls\_cge module
+-------------------------------------------
+
+.. automodule:: BrainNetAnno.transcriptome_pls_cge
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+BrainNetAnno.utils module
+-------------------------
+
+.. automodule:: BrainNetAnno.utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: BrainNetAnno
+   :members:
+   :undoc-members:
+   :show-inheritance:

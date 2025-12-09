@@ -1,0 +1,289 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrainNetAnno.mitochondrial &mdash; BrainNetAnno  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="BrainNetAnno.mitochondrial_pls_cge" href="BrainNetAnno.mitochondrial_pls_cge.html" />
+    <link rel="prev" title="BrainNetAnno.gene_layer" href="BrainNetAnno.gene_layer.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../modules.html">Module Index</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="BrainNetAnno.html">BrainNetAnno</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="BrainNetAnno.gene_celltype.html">BrainNetAnno.gene_celltype</a></li>
+<li class="toctree-l3"><a class="reference internal" href="BrainNetAnno.gene_layer.html">BrainNetAnno.gene_layer</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">BrainNetAnno.mitochondrial</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#BrainNetAnno.mitochondrial.build_precision_matrix"><code class="docutils literal notranslate"><span class="pre">build_precision_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BrainNetAnno.mitochondrial.compute_residual_matrix"><code class="docutils literal notranslate"><span class="pre">compute_residual_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BrainNetAnno.mitochondrial.lofo_contribution"><code class="docutils literal notranslate"><span class="pre">lofo_contribution()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BrainNetAnno.mitochondrial.plot_distance_decay"><code class="docutils literal notranslate"><span class="pre">plot_distance_decay()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BrainNetAnno.mitochondrial.run_mitochondrial_pipeline"><code class="docutils literal notranslate"><span class="pre">run_mitochondrial_pipeline()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="BrainNetAnno.mitochondrial_pls_cge.html">BrainNetAnno.mitochondrial_pls_cge</a></li>
+<li class="toctree-l3"><a class="reference internal" href="BrainNetAnno.neurotransmitter.html">BrainNetAnno.neurotransmitter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="BrainNetAnno.neurotransmitter_pls_cge.html">BrainNetAnno.neurotransmitter_pls_cge</a></li>
+<li class="toctree-l3"><a class="reference internal" href="BrainNetAnno.transcriptome.html">BrainNetAnno.transcriptome</a></li>
+<li class="toctree-l3"><a class="reference internal" href="BrainNetAnno.transcriptome_pls_cge.html">BrainNetAnno.transcriptome_pls_cge</a></li>
+<li class="toctree-l3"><a class="reference internal" href="BrainNetAnno.utils.html">BrainNetAnno.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.transcriptome_pls_cge.html">BrainNetAnno.transcriptome_pls_cge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.neurotransmitter_pls_cge.html">BrainNetAnno.neurotransmitter_pls_cge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.mitochondrial_pls_cge.html">BrainNetAnno.mitochondrial_pls_cge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.gene_celltype.html">BrainNetAnno.gene_celltype</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.gene_layer.html">BrainNetAnno.gene_layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.utils.html">BrainNetAnno.utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BrainNetAnno</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../modules.html">Module Index</a></li>
+          <li class="breadcrumb-item"><a href="BrainNetAnno.html">BrainNetAnno</a></li>
+      <li class="breadcrumb-item active">BrainNetAnno.mitochondrial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/_autosummary/BrainNetAnno.mitochondrial.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-BrainNetAnno.mitochondrial">
+<span id="brainnetanno-mitochondrial"></span><h1>BrainNetAnno.mitochondrial<a class="headerlink" href="#module-BrainNetAnno.mitochondrial" title="Link to this heading"></a></h1>
+<p>Mitochondrial network analysis utilities using NumPy/SciPy/Scikit-learn on CPU.</p>
+<p>This module provides functions to build precision matrices, fit distance-decay
+models, compute residual networks, and perform leave-one-feature-out (LOFO)
+contribution analysis for mitochondrial sets.</p>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#BrainNetAnno.mitochondrial.build_precision_matrix" title="BrainNetAnno.mitochondrial.build_precision_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_precision_matrix</span></code></a>(...)</p></td>
+<td><p>Estimate covariance and precision for mitochondrial expression.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#BrainNetAnno.mitochondrial.compute_residual_matrix" title="BrainNetAnno.mitochondrial.compute_residual_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_residual_matrix</span></code></a>(observed_matrix, ...)</p></td>
+<td><p>Compute residual network as observed minus expected.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#BrainNetAnno.mitochondrial.lofo_contribution" title="BrainNetAnno.mitochondrial.lofo_contribution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lofo_contribution</span></code></a>(...)</p></td>
+<td><p>Perform Leave-One-Feature-Out (LOFO) analysis to estimate mitochondrial contributions.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#BrainNetAnno.mitochondrial.plot_distance_decay" title="BrainNetAnno.mitochondrial.plot_distance_decay"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_distance_decay</span></code></a>(distances, conn_values, ...)</p></td>
+<td><p>Plot empirical connection strength vs.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#BrainNetAnno.mitochondrial.run_mitochondrial_pipeline" title="BrainNetAnno.mitochondrial.run_mitochondrial_pipeline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_mitochondrial_pipeline</span></code></a>(coordinates_path, ...)</p></td>
+<td><p>Run mitochondrial CGE/precision analysis and optionally save LOFO mitochondrial contributions.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.mitochondrial.build_precision_matrix">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.mitochondrial.</span></span><span class="sig-name descname"><span class="pre">build_precision_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z_mitochondrial_expression</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/mitochondrial.html#build_precision_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.mitochondrial.build_precision_matrix" title="Link to this definition"></a></dt>
+<dd><p>Estimate covariance and precision for mitochondrial expression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>z_mitochondrial_expression</strong> (<em>np.ndarray</em>) – Z-scored mitochondrial expression matrix of shape (n_regions, n_mitochondrial). Rows are regions.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(covariance, precision) matrices of shape (n_mitochondrial, n_mitochondrial).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[np.ndarray, np.ndarray]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.mitochondrial.compute_residual_matrix">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.mitochondrial.</span></span><span class="sig-name descname"><span class="pre">compute_residual_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observed_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/mitochondrial.html#compute_residual_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.mitochondrial.compute_residual_matrix" title="Link to this definition"></a></dt>
+<dd><p>Compute residual network as observed minus expected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>observed_matrix</strong> (<em>np.ndarray</em>) – Observed connection/precision matrix.</p></li>
+<li><p><strong>expected_matrix</strong> (<em>np.ndarray</em>) – Expected connection matrix computed from distance decay.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Residual matrix of the same shape as inputs.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.mitochondrial.lofo_contribution">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.mitochondrial.</span></span><span class="sig-name descname"><span class="pre">lofo_contribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z_mitochondrial_expression</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">region_pairs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_precision</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mitochondrial_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.DataFrame</span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/mitochondrial.html#lofo_contribution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.mitochondrial.lofo_contribution" title="Link to this definition"></a></dt>
+<dd><p>Perform Leave-One-Feature-Out (LOFO) analysis to estimate mitochondrial contributions.</p>
+<p>For each mitochondrial g, remove it from the expression matrix, rebuild the precision
+matrix, and compute the change in residuals per connection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z_mitochondrial_expression</strong> (<em>np.ndarray</em>) – Z-scored mitochondrial expression matrix of shape (n_regions, n_mitochondrial). Rows are regions.</p></li>
+<li><p><strong>expected_matrix</strong> (<em>np.ndarray</em>) – Expected connection matrix of shape (n_regions, n_regions).</p></li>
+<li><p><strong>region_pairs</strong> (<em>Iterable</em><em>[</em><em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em><em>]</em>) – Iterable of (i, j) indices representing upper-triangle connections.</p></li>
+<li><p><strong>base_precision</strong> (<em>np.ndarray</em>) – Precision matrix computed from the full set of mitochondrial (shape (n_mitochondrial, n_mitochondrial)).</p></li>
+<li><p><strong>mitochondrial_names</strong> (<em>Sequence</em><em>[</em><em>str</em><em>]</em>) – Names of mitochondria corresponding to columns in z_mitochondrial_expression.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame containing per-connection contribution scores per mitochondrial with column ‘Region_Pair’.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.mitochondrial.plot_distance_decay">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.mitochondrial.</span></span><span class="sig-name descname"><span class="pre">plot_distance_decay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distances</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conn_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/mitochondrial.html#plot_distance_decay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.mitochondrial.plot_distance_decay" title="Link to this definition"></a></dt>
+<dd><p>Plot empirical connection strength vs. distance and fitted exponential decay curve.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>distances</strong> (<em>np.ndarray</em>) – 1D array of pairwise distances (upper triangle entries).</p></li>
+<li><p><strong>conn_values</strong> (<em>np.ndarray</em>) – 1D array of observed connection strengths matching distances.</p></li>
+<li><p><strong>params</strong> (<em>Tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>]</em>) – Fitted parameters (A, n, B).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.mitochondrial.run_mitochondrial_pipeline">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.mitochondrial.</span></span><span class="sig-name descname"><span class="pre">run_mitochondrial_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coordinates_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mitochondrial_expression_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_contribution_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(1.0,</span> <span class="pre">50.0,</span> <span class="pre">0.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_plot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pandas.DataFrame</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/mitochondrial.html#run_mitochondrial_pipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.mitochondrial.run_mitochondrial_pipeline" title="Link to this definition"></a></dt>
+<dd><p>Run mitochondrial CGE/precision analysis and optionally save LOFO mitochondrial contributions.</p>
+<p>This high-level pipeline loads region coordinates and mitochondrial expression
+from Excel, computes distances and a precision-based connection
+measure, fits an exponential distance-decay model, builds an expected
+connection matrix, and performs leave-one-feature-out (LOFO) analysis to
+quantify per-mitochondrial contributions per region pair. Results can be saved to
+CSV and an optional distance-decay plot can be saved.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>coordinates_csv</strong> (<em>str</em>) – Path to the CSV containing region coordinates (columns: <code class="docutils literal notranslate"><span class="pre">MNI_X</span></code>,
+<code class="docutils literal notranslate"><span class="pre">MNI_Y</span></code>, <code class="docutils literal notranslate"><span class="pre">MNI_Z</span></code>).</p></li>
+<li><p><strong>mitochondrial_expression_xlsx</strong> (<em>str</em>) – Path to the Excel file containing mitochondrial expression
+(rows=regions, columns=mitochondrial). Label columns may be dropped upstream.</p></li>
+<li><p><strong>output_contribution_csv</strong> (<em>str</em>) – Path to save the per-connection LOFO mitochondrial contribution scores as CSV.
+Parent directories are created automatically.</p></li>
+<li><p><strong>initial_params</strong> (<em>Sequence</em><em>[</em><em>float</em><em>]</em><em>, </em><em>optional</em>) – Initial guess for decay parameters <code class="docutils literal notranslate"><span class="pre">(A,</span> <span class="pre">n,</span> <span class="pre">B)</span></code>, by default
+<code class="docutils literal notranslate"><span class="pre">(1.0,</span> <span class="pre">50.0,</span> <span class="pre">0.0)</span></code>.</p></li>
+<li><p><strong>save_plot</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to save the fitted distance-decay plot. Default <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><strong>plot_path</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Path to save the plot when <code class="docutils literal notranslate"><span class="pre">save_plot=True</span></code>. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, a file next
+to <code class="docutils literal notranslate"><span class="pre">output_contribution_csv</span></code> is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The fitted decay parameters <code class="docutils literal notranslate"><span class="pre">(A,</span> <span class="pre">n,</span> <span class="pre">B)</span></code> and the LOFO contribution
+DataFrame with a <code class="docutils literal notranslate"><span class="pre">'Region_Pair'</span></code> column followed by per-mitochondrial
+scores.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[Tuple[float, float, float], pd.DataFrame]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Rows of the expression matrix are z-scored prior to precision modeling.</p></li>
+<li><p>Precision matrix is estimated via Ledoit–Wolf shrinkage.</p></li>
+<li><p>Expected matrix is derived from the fitted decay parameters.</p></li>
+<li><p>Parent directories for <code class="docutils literal notranslate"><span class="pre">output_contribution_csv</span></code> are created
+automatically when saving results.</p></li>
+</ul>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="BrainNetAnno.gene_layer.html" class="btn btn-neutral float-left" title="BrainNetAnno.gene_layer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="BrainNetAnno.mitochondrial_pls_cge.html" class="btn btn-neutral float-right" title="BrainNetAnno.mitochondrial_pls_cge" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, BrainNetAnno.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

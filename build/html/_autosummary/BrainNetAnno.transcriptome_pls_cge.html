@@ -1,0 +1,242 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrainNetAnno.transcriptome_pls_cge &mdash; BrainNetAnno  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="BrainNetAnno.utils" href="BrainNetAnno.utils.html" />
+    <link rel="prev" title="BrainNetAnno.transcriptome" href="BrainNetAnno.transcriptome.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../modules.html">Module Index</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.html">BrainNetAnno</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">BrainNetAnno.transcriptome_pls_cge</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.transcriptome_pls_cge.read_data_from_files"><code class="docutils literal notranslate"><span class="pre">read_data_from_files()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.transcriptome_pls_cge.select_best_component_and_genes"><code class="docutils literal notranslate"><span class="pre">select_best_component_and_genes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.transcriptome_pls_cge.save_best_genes_to_csv"><code class="docutils literal notranslate"><span class="pre">save_best_genes_to_csv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.transcriptome_pls_cge.run_transcriptome_pls_pipeline"><code class="docutils literal notranslate"><span class="pre">run_transcriptome_pls_pipeline()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.neurotransmitter_pls_cge.html">BrainNetAnno.neurotransmitter_pls_cge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.mitochondrial_pls_cge.html">BrainNetAnno.mitochondrial_pls_cge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.gene_celltype.html">BrainNetAnno.gene_celltype</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.gene_layer.html">BrainNetAnno.gene_layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.utils.html">BrainNetAnno.utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BrainNetAnno</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../modules.html">Module Index</a></li>
+          <li class="breadcrumb-item"><a href="BrainNetAnno.html">BrainNetAnno</a></li>
+      <li class="breadcrumb-item active">BrainNetAnno.transcriptome_pls_cge</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/_autosummary/BrainNetAnno.transcriptome_pls_cge.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-BrainNetAnno.transcriptome_pls_cge">
+<span id="brainnetanno-transcriptome-pls-cge"></span><h1>BrainNetAnno.transcriptome_pls_cge<a class="headerlink" href="#module-BrainNetAnno.transcriptome_pls_cge" title="Link to this heading"></a></h1>
+<p>PLS analysis for transcriptome gene contributions against FC deviations.</p>
+<p>Provides reusable functions to select PLS components via CV, run PLS, compute
+permutation p-values for weights, plotting utilities, and high-level pipeline.</p>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#BrainNetAnno.transcriptome_pls_cge.read_data_from_files" title="BrainNetAnno.transcriptome_pls_cge.read_data_from_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_data_from_files</span></code></a>(t_values_file, ...)</p></td>
+<td><p>Read FC deviation (t_values) and gene contribution matrices, align by Region_Pair.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#BrainNetAnno.transcriptome_pls_cge.run_transcriptome_pls_pipeline" title="BrainNetAnno.transcriptome_pls_cge.run_transcriptome_pls_pipeline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_transcriptome_pls_pipeline</span></code></a>(...[, ...])</p></td>
+<td><p>Run PLS-based transcriptome analysis linking FC deviations to gene contributions.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#BrainNetAnno.transcriptome_pls_cge.save_best_genes_to_csv" title="BrainNetAnno.transcriptome_pls_cge.save_best_genes_to_csv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_best_genes_to_csv</span></code></a>(gene_names, ...)</p></td>
+<td><p>Save significant genes info to CSV file.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#BrainNetAnno.transcriptome_pls_cge.select_best_component_and_genes" title="BrainNetAnno.transcriptome_pls_cge.select_best_component_and_genes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select_best_component_and_genes</span></code></a>(...[, threshold])</p></td>
+<td><p>Select best component (prefer significant) and significant genes by simple z-score permutation.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.transcriptome_pls_cge.read_data_from_files">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.transcriptome_pls_cge.</span></span><span class="sig-name descname"><span class="pre">read_data_from_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_values_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_expression_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.DataFrame</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/transcriptome_pls_cge.html#read_data_from_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.transcriptome_pls_cge.read_data_from_files" title="Link to this definition"></a></dt>
+<dd><p>Read FC deviation (t_values) and gene contribution matrices, align by Region_Pair.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t_values_file</strong> (<em>str</em>) – Path to CSV containing a square matrix of FC deviations (no header).</p></li>
+<li><p><strong>gene_expression_file</strong> (<em>str</em>) – Path to CSV containing gene contributions with a ‘Region_Pair’ column.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(df_pairs_values, t_values_vector, gene_matrix_aligned, gene_names_array)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[pd.DataFrame, np.ndarray, np.ndarray, np.ndarray]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.transcriptome_pls_cge.select_best_component_and_genes">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.transcriptome_pls_cge.</span></span><span class="sig-name descname"><span class="pre">select_best_component_and_genes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">explained_variance_ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BrainNetAnno/transcriptome_pls_cge.html#select_best_component_and_genes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.transcriptome_pls_cge.select_best_component_and_genes" title="Link to this definition"></a></dt>
+<dd><p>Select best component (prefer significant) and significant genes by simple z-score permutation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>explained_variance_ratio</strong> (<em>np.ndarray</em>) – Ratio of variance explained per component.</p></li>
+<li><p><strong>p_values</strong> (<em>np.ndarray</em>) – P-values per component from permutation.</p></li>
+<li><p><strong>weights</strong> (<em>np.ndarray</em>) – X weights matrix from PLS, shape (n_features, n_components).</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Significance threshold, by default 0.05.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>best_component_index, best_genes_indices, z_scores_per_gene, p_values_per_gene</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[int, np.ndarray, np.ndarray, np.ndarray]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.transcriptome_pls_cge.save_best_genes_to_csv">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.transcriptome_pls_cge.</span></span><span class="sig-name descname"><span class="pre">save_best_genes_to_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gene_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">best_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_scores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_values_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/transcriptome_pls_cge.html#save_best_genes_to_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.transcriptome_pls_cge.save_best_genes_to_csv" title="Link to this definition"></a></dt>
+<dd><p>Save significant genes info to CSV file.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BrainNetAnno.transcriptome_pls_cge.run_transcriptome_pls_pipeline">
+<span class="sig-prename descclassname"><span class="pre">BrainNetAnno.transcriptome_pls_cge.</span></span><span class="sig-name descname"><span class="pre">run_transcriptome_pls_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_values_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_expression_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_best_genes_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mse_plot_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explained_variance_plot_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv_splits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_permutations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/transcriptome_pls_cge.html#run_transcriptome_pls_pipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.transcriptome_pls_cge.run_transcriptome_pls_pipeline" title="Link to this definition"></a></dt>
+<dd><p>Run PLS-based transcriptome analysis linking FC deviations to gene contributions.</p>
+<p>This pipeline reads FC deviation (t-values) and per-connection gene
+contribution matrices, aligns them by <code class="docutils literal notranslate"><span class="pre">Region_Pair</span></code>, standardizes inputs,
+selects the optimal number of PLS components via cross-validated RMSE,
+estimates permutation-based significance for explained variance and feature
+weights, saves the significant genes to CSV, and plots RMSE and explained
+variance curves.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t_values_file</strong> (<em>str</em>) – Path to the CSV containing a square matrix of FC deviations (no header).</p></li>
+<li><p><strong>gene_expression_file</strong> (<em>str</em>) – Path to the CSV containing per-connection gene contributions with a
+<code class="docutils literal notranslate"><span class="pre">'Region_Pair'</span></code> column.</p></li>
+<li><p><strong>output_best_genes_csv</strong> (<em>str</em>) – Path to save the significant genes table. Parent directories are
+created automatically.</p></li>
+<li><p><strong>fig_outputfile</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Path to save plots (RMSE curve and explained variance). If <code class="docutils literal notranslate"><span class="pre">None</span></code>,
+plots are saved next to <code class="docutils literal notranslate"><span class="pre">output_best_genes_csv</span></code>. Default <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>max_components</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum number of components to consider in CV. Default <code class="docutils literal notranslate"><span class="pre">15</span></code>.</p></li>
+<li><p><strong>n_splits</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of CV splits. Default <code class="docutils literal notranslate"><span class="pre">5</span></code>.</p></li>
+<li><p><strong>n_permutations</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of permutations for significance testing. Default <code class="docutils literal notranslate"><span class="pre">1000</span></code>.</p></li>
+<li><p><strong>n_components</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – If provided, forces the number of components; otherwise chosen by CV.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Saves outputs to disk and logs progress.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Inputs are standardized before fitting.</p></li>
+<li><p>Significant component selection prefers components with permutation
+p-values below the threshold; otherwise the component with highest
+explained variance is chosen.</p></li>
+<li><p>Output directories are created automatically for CSV and figures.</p></li>
+</ul>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="BrainNetAnno.transcriptome.html" class="btn btn-neutral float-left" title="BrainNetAnno.transcriptome" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="BrainNetAnno.utils.html" class="btn btn-neutral float-right" title="BrainNetAnno.utils" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, BrainNetAnno.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
