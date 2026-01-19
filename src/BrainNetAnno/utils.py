@@ -362,18 +362,18 @@ def select_optimal_components(X: np.ndarray, Y: np.ndarray,
     cv = KFold(n_splits=cv_splits, shuffle=True, random_state=random_state)
 
     # Determine sklearn's upper bound for n_components
-    n_samples = X.shape[0]
-    n_features = X.shape[1]
-    n_targets = 1 if Y.ndim == 1 else Y.shape[1]
-    upper_bound = int(min(n_samples, n_features, n_targets))
+    # n_samples = X.shape[0]
+    # n_features = X.shape[1]
+    # n_targets = 1 if Y.ndim == 1 else Y.shape[1]
+    # upper_bound = int(min(n_samples, n_features, n_targets))
 
-    # Cap the component search space to avoid invalid configurations
-    max_n = int(min(max_components, upper_bound))
+    # # Cap the component search space to avoid invalid configurations
+    # max_n = int(min(max_components, upper_bound))
 
     mse_scores = []  # Collect mean CV MSE for each component count
 
     # Evaluate PLS models from 1 to max_n components
-    for n_comp in range(1, max_n + 1):
+    for n_comp in range(1, max_components + 1):
         pls = PLSRegression(n_components=n_comp)
         # cross_val_score returns negative MSE; convert to positive MSE by negation
         scores = cross_val_score(pls, X, Y, cv=cv, scoring='neg_mean_squared_error')
