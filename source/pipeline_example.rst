@@ -19,7 +19,31 @@ After installation, you can download Allen Human Brain Atlas microarray data and
     import abagen
     # Download Allen microarray data
     abagen.datasets.fetch_microarray(donors='all')  # fetch data for all donors
+    import pandas as pd
+    import inspect
 
+    # 兼容 DataFrame.set_axis(..., inplace=...)
+    if 'inplace' not in inspect.signature(pd.DataFrame.set_axis).parameters:
+        _orig_set_axis = pd.DataFrame.set_axis
+        def _set_axis_compat(self, labels, axis=0, inplace=None):
+            return _orig_set_axis(self, labels, axis=axis)
+        pd.DataFrame.set_axis = _set_axis_compat
+
+    # 兼容 DataFrame.append(...)
+    if not hasattr(pd.DataFrame, 'append'):
+        def _df_append(self, other, ignore_index=False, verify_integrity=False, sort=False):
+            # pandas<2 的 append 等价于 concat 按行拼接
+            res = pd.concat([self, other], axis=0, ignore_index=ignore_index, sort=sort)
+            return res
+        pd.DataFrame.append = _df_append
+
+    # 兼容 Series.append(...)
+    if not hasattr(pd.Series, 'append'):
+        def _ser_append(self, to_append, ignore_index=False, verify_integrity=False):
+            res = pd.concat([self, to_append], axis=0, ignore_index=ignore_index)
+            return res
+        pd.Series.append = _ser_append
+        
     expression = abagen.get_expression_data(
         atlas="/path/to/standard_brain_atlas.nii.gz",  # path to the template atlas (e.g., BNA246, AAL)
         missing='centroids',                            # strategy to fill missing data; see abagen docs
