@@ -1,21 +1,21 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="./">
+<html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Installation and setup &mdash; BrainNetAnno  documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=5929fcd5"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=b3ba4146"></script>
+      <script src="_static/doctools.js?v=888ff710"></script>
+      <script src="_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -86,7 +86,7 @@
            <div itemprop="articleBody">
              
   <section id="installation-and-setup">
-<h1>Installation and setup<a class="headerlink" href="#installation-and-setup" title="Link to this heading"></a></h1>
+<h1>Installation and setup<a class="headerlink" href="#installation-and-setup" title="Permalink to this heading"></a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Using a virtual environment (<code class="docutils literal notranslate"><span class="pre">venv</span></code> or <code class="docutils literal notranslate"><span class="pre">conda</span></code>) is highly recommended to
@@ -94,7 +94,7 @@ avoid conflicts with system packages. The examples below assume you are
 working in an isolated environment.</p>
 </div>
 <section id="basic-installation">
-<h2>Basic installation<a class="headerlink" href="#basic-installation" title="Link to this heading"></a></h2>
+<h2>Basic installation<a class="headerlink" href="#basic-installation" title="Permalink to this heading"></a></h2>
 <p>This package requires Python 3.8 or later. If you already have a supported
 Python version installed, the simplest option is to install the latest
 released wheel from PyPI:</p>
@@ -106,7 +106,7 @@ project metadata. The wheel distribution avoids source compilation and is the
 recommended route for most users.</p>
 </section>
 <section id="install-from-source-github">
-<h2>Install from source (GitHub)<a class="headerlink" href="#install-from-source-github" title="Link to this heading"></a></h2>
+<h2>Install from source (GitHub)<a class="headerlink" href="#install-from-source-github" title="Permalink to this heading"></a></h2>
 <p>If you prefer to install the most up-to-date version from the GitHub
 repository (for example to test a fix or new feature), clone the repository
 and install locally:</p>
@@ -131,7 +131,7 @@ to untested changes.</p>
 </div>
 </section>
 <section id="optional-i-o-extras">
-<h2>Optional I/O extras<a class="headerlink" href="#optional-i-o-extras" title="Link to this heading"></a></h2>
+<h2>Optional I/O extras<a class="headerlink" href="#optional-i-o-extras" title="Permalink to this heading"></a></h2>
 <p>Some features (e.g., faster parquet-backed I/O or optional dependency-driven
 converters) require additional packages. These extras are optional and can be
 installed with <code class="docutils literal notranslate"><span class="pre">pip</span></code> using extras syntax:</p>
@@ -146,7 +146,7 @@ pip<span class="w"> </span>install<span class="w"> </span>.<span class="o">[</sp
 </div>
 </section>
 <section id="platform-notes-linux">
-<h2>Platform notes (Linux)<a class="headerlink" href="#platform-notes-linux" title="Link to this heading"></a></h2>
+<h2>Platform notes (Linux)<a class="headerlink" href="#platform-notes-linux" title="Permalink to this heading"></a></h2>
 <p>On some Linux distributions you may need to install system-level libraries
 before the Python wheels for optional packages can be built. For example,
 to enable Snappy/parquet support you may need the following packages:</p>
@@ -173,7 +173,7 @@ pip<span class="w"> </span>install<span class="w"> </span>BrainNetAnno
 </div>
 </section>
 <section id="troubleshooting">
-<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h2>
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>If <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code> fails while building a package wheel, inspect the
 console output for missing system packages (often headers like <code class="docutils literal notranslate"><span class="pre">libxml2</span></code>
@@ -184,7 +184,7 @@ from wheels: <code class="docutils literal notranslate"><span class="pre">pip</s
 </ul>
 </section>
 <section id="developer-editable-install">
-<h2>Developer / editable install<a class="headerlink" href="#developer-editable-install" title="Link to this heading"></a></h2>
+<h2>Developer / editable install<a class="headerlink" href="#developer-editable-install" title="Permalink to this heading"></a></h2>
 <p>For contributors who want to develop the package locally, install in editable
 mode and run the tests locally:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/Yunheng-Diao/BrainNetAnno.git
@@ -198,7 +198,7 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 </div>
 </section>
 <section id="local-docs-build-optional">
-<h2>Local docs build (optional)<a class="headerlink" href="#local-docs-build-optional" title="Link to this heading"></a></h2>
+<h2>Local docs build (optional)<a class="headerlink" href="#local-docs-build-optional" title="Permalink to this heading"></a></h2>
 <p>To preview the Sphinx documentation locally (useful after editing the
 install page), install the docs requirements and build HTML:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>source/requirements.txt

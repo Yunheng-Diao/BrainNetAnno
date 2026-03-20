@@ -12,3 +12,5 @@ Module Index
    BrainNetAnno.gene_celltype
    BrainNetAnno.gene_layer
    BrainNetAnno.utils
+   BrainNetAnno.molecular_mapping
+

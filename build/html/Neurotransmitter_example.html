@@ -1,0 +1,255 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neurotransmitter Example &mdash; BrainNetAnno  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=b3ba4146"></script>
+      <script src="_static/doctools.js?v=888ff710"></script>
+      <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Mitochondrial Example" href="Mitochondrial_example.html" />
+    <link rel="prev" title="Transcriptome Example" href="Transcriptome_example.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation and setup</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Example.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Transcriptome_example.html">Transcriptome Example</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Neurotransmitter Example</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#neurotransmitter-feature-importance-via-lofo">1. Neurotransmitter feature importance via LOFO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#neurotransmitter-pls-cge-association">2. Neurotransmitter PLS-CGE association</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#notes">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Mitochondrial_example.html">Mitochondrial Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Module Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BrainNetAnno</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="Example.html">Examples</a></li>
+      <li class="breadcrumb-item active">Neurotransmitter Example</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Neurotransmitter_example.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="neurotransmitter-example">
+<h1>Neurotransmitter Example<a class="headerlink" href="#neurotransmitter-example" title="Permalink to this heading"></a></h1>
+<p>A complete pipeline for neurotransmitter analysis is demonstrated in this example.</p>
+<section id="neurotransmitter-feature-importance-via-lofo">
+<h2>1. Neurotransmitter feature importance via LOFO<a class="headerlink" href="#neurotransmitter-feature-importance-via-lofo" title="Permalink to this heading"></a></h2>
+<p>Estimate the importance of each neurotransmitter feature using a Leave-One-Feature-Out (LOFO) strategy. The approach:</p>
+<ol class="arabic simple">
+<li><p>Map the neurotransmitter profile onto the standard brain atlas</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">BrainNetAnno.molecular_mapping</span><span class="w"> </span><span class="kn">import</span> <span class="n">MolecularBrainMapper</span>
+<span class="c1"># 1. Initialize the mapper</span>
+<span class="n">mapper</span> <span class="o">=</span> <span class="n">MolecularBrainMapper</span><span class="p">(</span>
+    <span class="n">atlas_path</span><span class="o">=</span><span class="s2">&quot;/path/to/aal116MNI.nii.gz&quot;</span><span class="p">,</span> <span class="c1"># Replace with your brain atlas path</span>
+    <span class="n">data_dir</span><span class="o">=</span><span class="s2">&quot;/path/to/Neurotransmitter_Profile&quot;</span><span class="p">,</span>  <span class="c1"># Replace with your data path</span>
+    <span class="n">standard_template</span><span class="o">=</span><span class="s1">&#39;MNI152&#39;</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="c1"># 2. Load mitochondrial data</span>
+<span class="n">mito_data</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="n">load_mitochondrial_data</span><span class="p">(</span><span class="n">file_pattern</span><span class="o">=</span><span class="s2">&quot;*.nii.gz&quot;</span><span class="p">)</span>
+
+<span class="c1"># 3. Map to brain atlas</span>
+<span class="n">result_df</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="n">map_to_atlas</span><span class="p">(</span>
+    <span class="n">mito_data</span><span class="p">,</span>
+    <span class="n">missing</span><span class="o">=</span><span class="s1">&#39;centroids&#39;</span><span class="p">,</span>    <span class="c1"># Strategy for handling missing values</span>
+    <span class="n">statistic</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span>        <span class="c1"># Extract mean value</span>
+<span class="p">)</span>
+
+<span class="c1"># 4. Preview results</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Preview of mapping results:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result_df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="c1"># 5. Save results</span>
+<span class="n">mapper</span><span class="o">.</span><span class="n">save_results</span><span class="p">(</span><span class="n">result_df</span><span class="p">,</span> <span class="s2">&quot;/path/to/neurotransmitter_mapping_results.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Neurotransmitter profile data can be obtained from public repositories (for example, <a class="reference external" href="https://github.com/juryxy/JuSpace/tree/JuSpace_v2.0/JuSpace_v2/PETatlas">https://github.com/juryxy/JuSpace/tree/JuSpace_v2.0/JuSpace_v2/PETatlas</a>).</p>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Data loading &amp; preprocessing</p></li>
+</ol>
+<ul class="simple">
+<li><p>Load atlas MNI coordinates and the neurotransmitter distribution matrix (regions × features).</p></li>
+<li><p>Compute pairwise Euclidean distances between regions.</p></li>
+<li><p>Row-wise z-score normalize neurotransmitter features.</p></li>
+</ul>
+<ol class="arabic simple" start="3">
+<li><p>Fit baseline network model</p></li>
+</ol>
+<ul class="simple">
+<li><p>Use a Ledoit–Wolf shrinkage estimator to obtain a stable covariance estimate and invert it to obtain a precision matrix.</p></li>
+<li><p>Extract the upper-triangle elements of the precision matrix as the observed network vector.</p></li>
+</ul>
+<ol class="arabic simple" start="4">
+<li><p>Fit distance–connection expectation</p></li>
+</ol>
+<ul class="simple">
+<li><p>Fit an exponential decay model (as above) to model expected connection strength as a function of distance.</p></li>
+</ul>
+<ol class="arabic simple" start="5">
+<li><p>Compute residual network</p></li>
+</ol>
+<ul class="simple">
+<li><p>Compute the residuals by subtracting the expected connection matrix from the observed precision-based connections.</p></li>
+</ul>
+<ol class="arabic simple" start="6">
+<li><p>LOFO iterations</p></li>
+</ol>
+<p>For each neurotransmitter feature k:</p>
+<ul>
+<li><p>Remove feature k from the neurotransmitter matrix and re-fit the covariance/precision using the remaining features.</p></li>
+<li><p>If the reduced data causes singular covariance, record and skip that feature.</p></li>
+<li><p>Compute the new residual network and quantify the change in residual magnitude per connection:</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[Contribution_{i,j}^{(k)} = |Residual_{i,j}^{(full)}| - |Residual_{i,j}^{(LOFO_k)}|\]</div>
+</div></blockquote>
+</li>
+<li><p>Store contributions in a contributions matrix (connections × features).</p></li>
+</ul>
+<ol class="arabic simple" start="7">
+<li><p>Save results</p></li>
+</ol>
+<ul class="simple">
+<li><p>Save the neurotransmitter contribution matrix (connections × features) to CSV for downstream PLS and visualization.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">run_neurotransmitter_pipeline</span><span class="p">(</span>
+    <span class="n">coordinates_path</span><span class="o">=</span><span class="s2">&quot;/path/to/coords.csv&quot;</span><span class="p">,</span>
+    <span class="n">neurotransmitter_expression_path</span><span class="o">=</span><span class="s2">&quot;/path/to/neurotransmitter_mapping_results.csv&quot;</span><span class="p">,</span>
+    <span class="n">output_contribution_path</span><span class="o">=</span><span class="s2">&quot;/path/to/neurotransmitter_contribution.csv&quot;</span><span class="p">,</span>
+    <span class="n">initial_params</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">50.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+    <span class="n">save_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">plot_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="neurotransmitter-pls-cge-association">
+<h2>2. Neurotransmitter PLS-CGE association<a class="headerlink" href="#neurotransmitter-pls-cge-association" title="Permalink to this heading"></a></h2>
+<p>Use PLS regression to relate FC deviations to neurotransmitter-derived connection features. Steps mirror the transcriptome PLS workflow:</p>
+<ol class="arabic simple">
+<li><p>Prepare features and target vector (select top-N connections if desired).</p></li>
+<li><p>Use K-fold CV to select the optimal number of PLS components and plot MSE curve.</p></li>
+<li><p>Train final PLS on full dataset and compute feature weights.</p></li>
+<li><p>Use permutation testing to derive empirical p-values for feature weights.</p></li>
+<li><p>Save weights, explained variance and p-values to CSV.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">run_neurotransmitter_pls_pipeline</span><span class="p">(</span>
+    <span class="n">fc_matrix_path</span><span class="o">=</span><span class="s2">&quot;/path/to/fc_deviation.csv&quot;</span><span class="p">,</span>
+    <span class="n">nt_contrib_path</span><span class="o">=</span><span class="s2">&quot;/path/to/neurotransmitter_contribution.csv&quot;</span><span class="p">,</span>
+    <span class="n">output_weights_path</span><span class="o">=</span><span class="s2">&quot;/path/to/neurotransmitter_weights.csv&quot;</span><span class="p">,</span>
+    <span class="n">max_components</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">cv_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">n_permutations</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>The snippet above is purely illustrative. To run these calls you must import
+the corresponding functions from the <cite>BrainNetAnno</cite> package or ensure the
+project’s <cite>src/</cite> is on <cite>PYTHONPATH</cite>.</p></li>
+<li><p>Replace <cite>/path/to/…</cite> with real, accessible file paths and choose sensible
+parameters for <cite>max_components</cite>, <cite>cv_splits</cite>, and <cite>n_permutations</cite> based on
+your dataset size and computational resources.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Transcriptome_example.html" class="btn btn-neutral float-left" title="Transcriptome Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Mitochondrial_example.html" class="btn btn-neutral float-right" title="Mitochondrial Example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, BrainNetAnno.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

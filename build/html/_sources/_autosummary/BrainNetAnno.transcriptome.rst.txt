@@ -4,6 +4,11 @@ BrainNetAnno.transcriptome
 .. automodule:: BrainNetAnno.transcriptome
 
    
+   
+   
+
+   
+   
    .. rubric:: Functions
 
    .. autosummary::
@@ -12,3 +17,15 @@ BrainNetAnno.transcriptome
       plot_fit
       run_transcriptome_pipeline
    
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

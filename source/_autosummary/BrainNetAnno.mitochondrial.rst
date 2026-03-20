@@ -4,6 +4,11 @@ BrainNetAnno.mitochondrial
 .. automodule:: BrainNetAnno.mitochondrial
 
    
+   
+   
+
+   
+   
    .. rubric:: Functions
 
    .. autosummary::
@@ -14,3 +19,15 @@ BrainNetAnno.mitochondrial
       plot_distance_decay
       run_mitochondrial_pipeline
    
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

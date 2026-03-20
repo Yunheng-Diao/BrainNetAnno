@@ -1,22 +1,21 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="./">
+<html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BrainNetAnno: A toolkit for molecular annotation of brain networks. &mdash; BrainNetAnno  documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=5929fcd5"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=b3ba4146"></script>
+      <script src="_static/doctools.js?v=888ff710"></script>
+      <script src="_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -77,9 +76,8 @@
            <div itemprop="articleBody">
              
   <section id="brainnetanno-a-toolkit-for-molecular-annotation-of-brain-networks">
-<h1>BrainNetAnno: A toolkit for molecular annotation of brain networks.<a class="headerlink" href="#brainnetanno-a-toolkit-for-molecular-annotation-of-brain-networks" title="Link to this heading"></a></h1>
-<a class="reference internal image-reference" href="_images/logo.png"><img alt="BrainNetAnno" class="align-center" src="_images/logo.png" style="width: 220px;" />
-</a>
+<h1>BrainNetAnno: A toolkit for molecular annotation of brain networks.<a class="headerlink" href="#brainnetanno-a-toolkit-for-molecular-annotation-of-brain-networks" title="Permalink to this heading"></a></h1>
+<a class="reference internal image-reference" href="_images/logo.png"><img alt="BrainNetAnno" class="align-center" src="_images/logo.png" style="width: 220px;" /></a>
 <p>With the rapid advancement of multi-omics technologies and large-scale brain atlas initiatives, molecular-level information about the human brain has become increasingly abundant, including gene expression, neurotransmitter receptor densities, cell-type distributions, mitochondrial functional signatures, synaptic mechanisms, and metabolic features. These resources offer important opportunities to elucidate the biological foundations of brain development and neuropsychiatric disorders. However, brain function is not carried out by isolated regions in isolation; rather, it relies on a highly interconnected network architecture. Inter-regional connections work together to support cognition, emotion, and behavior, and disease-related abnormalities often manifest as systematic alterations in network connectivity. Therefore, understanding the molecular basis of network-level abnormalities is critical for uncovering the pathophysiology of neuropsychiatric disorders.</p>
 <p>Although substantial molecular annotation resources now exist at the level of brain regions, enabling characterization of regional molecular properties, methods that focus on the molecular annotation of the connections themselves remain highly limited. In other words, while we know the molecular attributes of individual regions, we still lack answers to fundamental questions such as why certain connections are more vulnerable, what molecular mechanisms drive connection-level abnormalities, or what underlies the susceptibility of specific connections in disease. This gap constrains the integration of multi-omics data with network neuroscience and limits our ability to understand complex brain disorders from a systems-level perspective.</p>
 <p>The present toolkit was developed to fill this critical gap. It provides systematic molecular annotation of inter-regional connections, enabling researchers to directly link network connectivity alterations to underlying gene-expression profiles, neurotransmitter systems, mitochondrial features, cell-type compositions, synaptic mechanisms, and metabolic characteristics. By integrating multi-omics information at the level of connections, the toolkit offers a new pathway for understanding the pathophysiology of neuropsychiatric disorders and provides a biologically informed, mechanistically interpretable framework for identifying targets for network-based interventions such as brain stimulation.</p>
@@ -97,7 +95,9 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Example.html">Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pipeline_example.html">Pipeline Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Transcriptome_example.html">Transcriptome Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Neurotransmitter_example.html">Neurotransmitter Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Mitochondrial_example.html">Mitochondrial Example</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">Module Index</a><ul>
@@ -108,6 +108,7 @@
 <li class="toctree-l2"><a class="reference internal" href="_autosummary/BrainNetAnno.gene_celltype.html">BrainNetAnno.gene_celltype</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_autosummary/BrainNetAnno.gene_layer.html">BrainNetAnno.gene_layer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_autosummary/BrainNetAnno.utils.html">BrainNetAnno.utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_autosummary/BrainNetAnno.molecular_mapping.html">BrainNetAnno.molecular_mapping</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a><ul>
@@ -140,6 +141,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.utils.plot_mse_curve"><code class="docutils literal notranslate"><span class="pre">plot_mse_curve()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.utils.permutation_explained_variance"><code class="docutils literal notranslate"><span class="pre">permutation_explained_variance()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.utils.plot_rmse_and_variance"><code class="docutils literal notranslate"><span class="pre">plot_rmse_and_variance()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#BrainNetAnno.molecular_mapping.MolecularBrainMapper"><code class="docutils literal notranslate"><span class="pre">MolecularBrainMapper</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a><ul>

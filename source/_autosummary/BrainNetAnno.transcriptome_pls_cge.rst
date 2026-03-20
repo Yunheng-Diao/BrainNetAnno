@@ -4,6 +4,11 @@ BrainNetAnno.transcriptome\_pls\_cge
 .. automodule:: BrainNetAnno.transcriptome_pls_cge
 
    
+   
+   
+
+   
+   
    .. rubric:: Functions
 
    .. autosummary::
@@ -13,3 +18,15 @@ BrainNetAnno.transcriptome\_pls\_cge
       save_best_genes_to_csv
       select_best_component_and_genes
    
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

@@ -37,3 +37,8 @@ API Reference
    :members:
    :undoc-members:
    :show-inheritance:
+
+.. automodule:: BrainNetAnno.molecular_mapping
+   :members:
+   :undoc-members:
+   :show-inheritance:

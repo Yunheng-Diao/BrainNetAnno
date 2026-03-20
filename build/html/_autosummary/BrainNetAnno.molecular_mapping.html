@@ -1,0 +1,227 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrainNetAnno.molecular_mapping &mdash; BrainNetAnno  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=b3ba4146"></script>
+      <script src="../_static/doctools.js?v=888ff710"></script>
+      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="BrainNetAnno.neurotransmitter" href="BrainNetAnno.neurotransmitter.html" />
+    <link rel="prev" title="BrainNetAnno.mitochondrial_pls_cge" href="BrainNetAnno.mitochondrial_pls_cge.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation and setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../modules.html">Module Index</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.html">BrainNetAnno</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.transcriptome_pls_cge.html">BrainNetAnno.transcriptome_pls_cge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.neurotransmitter_pls_cge.html">BrainNetAnno.neurotransmitter_pls_cge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.mitochondrial_pls_cge.html">BrainNetAnno.mitochondrial_pls_cge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.gene_celltype.html">BrainNetAnno.gene_celltype</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.gene_layer.html">BrainNetAnno.gene_layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BrainNetAnno.utils.html">BrainNetAnno.utils</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">BrainNetAnno.molecular_mapping</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#BrainNetAnno.molecular_mapping.MolecularBrainMapper"><code class="docutils literal notranslate"><span class="pre">MolecularBrainMapper</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#BrainNetAnno.molecular_mapping.MolecularBrainMapper.load_mitochondrial_data"><code class="docutils literal notranslate"><span class="pre">MolecularBrainMapper.load_mitochondrial_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BrainNetAnno.molecular_mapping.MolecularBrainMapper.map_to_atlas"><code class="docutils literal notranslate"><span class="pre">MolecularBrainMapper.map_to_atlas()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BrainNetAnno.molecular_mapping.MolecularBrainMapper.save_results"><code class="docutils literal notranslate"><span class="pre">MolecularBrainMapper.save_results()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BrainNetAnno</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../modules.html">Module Index</a></li>
+          <li class="breadcrumb-item"><a href="BrainNetAnno.html">BrainNetAnno</a></li>
+      <li class="breadcrumb-item active">BrainNetAnno.molecular_mapping</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/_autosummary/BrainNetAnno.molecular_mapping.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-BrainNetAnno.molecular_mapping">
+<span id="brainnetanno-molecular-mapping"></span><h1>BrainNetAnno.molecular_mapping<a class="headerlink" href="#module-BrainNetAnno.molecular_mapping" title="Permalink to this heading"></a></h1>
+<p>Implementation of molecular atlas mapping to standard brain template
+Reference abagen.get_expression_data mapping strategy</p>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api.html#BrainNetAnno.molecular_mapping.MolecularBrainMapper" title="BrainNetAnno.molecular_mapping.MolecularBrainMapper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MolecularBrainMapper</span></code></a>(atlas_path[, data_dir, ...])</p></td>
+<td><p>Molecular mapping tool class</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="BrainNetAnno.molecular_mapping.MolecularBrainMapper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">BrainNetAnno.molecular_mapping.</span></span><span class="sig-name descname"><span class="pre">MolecularBrainMapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atlas_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">standard_template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'MNI152'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BrainNetAnno/molecular_mapping.html#MolecularBrainMapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.molecular_mapping.MolecularBrainMapper" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Molecular mapping tool class</p>
+<dl class="simple">
+<dt>Function:</dt><dd><ol class="arabic simple">
+<li><p>Load the molecular atlas data in .nii.gz format.</p></li>
+<li><p>Align to the standard brain template.</p></li>
+<li><p>Extract the statistical indicators at the ROI level.</p></li>
+<li><p>Handle missing values.</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="BrainNetAnno.molecular_mapping.MolecularBrainMapper.load_mitochondrial_data">
+<span class="sig-name descname"><span class="pre">load_mitochondrial_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_pattern</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'*.nii.gz'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/molecular_mapping.html#MolecularBrainMapper.load_mitochondrial_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.molecular_mapping.MolecularBrainMapper.load_mitochondrial_data" title="Permalink to this definition"></a></dt>
+<dd><p>Load molecular atlas files</p>
+<section id="parameters">
+<h2>Parameters:<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>file_pattern<span class="classifier">str</span></dt><dd><p>File matching pattern, default <a href="#id1"><span class="problematic" id="id2">*</span></a>.nii.gz</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h2>Returns:<a class="headerlink" href="#returns" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>dict</dt><dd><p>{filename: nifti data array}</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BrainNetAnno.molecular_mapping.MolecularBrainMapper.map_to_atlas">
+<span class="sig-name descname"><span class="pre">map_to_atlas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mito_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'centroids'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statistic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'mean'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.DataFrame</span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/molecular_mapping.html#MolecularBrainMapper.map_to_atlas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.molecular_mapping.MolecularBrainMapper.map_to_atlas" title="Permalink to this definition"></a></dt>
+<dd><p>Map molecular data to brain atlas (refer to abagen strategy)</p>
+<section id="id3">
+<h2>Parameters:<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>mito_data<span class="classifier">dict</span></dt><dd><p>Molecular atlas data, {name: data array}</p>
+</dd>
+<dt>missing<span class="classifier">str</span></dt><dd><p>Method to handle missing values
+- ‘centroids’: Use ROI centroids (default)
+- ‘zeros’: Fill with 0
+- ‘nan’: Keep as NaN</p>
+</dd>
+<dt>statistic<span class="classifier">str</span></dt><dd><p>Extract ROI statistics
+- ‘mean’: Mean value
+- ‘median’: Median value
+- ‘std’: Standard deviation
+- ‘max’: Maximum value
+- ‘min’: Minimum value</p>
+</dd>
+</dl>
+</section>
+<section id="id4">
+<h2>Returns:<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>pd.DataFrame</dt><dd><p>Mapping results at ROI level, rows are ROIs, columns are molecular types</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BrainNetAnno.molecular_mapping.MolecularBrainMapper.save_results">
+<span class="sig-name descname"><span class="pre">save_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pandas.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/BrainNetAnno/molecular_mapping.html#MolecularBrainMapper.save_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BrainNetAnno.molecular_mapping.MolecularBrainMapper.save_results" title="Permalink to this definition"></a></dt>
+<dd><p>Save mapping results</p>
+<section id="id5">
+<h2>Parameters:<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>df_result<span class="classifier">pd.DataFrame</span></dt><dd><p>Mapping result dataframe</p>
+</dd>
+<dt>output_path<span class="classifier">str</span></dt><dd><p>Output file path</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="BrainNetAnno.mitochondrial_pls_cge.html" class="btn btn-neutral float-left" title="BrainNetAnno.mitochondrial_pls_cge" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="BrainNetAnno.neurotransmitter.html" class="btn btn-neutral float-right" title="BrainNetAnno.neurotransmitter" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, BrainNetAnno.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

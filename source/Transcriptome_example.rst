@@ -1,7 +1,7 @@
-Pipeline Example
+Transcriptome Example
 ================
 
-This example demonstrates a complete processing pipeline including transcriptome-based network annotation, neurotransmitter analysis, and mitochondrial functional analysis.
+A complete pipeline for transcriptome analysis is demonstrated in this example.
 
 1. Transcriptome-based network annotation — downloading Allen Human Brain Atlas data
 -----------------------------------------------------------------------------------
@@ -234,128 +234,6 @@ Compute the mean layer-specific statistic (e.g., mean t) for the target gene set
         layer_marker_path="/path/to/layer_markers.xlsx",
         target_genes_path="/path/to/transcriptome_best_genes.csv",
         output_path="/path/to/layer_enrichment.csv",
-    )
-
-6. Neurotransmitter feature importance via LOFO
-----------------------------------------------
-
-Estimate the importance of each neurotransmitter feature using a Leave-One-Feature-Out (LOFO) strategy. The approach:
-
-1) Data loading & preprocessing
-
-- Load atlas MNI coordinates and the neurotransmitter distribution matrix (regions × features).
-- Compute pairwise Euclidean distances between regions.
-- Row-wise z-score normalize neurotransmitter features.
-
-.. note::
-
-    Neurotransmitter atlas data (e.g. PET-based maps) can be obtained from public repositories (for example, JuSpace datasets).
-
-2) Fit baseline network model
-
-- Use a Ledoit–Wolf shrinkage estimator to obtain a stable covariance estimate and invert it to obtain a precision matrix.
-- Extract the upper-triangle elements of the precision matrix as the observed network vector.
-
-3) Fit distance–connection expectation
-
-- Fit an exponential decay model (as above) to model expected connection strength as a function of distance.
-
-4) Compute residual network
-
-- Compute the residuals by subtracting the expected connection matrix from the observed precision-based connections.
-
-5) LOFO iterations
-
-For each neurotransmitter feature k:
-
-- Remove feature k from the neurotransmitter matrix and re-fit the covariance/precision using the remaining features.
-- If the reduced data causes singular covariance, record and skip that feature.
-- Compute the new residual network and quantify the change in residual magnitude per connection:
-
-    .. math::
-
-        Contribution_{i,j}^{(k)} = |Residual_{i,j}^{(full)}| - |Residual_{i,j}^{(LOFO_k)}|
-
-- Store contributions in a contributions matrix (connections × features).
-
-6) Save results
-
-- Save the neurotransmitter contribution matrix (connections × features) to CSV for downstream PLS and visualization.
-
-.. code-block:: python
-
-    run_neurotransmitter_pipeline(
-        coordinates_path="/path/to/coords.csv",
-        neurotransmitter_expression_path="/path/to/neuro_expression.xlsx",
-        output_contribution_path="/path/to/neurotransmitter_contribution.csv",
-        initial_params=(1.0, 50.0, 0.0),
-        save_plot=False,
-        plot_path=None,
-    )
-
-7. Neurotransmitter PLS-CGE association
-----------------------------------------
-
-Use PLS regression to relate FC deviations to neurotransmitter-derived connection features. Steps mirror the transcriptome PLS workflow:
-
-1) Prepare features and target vector (select top-N connections if desired).
-2) Use K-fold CV to select the optimal number of PLS components and plot MSE curve.
-3) Train final PLS on full dataset and compute feature weights.
-4) Use permutation testing to derive empirical p-values for feature weights.
-5) Save weights, explained variance and p-values to CSV.
-
-.. code-block:: python
-
-    run_neurotransmitter_pls_pipeline(
-        fc_matrix_path="/path/to/fc_deviation.csv",
-        nt_contrib_path="/path/to/neurotransmitter_contribution.csv",
-        output_weights_path="/path/to/neurotransmitter_weights.csv",
-        max_components=10,
-        cv_splits=5,
-        n_permutations=1000,
-    )
-
-8. Mitochondrial LOFO and contribution analysis
-----------------------------------------------
-
-Apply the LOFO strategy to mitochondrial-related phenotypes to quantify each phenotype's contribution to network residuals. Steps are analogous to the neurotransmitter LOFO workflow:
-
-1) Data & spatial preparation: load MNI coordinates and mitochondrial expression matrix; compute distances and z-score normalize.
-2) Fit baseline network with Ledoit–Wolf and compute residuals relative to distance expectation.
-3) For each mitochondrial phenotype, remove it, re-fit, compute new residuals and record contribution changes.
-4) Aggregate contributions into a matrix (connections × mitochondrial phenotypes) and save to CSV.
-
-.. code-block:: python
-
-    run_mitochondrial_pipeline(
-        coordinates_path="/path/to/coords.csv",
-        mitochondrial_expression_path="/path/to/mitochondrial_expression.xlsx",
-        output_contribution_path="/path/to/mitochondrial_contribution.csv",
-        initial_params=(1.0, 50.0, 0.0),
-        save_plot=False,
-        plot_path=None,
-    )
-
-9. Mitochondrial PLS-CGE association
------------------------------------
-
-Relate FC deviations to mitochondrial phenotype contributions using PLS-CGE. Main steps:
-
-1) Assemble feature matrix (connections × mitochondrial phenotypes) and target vector.
-2) Optionally select top-N connections by absolute effect size.
-3) Use K-fold CV to choose the optimal number of PLS components and visualize MSE curves.
-4) Fit final PLS, extract weights and compute explained variance.
-5) Use permutations to derive empirical P-values for weights and save results.
-
-.. code-block:: python
-
-    run_mitochondrial_pls_pipeline(
-        fc_matrix_path="/path/to/fc_deviation.csv",
-        nt_contrib_path="/path/to/mitochondrial_contribution.csv",
-        output_weights_path="/path/to/mitochondrial_weights.csv",
-        max_components=6,
-        cv_splits=5,
-        n_permutations=1000,
     )
 
 Notes

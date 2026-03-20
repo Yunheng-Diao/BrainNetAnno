@@ -4,18 +4,37 @@
 .. automodule:: BrainNetAnno
 
    
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
 .. rubric:: Modules
 
 .. autosummary::
    :toctree:
    :recursive:
 
-   gene_celltype
-   gene_layer
-   mitochondrial
-   mitochondrial_pls_cge
-   neurotransmitter
-   neurotransmitter_pls_cge
-   transcriptome
-   transcriptome_pls_cge
-   utils
+   BrainNetAnno.gene_celltype
+   BrainNetAnno.gene_layer
+   BrainNetAnno.mitochondrial
+   BrainNetAnno.mitochondrial_pls_cge
+   BrainNetAnno.molecular_mapping
+   BrainNetAnno.neurotransmitter
+   BrainNetAnno.neurotransmitter_pls_cge
+   BrainNetAnno.transcriptome
+   BrainNetAnno.transcriptome_pls_cge
+   BrainNetAnno.utils
+

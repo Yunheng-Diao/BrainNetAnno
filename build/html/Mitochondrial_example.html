@@ -1,0 +1,212 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mitochondrial Example &mdash; BrainNetAnno  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=b3ba4146"></script>
+      <script src="_static/doctools.js?v=888ff710"></script>
+      <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Module Index" href="modules.html" />
+    <link rel="prev" title="Neurotransmitter Example" href="Neurotransmitter_example.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation and setup</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Example.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Transcriptome_example.html">Transcriptome Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Neurotransmitter_example.html">Neurotransmitter Example</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Mitochondrial Example</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mitochondrial-lofo-and-contribution-analysis">1. Mitochondrial LOFO and contribution analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mitochondrial-pls-cge-association">2. Mitochondrial PLS-CGE association</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#notes">Notes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Module Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BrainNetAnno</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="Example.html">Examples</a></li>
+      <li class="breadcrumb-item active">Mitochondrial Example</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Mitochondrial_example.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="mitochondrial-example">
+<h1>Mitochondrial Example<a class="headerlink" href="#mitochondrial-example" title="Permalink to this heading"></a></h1>
+<p>A complete pipeline for mitochondrial analysis is demonstrated in this example.</p>
+<section id="mitochondrial-lofo-and-contribution-analysis">
+<h2>1. Mitochondrial LOFO and contribution analysis<a class="headerlink" href="#mitochondrial-lofo-and-contribution-analysis" title="Permalink to this heading"></a></h2>
+<p>Apply the LOFO strategy to mitochondrial-related phenotypes to quantify each phenotype’s contribution to network residuals. Steps are analogous to the neurotransmitter LOFO workflow:</p>
+<ol class="arabic simple">
+<li><p>Map the neurotransmitter profile onto the standard brain atlas</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">BrainNetAnno.molecular_mapping</span><span class="w"> </span><span class="kn">import</span> <span class="n">MolecularBrainMapper</span>
+<span class="c1"># 1. Initialize the mapper</span>
+<span class="n">mapper</span> <span class="o">=</span> <span class="n">MolecularBrainMapper</span><span class="p">(</span>
+    <span class="n">atlas_path</span><span class="o">=</span><span class="s2">&quot;/path/to/aal116MNI.nii.gz&quot;</span><span class="p">,</span> <span class="c1"># Replace with your brain atlas path</span>
+    <span class="n">data_dir</span><span class="o">=</span><span class="s2">&quot;/path/to/Neurotransmitter_Profile&quot;</span><span class="p">,</span>  <span class="c1"># Replace with your data path</span>
+    <span class="n">standard_template</span><span class="o">=</span><span class="s1">&#39;MNI152&#39;</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="c1"># 2. Load mitochondrial data</span>
+<span class="n">mito_data</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="n">load_mitochondrial_data</span><span class="p">(</span><span class="n">file_pattern</span><span class="o">=</span><span class="s2">&quot;*.nii.gz&quot;</span><span class="p">)</span>
+
+<span class="c1"># 3. Map to brain atlas</span>
+<span class="n">result_df</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="n">map_to_atlas</span><span class="p">(</span>
+    <span class="n">mito_data</span><span class="p">,</span>
+    <span class="n">missing</span><span class="o">=</span><span class="s1">&#39;centroids&#39;</span><span class="p">,</span>    <span class="c1"># Strategy for handling missing values</span>
+    <span class="n">statistic</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span>        <span class="c1"># Extract mean value</span>
+<span class="p">)</span>
+
+<span class="c1"># 4. Preview results</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Preview of mapping results:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result_df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="c1"># 5. Save results</span>
+<span class="n">mapper</span><span class="o">.</span><span class="n">save_results</span><span class="p">(</span><span class="n">result_df</span><span class="p">,</span> <span class="s2">&quot;/path/to/neurotransmitter_mapping_results.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>mitochondrial profile data can be obtained from public repositories (for example, <a class="reference external" href="http://humanmitobrainmap.bcblab.com">http://humanmitobrainmap.bcblab.com</a>).</p>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Data &amp; spatial preparation: load MNI coordinates and mitochondrial expression matrix; compute distances and z-score normalize.</p></li>
+<li><p>Fit baseline network with Ledoit–Wolf and compute residuals relative to distance expectation.</p></li>
+<li><p>For each mitochondrial phenotype, remove it, re-fit, compute new residuals and record contribution changes.</p></li>
+<li><p>Aggregate contributions into a matrix (connections × mitochondrial phenotypes) and save to CSV.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">run_mitochondrial_pipeline</span><span class="p">(</span>
+    <span class="n">coordinates_path</span><span class="o">=</span><span class="s2">&quot;/path/to/coords.csv&quot;</span><span class="p">,</span>
+    <span class="n">mitochondrial_expression_path</span><span class="o">=</span><span class="s2">&quot;/path/to/mitochondrial_expression.xlsx&quot;</span><span class="p">,</span>
+    <span class="n">output_contribution_path</span><span class="o">=</span><span class="s2">&quot;/path/to/mitochondrial_contribution.csv&quot;</span><span class="p">,</span>
+    <span class="n">initial_params</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">50.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+    <span class="n">save_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">plot_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="mitochondrial-pls-cge-association">
+<h2>2. Mitochondrial PLS-CGE association<a class="headerlink" href="#mitochondrial-pls-cge-association" title="Permalink to this heading"></a></h2>
+<p>Relate FC deviations to mitochondrial phenotype contributions using PLS-CGE. Main steps:</p>
+<ol class="arabic simple">
+<li><p>Assemble feature matrix (connections × mitochondrial phenotypes) and target vector.</p></li>
+<li><p>Optionally select top-N connections by absolute effect size.</p></li>
+<li><p>Use K-fold CV to choose the optimal number of PLS components and visualize MSE curves.</p></li>
+<li><p>Fit final PLS, extract weights and compute explained variance.</p></li>
+<li><p>Use permutations to derive empirical P-values for weights and save results.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">run_mitochondrial_pls_pipeline</span><span class="p">(</span>
+    <span class="n">fc_matrix_path</span><span class="o">=</span><span class="s2">&quot;/path/to/fc_deviation.csv&quot;</span><span class="p">,</span>
+    <span class="n">nt_contrib_path</span><span class="o">=</span><span class="s2">&quot;/path/to/mitochondrial_contribution.csv&quot;</span><span class="p">,</span>
+    <span class="n">output_weights_path</span><span class="o">=</span><span class="s2">&quot;/path/to/mitochondrial_weights.csv&quot;</span><span class="p">,</span>
+    <span class="n">max_components</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+    <span class="n">cv_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">n_permutations</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>The snippet above is purely illustrative. To run these calls you must import
+the corresponding functions from the <cite>BrainNetAnno</cite> package or ensure the
+project’s <cite>src/</cite> is on <cite>PYTHONPATH</cite>.</p></li>
+<li><p>Replace <cite>/path/to/…</cite> with real, accessible file paths and choose sensible
+parameters for <cite>max_components</cite>, <cite>cv_splits</cite>, and <cite>n_permutations</cite> based on
+your dataset size and computational resources.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Neurotransmitter_example.html" class="btn btn-neutral float-left" title="Neurotransmitter Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="Module Index" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, BrainNetAnno.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

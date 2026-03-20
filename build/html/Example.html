@@ -1,26 +1,25 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="./">
+<html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Examples &mdash; BrainNetAnno  documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=5929fcd5"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=b3ba4146"></script>
+      <script src="_static/doctools.js?v=888ff710"></script>
+      <script src="_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Pipeline Example" href="pipeline_example.html" />
+    <link rel="next" title="Transcriptome Example" href="Transcriptome_example.html" />
     <link rel="prev" title="Installation and setup" href="install.html" /> 
 </head>
 
@@ -48,7 +47,9 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation and setup</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pipeline_example.html">Pipeline Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Transcriptome_example.html">Transcriptome Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Neurotransmitter_example.html">Neurotransmitter Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Mitochondrial_example.html">Mitochondrial Example</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">Module Index</a></li>
@@ -81,12 +82,32 @@
            <div itemprop="articleBody">
              
   <section id="examples">
-<h1>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h1>
+<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h1>
 <p>Practical example scripts demonstrating the main pipeline workflows and
 how to run them using the code under <cite>tests/examples</cite> in this repository.</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="pipeline_example.html">Pipeline Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Transcriptome_example.html">Transcriptome Example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Transcriptome_example.html#transcriptome-based-network-annotation-downloading-allen-human-brain-atlas-data">1. Transcriptome-based network annotation — downloading Allen Human Brain Atlas data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Transcriptome_example.html#computing-gene-co-expression-and-distance-dependence">2. Computing gene co-expression and distance dependence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Transcriptome_example.html#connectometranscriptome-association-via-pls-cge">3. Connectome–transcriptome association via PLS-CGE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Transcriptome_example.html#cell-type-enrichment-of-significant-genes">4. Cell-type enrichment of significant genes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Transcriptome_example.html#cortical-layer-enrichment">5. Cortical layer enrichment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Transcriptome_example.html#notes">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Neurotransmitter_example.html">Neurotransmitter Example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Neurotransmitter_example.html#neurotransmitter-feature-importance-via-lofo">1. Neurotransmitter feature importance via LOFO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Neurotransmitter_example.html#neurotransmitter-pls-cge-association">2. Neurotransmitter PLS-CGE association</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Neurotransmitter_example.html#notes">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Mitochondrial_example.html">Mitochondrial Example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Mitochondrial_example.html#mitochondrial-lofo-and-contribution-analysis">1. Mitochondrial LOFO and contribution analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Mitochondrial_example.html#mitochondrial-pls-cge-association">2. Mitochondrial PLS-CGE association</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Mitochondrial_example.html#notes">Notes</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </section>
@@ -96,7 +117,7 @@ how to run them using the code under <cite>tests/examples</cite> in this reposit
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="install.html" class="btn btn-neutral float-left" title="Installation and setup" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="pipeline_example.html" class="btn btn-neutral float-right" title="Pipeline Example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Transcriptome_example.html" class="btn btn-neutral float-right" title="Transcriptome Example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
